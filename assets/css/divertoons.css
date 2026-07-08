@@ -1,0 +1,208 @@
+/* =========================================================
+   DiverToons — theme stylesheet (built on Bootstrap + Font Awesome)
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root{
+  --dt-teal:#1FB6C4;
+  --dt-teal-dark:#0F707C;
+  --dt-orange:#F6941E;
+  --dt-coral:#F0524A;
+  --dt-coral-dark:#C93A33;
+  --dt-yellow:#FFC93C;
+  --dt-navy:#163A4D;
+  --dt-cream:#FFF8EC;
+  --dt-white:#FFFFFF;
+  --dt-radius:22px;
+  --dt-shadow:0 10px 25px rgba(22,58,77,.12);
+  --dt-transition:.25s ease;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--dt-cream);
+  color:var(--dt-navy);
+  overflow-x:hidden;
+}
+h1,h2,h3,h4,h5,h6,.dt-heading{
+  font-family:'Baloo 2',cursive;
+  color:var(--dt-navy);
+  font-weight:700;
+}
+a{transition:var(--dt-transition)}
+img{max-width:100%}
+
+.dt-container{max-width:1200px;margin:0 auto;padding:0 1.25rem}
+
+/* ---------- Buttons ---------- */
+.dt-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:'Baloo 2',cursive;font-weight:700;font-size:1.05rem;
+  padding:.85rem 1.9rem;border-radius:50px;border:none;cursor:pointer;
+  text-decoration:none;transition:var(--dt-transition);white-space:nowrap;
+}
+.dt-btn:hover{transform:translateY(-3px);text-decoration:none}
+.dt-btn-coral{background:var(--dt-coral);color:var(--dt-white);box-shadow:0 8px 18px rgba(240,82,74,.35)}
+.dt-btn-coral:hover{background:var(--dt-coral-dark);color:var(--dt-white)}
+.dt-btn-teal{background:var(--dt-teal);color:var(--dt-white);box-shadow:0 8px 18px rgba(31,182,196,.35)}
+.dt-btn-teal:hover{background:var(--dt-teal-dark);color:var(--dt-white)}
+.dt-btn-outline{background:transparent;color:var(--dt-navy);border:2px solid var(--dt-navy)}
+.dt-btn-outline:hover{background:var(--dt-navy);color:var(--dt-white)}
+.dt-btn-youtube{background:#FF0000;color:#fff;box-shadow:0 8px 18px rgba(255,0,0,.3)}
+.dt-btn-youtube:hover{background:#cc0000;color:#fff}
+
+/* ---------- Navbar ---------- */
+.dt-navbar{
+  position:sticky;top:0;z-index:1000;background:var(--dt-white);
+  box-shadow:0 2px 12px rgba(22,58,77,.08);padding:.6rem 0;transition:var(--dt-transition);
+}
+.dt-navbar .navbar-brand img{height:56px}
+.dt-navbar .nav-link{
+  font-family:'Baloo 2',cursive;font-weight:600;color:var(--dt-navy)!important;
+  margin:0 .35rem;padding:.5rem 1rem!important;border-radius:50px;
+}
+.dt-navbar .nav-link:hover,.dt-navbar .nav-link.active{
+  background:var(--dt-yellow);color:var(--dt-navy)!important;
+}
+.dt-lang-toggle a{
+  font-family:'Baloo 2',cursive;font-weight:700;color:var(--dt-navy);padding:.3rem .6rem;
+}
+.dt-lang-toggle a.active{color:var(--dt-coral);text-decoration:underline}
+.dt-social-mini a{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:50%;background:var(--dt-cream);
+  color:var(--dt-navy);margin-left:.4rem;font-size:1rem;
+}
+.dt-social-mini a:hover{background:var(--dt-coral);color:#fff}
+
+/* ---------- Hero ---------- */
+.dt-hero{
+  position:relative;overflow:hidden;padding:4rem 0 6rem;
+  background:linear-gradient(180deg,#EAFBFD 0%,var(--dt-cream) 100%);
+}
+.dt-hero .dt-shape{position:absolute;opacity:.9;pointer-events:none}
+.dt-hero h1{font-size:clamp(2.1rem,5vw,3.4rem);line-height:1.15;margin-bottom:1rem}
+.dt-hero h1 .dt-accent{color:var(--dt-coral)}
+.dt-hero p.lead{font-size:1.2rem;max-width:520px;margin-bottom:2rem}
+.dt-hero-logo img{max-width:420px;filter:drop-shadow(0 15px 25px rgba(22,58,77,.2))}
+.dt-hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}
+
+/* floating animation for decorative shapes */
+@keyframes dtFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.dt-floating{animation:dtFloat 5s ease-in-out infinite}
+
+/* ---------- Section titles ---------- */
+.dt-section{padding:4.5rem 0}
+.dt-section-title{text-align:center;max-width:640px;margin:0 auto 3rem}
+.dt-section-title span.tag{
+  display:inline-block;background:var(--dt-yellow);color:var(--dt-navy);
+  font-family:'Baloo 2',cursive;font-weight:700;padding:.35rem 1.1rem;
+  border-radius:50px;margin-bottom:.75rem;font-size:.95rem;
+}
+.dt-section-title h2{font-size:clamp(1.7rem,4vw,2.4rem)}
+.dt-section-title p{color:#4a6472}
+
+/* ---------- Cards ---------- */
+.dt-card{
+  background:var(--dt-white);border-radius:var(--dt-radius);box-shadow:var(--dt-shadow);
+  padding:1.75rem;text-align:center;height:100%;transition:var(--dt-transition);
+}
+.dt-card:hover{transform:translateY(-8px)}
+.dt-card .icon-wrap{
+  width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.1rem;font-size:1.8rem;color:#fff;
+}
+.dt-card h3{font-size:1.25rem;margin-bottom:.5rem}
+.dt-card p{color:#4a6472;font-size:.95rem;margin-bottom:0}
+
+/* Video / thumbnail placeholder cards */
+.dt-video-card{
+  border-radius:var(--dt-radius);overflow:hidden;background:var(--dt-white);
+  box-shadow:var(--dt-shadow);height:100%;display:block;text-decoration:none;
+}
+.dt-video-thumb{
+  aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;
+  background:linear-gradient(135deg,var(--dt-teal),var(--dt-coral));
+}
+.dt-video-thumb .play-icon{
+  width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.9);
+  display:flex;align-items:center;justify-content:center;color:var(--dt-coral);font-size:1.6rem;
+  transition:var(--dt-transition);
+}
+.dt-video-card:hover .play-icon{transform:scale(1.12);background:#fff}
+.dt-video-card .caption{padding:1.1rem 1.3rem;font-family:'Baloo 2',cursive;font-weight:600;color:var(--dt-navy)}
+
+/* ---------- Merch "coming soon" cards ---------- */
+.dt-merch-card{position:relative}
+.dt-merch-ribbon{
+  position:absolute;top:14px;right:-34px;transform:rotate(45deg);
+  background:var(--dt-coral);color:#fff;font-family:'Baloo 2',cursive;font-weight:700;
+  font-size:.78rem;padding:.3rem 2.6rem;box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+.dt-merch-thumb{
+  aspect-ratio:1/1;border-radius:16px;margin-bottom:1rem;
+  display:flex;align-items:center;justify-content:center;font-size:2.4rem;color:#fff;
+}
+
+/* ---------- Follow / social section ---------- */
+.dt-follow{background:var(--dt-navy);color:#fff;padding:4rem 0;text-align:center;border-radius:var(--dt-radius);}
+.dt-follow h2{color:#fff}
+.dt-follow-buttons{display:flex;justify-content:center;gap:1.1rem;flex-wrap:wrap;margin-top:1.75rem}
+.dt-follow-buttons a{
+  display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.7rem;border-radius:50px;
+  font-family:'Baloo 2',cursive;font-weight:700;color:#fff;font-size:1.05rem;
+}
+.dt-follow-buttons a.youtube{background:#FF0000}
+.dt-follow-buttons a.facebook{background:#1877F2}
+.dt-follow-buttons a.tiktok{background:#000}
+.dt-follow-buttons a:hover{transform:translateY(-3px);color:#fff}
+
+/* ---------- Footer ---------- */
+.dt-footer{background:#0F2733;color:#cfe3ea;padding:3.5rem 0 1.5rem;margin-top:3rem}
+.dt-footer h4{color:#fff;font-size:1.1rem;margin-bottom:1rem}
+.dt-footer a{color:#cfe3ea}
+.dt-footer a:hover{color:var(--dt-yellow)}
+.dt-footer .dt-footer-logo img{height:60px;margin-bottom:1rem}
+.dt-footer .dt-social-mini a{background:rgba(255,255,255,.08);color:#fff}
+.dt-footer .dt-social-mini a:hover{background:var(--dt-coral)}
+.dt-footer hr{border-color:rgba(255,255,255,.12);margin:2rem 0 1.25rem}
+.dt-footer .bottom{font-size:.9rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+
+/* ---------- Page title banner (inner pages) ---------- */
+.dt-page-title{
+  background:linear-gradient(135deg,var(--dt-teal),var(--dt-teal-dark));
+  color:#fff;padding:3.5rem 0;text-align:center;position:relative;overflow:hidden;
+}
+.dt-page-title h1{color:#fff;margin-bottom:.5rem}
+.dt-page-title .crumb{color:rgba(255,255,255,.85);font-weight:600}
+.dt-page-title .crumb a{color:#fff;text-decoration:underline}
+
+/* ---------- Character bios (about page) ---------- */
+.dt-character{
+  background:var(--dt-white);border-radius:var(--dt-radius);box-shadow:var(--dt-shadow);
+  padding:2rem;text-align:center;height:100%;
+}
+.dt-character .avatar{
+  width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1rem;font-size:2.6rem;color:#fff;
+}
+
+/* ---------- Back to top ---------- */
+#dtToTop{
+  position:fixed;right:22px;bottom:22px;width:48px;height:48px;border-radius:50%;
+  background:var(--dt-coral);color:#fff;border:none;box-shadow:var(--dt-shadow);
+  display:none;align-items:center;justify-content:center;font-size:1.2rem;z-index:1200;cursor:pointer;
+}
+#dtToTop.show{display:flex}
+
+/* ---------- Fade-in on scroll ---------- */
+.dt-fade{opacity:0;transform:translateY(24px);transition:all .7s ease}
+.dt-fade.in{opacity:1;transform:none}
+
+@media (max-width:991px){
+  .dt-hero-logo{margin-top:2.5rem;text-align:center}
+  .dt-follow-buttons a{width:100%;justify-content:center}
+}
