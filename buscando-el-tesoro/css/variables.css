@@ -1,0 +1,57 @@
+/* ══════════════════════════════════════════════════
+   Buscando el Tesoro · Divertoons
+   Paleta y tokens centralizados. Cambia aquí los
+   colores y toda la aplicación se actualiza.
+   ══════════════════════════════════════════════════ */
+:root {
+  /* Paleta Divertoons */
+  --amarillo:      #FFD93B;
+  --azul-cielo:    #67D5FF;
+  --azul-intenso:  #0077BE;
+  --naranja:       #FF914D;
+  --rosa:          #FF6FA7;
+  --turquesa:      #7DE2D1;
+  --blanco:        #FFFFFF;
+  --texto:         #183153;
+
+  /* Tema pirata (mapa del tesoro) */
+  --pergamino:       #F6E7BF;
+  --pergamino-osc:   #E8D5A3;
+  --madera:          #8B5E3C;
+  --rojo-pirata:     #D9534F;
+  --verde-patio:     #9BE58B;
+
+  /* Estados */
+  --exito:   #3BB273;
+  --error:   #E4572E;
+
+  /* Fondo general */
+  --fondo:        var(--azul-cielo);
+  --fondo-panel:  var(--blanco);
+
+  /* Tipografía */
+  --fuente-titulos: 'Baloo 2', 'Nunito', system-ui, sans-serif;
+  --fuente-texto:   'Nunito', system-ui, sans-serif;
+
+  /* Escala de tamaño (mobile first) */
+  --texto-xs: 0.8rem;
+  --texto-sm: 0.95rem;
+  --texto-md: 1.1rem;
+  --texto-lg: 1.35rem;
+  --texto-xl: 1.8rem;
+
+  /* Espaciado */
+  --esp-1: 6px;
+  --esp-2: 12px;
+  --esp-3: 18px;
+  --esp-4: 26px;
+
+  /* Bordes y sombras (con moderación) */
+  --radio: 14px;
+  --radio-boton: 999px;
+  --borde-grueso: 3px solid var(--texto);
+  --sombra-suave: 0 3px 0 rgba(24, 49, 83, 0.25);
+
+  /* Tamaño mínimo táctil */
+  --toque-min: 48px;
+}

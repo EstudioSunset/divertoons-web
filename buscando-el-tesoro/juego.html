@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Jugando · Buscando el Tesoro · Divertoons</title>
+  <meta name="theme-color" content="#67D5FF">
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/map.css">
+  <!-- Librerías por CDN (no requieren compilación; funcionan en hosting estático con HTTPS) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js" defer></script>
+</head>
+<body class="cielo">
+
+  <!-- ══════ Selección de jugador ══════ -->
+  <section class="pantalla" id="pantalla-jugador" aria-label="Elige tu jugador">
+    <h1>¿Quién va a buscar el tesoro?</h1>
+
+    <label for="nombre-jugador">Tu nombre (o el de tu equipo)</label>
+    <input class="campo" id="nombre-jugador" type="text" maxlength="30" autocomplete="off" placeholder="Escribe aquí…">
+
+    <h2 style="margin-top:18px;">Elige tu personaje</h2>
+    <div class="personajes" id="lista-personajes"></div>
+
+    <h2>¿Cómo van a jugar?</h2>
+    <div class="modo-juego" id="modo-juego">
+      <button class="btn" type="button" data-modo="individual" aria-pressed="true">🧒 Yo solo</button>
+      <button class="btn" type="button" data-modo="equipo" aria-pressed="false">👧👦 En equipo</button>
+    </div>
+
+    <div id="campo-equipo" class="oculto">
+      <label for="integrantes-equipo">Nombres del equipo, separados por comas</label>
+      <input class="campo" id="integrantes-equipo" type="text" placeholder="Ana, Leo, Sofi">
+      <p style="font-size:var(--texto-xs); margin-top:6px;">El juego irá diciendo a quién le toca leer y escanear. 🔄</p>
+    </div>
+
+    <button class="btn btn--aventura btn--bloque" id="btn-listo-jugador" type="button" style="margin-top:18px;">¡Listos!</button>
+  </section>
+
+  <!-- ══════ Introducción ══════ -->
+  <section class="pantalla" id="pantalla-intro" aria-label="Historia de la aventura">
+    <div class="intro__vineta">
+      <div class="intro__loro" aria-hidden="true">🦜💨💰</div>
+      <h1>¡El Cofre Dorado desapareció!</h1>
+      <p><strong id="intro-villano">🦜 El Loro Travieso</strong> escondió el Cofre Dorado de Divertoons
+        y rompió el mapa en varias partes.</p>
+      <p>Encuentra las pistas, completa las misiones y gana las letras secretas
+        para abrir el cofre. ¡Cada pista revela una parte nueva del mapa!</p>
+    </div>
+    <button class="btn btn--aventura btn--bloque" id="btn-comenzar-mision" type="button">⚓ ¡A la aventura!</button>
+  </section>
+
+  <!-- ══════ Juego ══════ -->
+  <section class="pantalla tablero" id="pantalla-juego" aria-label="Mapa y misión">
+    <header class="tablero__cabecera">
+      <div class="tablero__jugador">
+        <span class="cara" id="jugador-cara" aria-hidden="true">🙂</span>
+        <span class="nombre" id="jugador-nombre">Aventurero</span>
+      </div>
+      <div class="progreso">
+        <div class="progreso__texto" id="progreso-texto">Pista 1 de 5</div>
+        <div class="progreso__barra" role="progressbar" aria-labelledby="progreso-texto">
+          <div class="progreso__relleno" id="progreso-relleno"></div>
+        </div>
+      </div>
+      <button class="btn btn--icono" id="btn-sonido-juego" type="button" aria-label="Silenciar sonidos">🔊</button>
+    </header>
+
+    <div class="turno oculto" id="turno" aria-live="polite"></div>
+
+    <!-- Letras ganadas para abrir el cofre -->
+    <div class="letras-cofre" id="letras-cofre" aria-label="Letras secretas del cofre"></div>
+
+    <!-- Mapa -->
+    <div class="mapa-marco" id="mapa-marco" aria-label="Mapa del tesoro de la casa. Toca una zona para conocer su estado.">
+      <p style="padding:24px; text-align:center;">Cargando el mapa… 🗺️</p>
+    </div>
+    <p style="font-size:var(--texto-xs); text-align:center; margin-top:6px;">
+      🤏 Pellizca para acercar · Doble toque para hacer zoom
+    </p>
+
+    <!-- Misión actual -->
+    <article class="mision" id="mision">
+      <h2 id="mision-titulo">Pista</h2>
+      <div class="mision__personaje">
+        <span class="mision__cara" id="mision-cara" aria-hidden="true">🔵</span>
+        <div class="mision__globo">
+          <div class="mision__quien" id="mision-quien">Xan dice:</div>
+          <p id="mision-acertijo"></p>
+          <div class="linterna oculto" id="linterna">
+            <div class="linterna__texto" id="linterna-texto"></div>
+            <canvas aria-label="Zona oscura: arrastra el dedo como una linterna para leer la pista"></canvas>
+            <div class="linterna__pista-uso">🔦 Arrastra el dedo para alumbrar la pista</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mision__acciones">
+        <button class="btn btn--primario btn--bloque" id="btn-abrir-desafio" type="button">
+          🎯 Comenzar el desafío
+        </button>
+
+        <div id="acciones-busqueda">
+          <button class="btn btn--aventura btn--bloque" id="btn-escanear" type="button">📷 Escanear pista</button>
+          <div class="mision__fila" style="margin-top:12px;">
+            <button class="btn" id="btn-manual" type="button">⌨️ Escribir código</button>
+            <button class="btn btn--secundario" id="btn-ayuda" type="button">
+              <span id="btn-ayuda-texto">Necesito una ayuda</span>
+            </button>
+          </div>
+          <div class="termometro" style="margin-top:12px;">
+            <button class="btn btn--fantasma" id="btn-temperatura" type="button">🌡️ ¿Frío o caliente?</button>
+            <p class="termometro__resultado" id="termometro-resultado" aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ══════ Victoria ══════ -->
+  <section class="pantalla victoria" id="pantalla-victoria" aria-label="¡Tesoro encontrado!">
+    <div class="victoria__cofre" aria-hidden="true">🏆💰</div>
+    <h1>¡Tesoro encontrado!</h1>
+    <p>Ayudaste a Divertoons a recuperar el Cofre Dorado, <strong id="victoria-nombre">Aventurero</strong>.</p>
+    <div class="victoria__estrellas" id="victoria-estrellas" role="img">⭐⭐⭐</div>
+    <div class="victoria__insignias" id="victoria-insignias"></div>
+    <div class="victoria__datos">
+      <p id="victoria-tiempo"></p>
+      <p id="victoria-ayudas"></p>
+    </div>
+    <div class="portada__acciones" style="margin-inline:auto;">
+      <button class="btn btn--primario" id="btn-ver-mapa" type="button">🗺️ Ver mapa completo</button>
+      <button class="btn btn--secundario" id="btn-imprimir-diploma" type="button">📜 Imprimir mi diploma</button>
+      <button class="btn" id="btn-jugar-otra-vez" type="button">🔁 Jugar otra vez</button>
+      <a class="btn btn--fantasma" href="index.html">🏠 Volver al inicio</a>
+    </div>
+  </section>
+
+  <!-- ══════ Error para el adulto ══════ -->
+  <section class="pantalla" id="pantalla-error" aria-label="Error de configuración">
+    <div class="intro__vineta" id="error-admin">
+      <h1>⚠️ Algo falta por configurar</h1>
+      <p></p>
+      <p style="font-size:var(--texto-sm);">Este mensaje es para el adulto que administra el juego.
+        Revisa el archivo <code>data/aventura-001.json</code> o consulta el README.</p>
+      <a class="btn" href="index.html">Volver al inicio</a>
+    </div>
+  </section>
+
+  <!-- ══════ Modales ══════ -->
+
+  <div class="modal" id="modal-escaner" role="dialog" aria-modal="true" aria-labelledby="titulo-escaner">
+    <div class="modal__caja">
+      <h2 id="titulo-escaner">📷 Escanear pista</h2>
+      <p class="escaner__guia">Apunta la cámara al código QR de la tarjeta y colócalo dentro del cuadro.</p>
+      <div id="lector-qr"></div>
+      <p class="escaner__estado" id="escaner-estado" aria-live="polite"></p>
+      <button class="btn btn--bloque oculto" id="btn-manual-desde-escaner" type="button">⌨️ Escribir el código</button>
+      <button class="btn btn--fantasma btn--bloque" id="btn-cerrar-escaner" type="button" style="margin-top:8px;">Cerrar</button>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-manual" role="dialog" aria-modal="true" aria-labelledby="titulo-manual">
+    <div class="modal__caja">
+      <h2 id="titulo-manual">⌨️ Escribir código</h2>
+      <label for="codigo-manual">Copia el código corto de la tarjeta</label>
+      <input class="campo" id="codigo-manual" type="text" autocomplete="off" autocapitalize="characters"
+             spellcheck="false" placeholder="Ejemplo: XAN-482">
+      <p style="font-size:var(--texto-xs); margin-top:6px;">No importan mayúsculas, minúsculas ni espacios.</p>
+      <button class="btn btn--aventura btn--bloque" id="btn-validar-manual" type="button">Comprobar</button>
+      <button class="btn btn--fantasma btn--bloque" type="button" data-cerrar-modal="modal-manual" style="margin-top:8px;">Cancelar</button>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-resultado" role="dialog" aria-modal="true" aria-labelledby="resultado-titulo">
+    <div class="modal__caja resultado" id="resultado">
+      <div class="resultado__icono" id="resultado-icono" aria-hidden="true">🎉</div>
+      <h3 id="resultado-titulo"></h3>
+      <p id="resultado-detalle"></p>
+      <p class="resultado__loro" id="resultado-loro"></p>
+      <button class="btn btn--primario btn--bloque" id="btn-resultado-ok" type="button">Continuar</button>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-ayuda" role="dialog" aria-modal="true" aria-labelledby="ayuda-numero">
+    <div class="modal__caja centrado">
+      <h2>💡 <span id="ayuda-numero">Ayuda</span></h2>
+      <p id="ayuda-texto" style="font-size:var(--texto-lg);"></p>
+      <button class="btn btn--primario btn--bloque" type="button" data-cerrar-modal="modal-ayuda">¡Gracias!</button>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-desafio" role="dialog" aria-modal="true" aria-label="Desafío">
+    <div class="modal__caja">
+      <div id="desafio-contenido"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-cofre" role="dialog" aria-modal="true" aria-labelledby="titulo-cofre">
+    <div class="modal__caja centrado">
+      <div style="font-size:3.4rem;" aria-hidden="true">🔐💰</div>
+      <h2 id="titulo-cofre">¡El cofre tiene cerradura!</h2>
+      <p id="cofre-mensaje"></p>
+      <label for="cofre-palabra">Ordena tus letras y escribe la palabra secreta</label>
+      <input class="campo" id="cofre-palabra" type="text" autocomplete="off" autocapitalize="characters"
+             spellcheck="false" placeholder="_ _ _ _ _">
+      <button class="btn btn--aventura btn--bloque" id="btn-abrir-cofre" type="button" style="margin-top:12px;">🗝️ Abrir el cofre</button>
+    </div>
+  </div>
+
+  <!-- Aviso flotante + anuncios para lector de pantalla -->
+  <div class="aviso" id="aviso" aria-hidden="true"></div>
+  <div class="visually-hidden" id="anuncios" aria-live="polite"></div>
+
+  <!-- Diploma (solo visible al imprimir) -->
+  <div class="diploma" aria-hidden="true">
+    <h1>🏆 Diploma de Explorador 🏆</h1>
+    <p>Divertoons certifica que</p>
+    <div class="diploma__nombre" id="diploma-nombre">Aventurero</div>
+    <p>encontró el Cofre Dorado y completó<br>la gran Búsqueda del Tesoro</p>
+    <div class="diploma__estrellas" id="diploma-estrellas">⭐⭐⭐</div>
+    <p id="diploma-personaje"></p>
+    <p id="diploma-fecha"></p>
+    <p>✕ marca el lugar · www.divertoons.com</p>
+  </div>
+
+  <script type="module" src="js/game-engine.js"></script>
+</body>
+</html>

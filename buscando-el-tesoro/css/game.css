@@ -1,0 +1,327 @@
+/* ═══ Pantallas del juego ═══ */
+
+/* Fondo con nubes suaves (sin saturar) */
+.cielo {
+  background:
+    radial-gradient(circle at 15% 12%, rgba(255,255,255,0.55) 0 46px, transparent 47px),
+    radial-gradient(circle at 82% 20%, rgba(255,255,255,0.45) 0 34px, transparent 35px),
+    radial-gradient(circle at 60% 6%,  rgba(255,255,255,0.4)  0 26px, transparent 27px),
+    var(--azul-cielo);
+}
+
+.pantalla {
+  display: none;
+  min-height: 100svh;
+  padding: var(--esp-3);
+  max-width: 640px;
+  margin-inline: auto;
+}
+.pantalla.activa { display: block; }
+
+/* ─── Portada ─── */
+.portada {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-3);
+  text-align: center;
+}
+.portada__logo { width: min(320px, 78vw); }
+.portada__acciones { display: flex; flex-direction: column; gap: var(--esp-2); width: min(340px, 100%); }
+.portada__extras { display: flex; gap: var(--esp-2); justify-content: center; }
+
+/* ─── Selección de jugador ─── */
+.personajes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--esp-2);
+  margin: var(--esp-2) 0 var(--esp-3);
+}
+.personaje {
+  border: var(--borde-grueso);
+  border-radius: var(--radio);
+  background: var(--blanco);
+  padding: var(--esp-2) var(--esp-1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-height: 96px;
+}
+.personaje__cara { font-size: 2.2rem; }
+.personaje__nombre { font-family: var(--fuente-titulos); font-weight: 700; font-size: var(--texto-sm); }
+.personaje[aria-pressed="true"] {
+  background: var(--amarillo);
+  outline: 4px solid var(--azul-intenso);
+  outline-offset: 2px;
+}
+.personaje:focus-visible { outline: 4px solid var(--azul-intenso); outline-offset: 2px; }
+
+.modo-juego { display: flex; gap: var(--esp-2); margin-bottom: var(--esp-3); }
+.modo-juego .btn { flex: 1; }
+.modo-juego .btn[aria-pressed="true"] { background: var(--amarillo); }
+
+/* ─── Introducción ─── */
+.intro__vineta {
+  background: var(--blanco);
+  border: var(--borde-grueso);
+  border-radius: var(--radio);
+  padding: var(--esp-3);
+  margin-bottom: var(--esp-3);
+}
+.intro__loro { font-size: 3.4rem; text-align: center; margin-bottom: var(--esp-2); }
+
+/* ─── Pantalla principal del juego ─── */
+.tablero { max-width: 720px; padding-bottom: 90px; }
+
+.tablero__cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--azul-cielo);
+  padding: var(--esp-2) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+}
+.tablero__jugador {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  min-width: 0;
+}
+.tablero__jugador .cara { font-size: 1.6rem; }
+.tablero__jugador .nombre { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tablero__cabecera .btn--icono { margin-left: auto; flex: none; }
+
+.progreso { flex: 1; min-width: 90px; }
+.progreso__texto { font-size: var(--texto-xs); font-weight: 700; margin-bottom: 3px; }
+.progreso__barra {
+  height: 14px;
+  border: 2px solid var(--texto);
+  border-radius: 999px;
+  background: var(--blanco);
+  overflow: hidden;
+}
+.progreso__relleno {
+  height: 100%;
+  width: 0%;
+  background: var(--exito);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+/* Letras del cofre coleccionadas */
+.letras-cofre {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin: var(--esp-2) 0;
+  flex-wrap: wrap;
+}
+.letra {
+  width: 42px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: var(--borde-grueso);
+  border-radius: 10px;
+  background: var(--pergamino);
+  font-family: var(--fuente-titulos);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+.letra--vacia { color: transparent; background: var(--pergamino-osc); border-style: dashed; }
+.letra--nueva { animation: brinco 0.6s ease; background: var(--amarillo); }
+
+/* ─── Tarjeta de misión ─── */
+.mision {
+  background: var(--blanco);
+  border: var(--borde-grueso);
+  border-radius: var(--radio);
+  padding: var(--esp-3);
+  margin-top: var(--esp-3);
+}
+.mision__personaje {
+  display: flex;
+  gap: var(--esp-2);
+  align-items: flex-start;
+  margin-bottom: var(--esp-2);
+}
+.mision__cara { font-size: 2.6rem; flex: none; }
+.mision__globo {
+  position: relative;
+  background: var(--pergamino);
+  border: 2px solid var(--madera);
+  border-radius: var(--radio);
+  padding: var(--esp-2) var(--esp-3);
+  font-size: var(--texto-md);
+}
+.mision__globo::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 18px;
+  border: 8px solid transparent;
+  border-right-color: var(--madera);
+}
+.mision__quien { font-size: var(--texto-xs); font-weight: 800; color: var(--madera); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+
+.mision__acciones { display: flex; flex-direction: column; gap: var(--esp-2); margin-top: var(--esp-2); }
+.mision__fila { display: flex; gap: var(--esp-2); }
+.mision__fila .btn { flex: 1; }
+
+/* Linterna mágica */
+.linterna {
+  position: relative;
+  border-radius: var(--radio);
+  overflow: hidden;
+  border: var(--borde-grueso);
+  margin-bottom: var(--esp-2);
+}
+.linterna canvas { display: block; width: 100%; touch-action: none; }
+.linterna__texto {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--esp-3);
+  text-align: center;
+  font-family: var(--fuente-titulos);
+  font-size: var(--texto-lg);
+  background: var(--pergamino);
+  z-index: -1;
+}
+.linterna__pista-uso {
+  position: absolute;
+  bottom: 6px;
+  left: 0; right: 0;
+  text-align: center;
+  color: var(--blanco);
+  font-size: var(--texto-xs);
+  pointer-events: none;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+}
+
+/* Termómetro frío / caliente */
+.termometro { text-align: center; }
+.termometro__resultado {
+  font-family: var(--fuente-titulos);
+  font-size: var(--texto-lg);
+  margin-top: var(--esp-1);
+  min-height: 1.6em;
+}
+
+/* Turnos en modo equipo */
+.turno {
+  background: var(--turquesa);
+  border: 2px solid var(--texto);
+  border-radius: var(--radio);
+  padding: 8px 14px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: var(--esp-2);
+}
+
+/* ─── Desafíos ─── */
+.desafio__opciones { display: flex; flex-direction: column; gap: var(--esp-2); margin-top: var(--esp-2); }
+
+/* ─── Escáner QR ─── */
+#lector-qr { width: 100%; border-radius: var(--radio); overflow: hidden; }
+.escaner__guia { text-align: center; font-weight: 700; margin: var(--esp-2) 0; }
+.escaner__estado { text-align: center; min-height: 1.5em; font-weight: 700; }
+
+/* ─── Resultado del escaneo ─── */
+.resultado { text-align: center; }
+.resultado__icono { font-size: 4rem; margin-bottom: var(--esp-1); }
+.resultado--exito h3 { color: var(--exito); }
+.resultado--error h3 { color: var(--error); }
+.resultado__loro { font-style: italic; color: var(--madera); }
+
+/* ─── Victoria ─── */
+.victoria { text-align: center; }
+.victoria__cofre { font-size: 5rem; animation: brinco 0.9s ease infinite; }
+.victoria__estrellas { font-size: 2.6rem; letter-spacing: 6px; margin: var(--esp-2) 0; }
+.victoria__insignias {
+  display: flex;
+  gap: var(--esp-2);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: var(--esp-2) 0 var(--esp-3);
+}
+.insignia {
+  background: var(--blanco);
+  border: var(--borde-grueso);
+  border-radius: var(--radio);
+  padding: var(--esp-2);
+  width: 108px;
+}
+.insignia__icono { font-size: 2rem; }
+.insignia__nombre { font-size: var(--texto-xs); font-weight: 800; }
+.victoria__datos { margin-bottom: var(--esp-3); }
+
+/* ─── Diploma imprimible ─── */
+.diploma { display: none; }
+@media print {
+  body * { display: none !important; }
+  body { background: #fff !important; }
+  .diploma, .diploma * { display: block !important; }
+  .diploma {
+    position: fixed;
+    inset: 0;
+    padding: 2cm;
+    text-align: center;
+    border: 10px double var(--madera);
+    font-family: var(--fuente-titulos);
+    color: var(--texto);
+  }
+  .diploma h1 { font-size: 34pt; margin-bottom: 0.5cm; }
+  .diploma .diploma__nombre { font-size: 28pt; color: var(--azul-intenso); margin: 0.4cm 0; }
+  .diploma p { font-size: 14pt; }
+  .diploma .diploma__estrellas { font-size: 30pt; letter-spacing: 10px; }
+}
+
+/* ─── Panel de depuración ─── */
+.debug {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  background: #183153;
+  color: #fff;
+  padding: 8px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+}
+.debug button { font-size: 0.75rem; padding: 6px 8px; border-radius: 8px; border: none; }
+
+/* ─── Aviso flotante accesible ─── */
+.aviso {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  background: var(--texto);
+  color: var(--blanco);
+  padding: 10px 18px;
+  border-radius: var(--radio-boton);
+  font-weight: 700;
+  z-index: 80;
+  max-width: 92vw;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.aviso.visible { opacity: 1; }
+
+@media (min-width: 768px) {
+  .pantalla { padding: var(--esp-4); }
+  .tablero { max-width: 860px; }
+}
