@@ -1,0 +1,255 @@
+import React, { useState, useEffect } from 'react';
+import { Star, Play, RotateCcw, Trophy, Volume2 } from 'lucide-react';
+
+const BilingualLearningGame = () => {
+  const [currentCategory, setCurrentCategory] = useState('animals');
+  const [currentWord, setCurrentWord] = useState(null);
+  const [score, setScore] = useState(0);
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [streak, setStreak] = useState(0);
+  const [gameMode, setGameMode] = useState('learn'); // 'learn' or 'quiz'
+
+  const categories = {
+    animals: {
+      name: '🐾 Animales',
+      color: 'bg-gradient-to-br from-green-400 to-blue-500',
+      words: [
+        { spanish: 'Gato', english: 'Cat', emoji: '🐱', sound: 'meow' },
+        { spanish: 'Perro', english: 'Dog', emoji: '🐶', sound: 'woof' },
+        { spanish: 'Pez', english: 'Fish', emoji: '🐟', sound: 'splash' },
+        { spanish: 'Pájaro', english: 'Bird', emoji: '🐦', sound: 'tweet' },
+        { spanish: 'Rana', english: 'Frog', emoji: '🐸', sound: 'ribbit' },
+        { spanish: 'Vaca', english: 'Cow', emoji: '🐄', sound: 'moo' }
+      ]
+    },
+    colors: {
+      name: '🌈 Colores',
+      color: 'bg-gradient-to-br from-pink-400 to-purple-500',
+      words: [
+        { spanish: 'Rojo', english: 'Red', emoji: '🔴', color: '#ef4444' },
+        { spanish: 'Azul', english: 'Blue', emoji: '🔵', color: '#3b82f6' },
+        { spanish: 'Verde', english: 'Green', emoji: '🟢', color: '#22c55e' },
+        { spanish: 'Amarillo', english: 'Yellow', emoji: '🟡', color: '#eab308' },
+        { spanish: 'Naranja', english: 'Orange', emoji: '🟠', color: '#f97316' },
+        { spanish: 'Morado', english: 'Purple', emoji: '🟣', color: '#a855f7' }
+      ]
+    },
+    numbers: {
+      name: '🔢 Números',
+      color: 'bg-gradient-to-br from-yellow-400 to-orange-500',
+      words: [
+        { spanish: 'Uno', english: 'One', emoji: 1️⃣', number: 1 },
+        { spanish: 'Dos', english: 'Two', emoji: '2️⃣', number: 2 },
+        { spanish: 'Tres', english: 'Three', emoji: '3️⃣', number: 3 },
+        { spanish: 'Cuatro', english: 'Four', emoji: '4️⃣', number: 4 },
+        { spanish: 'Cinco', english: 'Five', emoji: '5️⃣', number: 5 },
+        { spanish: 'Seis', english: 'Six', emoji: '6️⃣', number: 6 }
+      ]
+    },
+    greetings: {
+      name: '👋 Saludos',
+      color: 'bg-gradient-to-br from-purple-400 to-pink-500',
+      words: [
+        { spanish: 'Hola', english: 'Hello', emoji: '👋', gesture: 'wave' },
+        { spanish: 'Adiós', english: 'Goodbye', emoji: '👋', gesture: 'wave' },
+        { spanish: 'Gracias', english: 'Thank you', emoji: '🙏', gesture: 'thanks' },
+        { spanish: 'Por favor', english: 'Please', emoji: '🙏', gesture: 'please' },
+        { spanish: 'Perdón', english: 'Sorry', emoji: '😔', gesture: 'sorry' },
+        { spanish: 'De nada', english: 'You\'re welcome', emoji: '😊', gesture: 'smile' }
+      ]
+    }
+  };
+
+  const getRandomWord = () => {
+    const words = categories[currentCategory].words;
+    const randomIndex = Math.floor(Math.random() * words.length);
+    return words[randomIndex];
+  };
+
+  const nextWord = () => {
+    setCurrentWord(getRandomWord());
+    setShowAnswer(false);
+  };
+
+  const revealAnswer = () => {
+    setShowAnswer(true);
+    if (gameMode === 'quiz') {
+      setScore(score + 1);
+      setStreak(streak + 1);
+    }
+  };
+
+  const resetGame = () => {
+    setScore(0);
+    setStreak(0);
+    setShowAnswer(false);
+    nextWord();
+  };
+
+  useEffect(() => {
+    nextWord();
+  }, [currentCategory]);
+
+  const playWordSound = (word) => {
+    // Visual feedback for sound (since we can't actually play audio)
+    const button = document.getElementById('sound-button');
+    if (button) {
+      button.classList.add('animate-pulse');
+      setTimeout(() => {
+        button.classList.remove('animate-pulse');
+      }, 500);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 p-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg">
+            🎬 DIVERTOONS 🎬
+          </h1>
+          <p className="text-xl text-white/90 drop-shadow">
+            ¡Aprende Inglés y Español de manera divertida!
+          </p>
+        </div>
+
+        {/* Stats */}
+        <div className="flex justify-center gap-4 mb-6">
+          <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2 text-white">
+            <Trophy className="inline mr-2" size={20} />
+            Puntos: {score}
+          </div>
+          <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2 text-white">
+            <Star className="inline mr-2" size={20} />
+            Racha: {streak}
+          </div>
+        </div>
+
+        {/* Category Selection */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+          {Object.entries(categories).map(([key, category]) => (
+            <button
+              key={key}
+              onClick={() => setCurrentCategory(key)}
+              className={`${category.color} text-white font-bold py-3 px-4 rounded-xl transform transition-all duration-200 hover:scale-105 ${
+                currentCategory === key ? 'ring-4 ring-white/50 scale-105' : ''
+              }`}
+            >
+              {category.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Game Mode Toggle */}
+        <div className="flex justify-center mb-6">
+          <div className="bg-white/20 backdrop-blur-sm rounded-lg p-1">
+            <button
+              onClick={() => setGameMode('learn')}
+              className={`px-4 py-2 rounded-lg transition-all ${
+                gameMode === 'learn' ? 'bg-white text-purple-600 font-bold' : 'text-white'
+              }`}
+            >
+              📚 Aprender
+            </button>
+            <button
+              onClick={() => setGameMode('quiz')}
+              className={`px-4 py-2 rounded-lg transition-all ${
+                gameMode === 'quiz' ? 'bg-white text-purple-600 font-bold' : 'text-white'
+              }`}
+            >
+              🎯 Quiz
+            </button>
+          </div>
+        </div>
+
+        {/* Main Game Card */}
+        {currentWord && (
+          <div className="bg-white rounded-3xl p-8 shadow-2xl mb-6 max-w-2xl mx-auto">
+            <div className="text-center">
+              {/* Word Display */}
+              <div className="mb-6">
+                <div className="text-8xl mb-4 animate-bounce">
+                  {currentWord.emoji}
+                </div>
+                
+                {/* Color circle for colors category */}
+                {currentCategory === 'colors' && currentWord.color && (
+                  <div 
+                    className="w-24 h-24 rounded-full mx-auto mb-4 shadow-lg animate-pulse"
+                    style={{ backgroundColor: currentWord.color }}
+                  ></div>
+                )}
+
+                {/* Spanish Word */}
+                <div className="text-4xl font-bold text-purple-600 mb-2">
+                  {currentWord.spanish}
+                </div>
+
+                {/* English Word - Hidden in quiz mode */}
+                {(gameMode === 'learn' || showAnswer) && (
+                  <div className="text-3xl font-semibold text-blue-600 animate-fadeIn">
+                    {currentWord.english}
+                  </div>
+                )}
+
+                {/* Sound Button */}
+                <button
+                  id="sound-button"
+                  onClick={() => playWordSound(currentWord)}
+                  className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-white p-3 rounded-full shadow-lg transform transition-all hover:scale-110"
+                >
+                  <Volume2 size={24} />
+                </button>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-center gap-4">
+                {gameMode === 'quiz' && !showAnswer && (
+                  <button
+                    onClick={revealAnswer}
+                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transform transition-all hover:scale-105 shadow-lg"
+                  >
+                    🎯 ¡Mostrar respuesta!
+                  </button>
+                )}
+                
+                <button
+                  onClick={nextWord}
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl transform transition-all hover:scale-105 shadow-lg"
+                >
+                  <Play className="inline mr-2" size={20} />
+                  Siguiente palabra
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Fun Facts */}
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-white text-center">
+          <h3 className="text-xl font-bold mb-3">💡 ¡Dato Divertido!</h3>
+          <p className="text-lg">
+            {currentCategory === 'animals' && "Los gatos pueden hacer más de 100 sonidos diferentes, ¡pero los perros solo 10!"}
+            {currentCategory === 'colors' && "¡El arco iris tiene 7 colores principales que puedes recordar con ROY G. BIV!"}
+            {currentCategory === 'numbers' && "El número 4 se considera de mala suerte en algunos países asiáticos."}
+            {currentCategory === 'greetings' && "Decir 'hola' en diferentes idiomas es una gran manera de hacer amigos en todo el mundo."}
+          </p>
+        </div>
+
+        {/* Reset Button */}
+        <div className="text-center mt-6">
+          <button
+            onClick={resetGame}
+            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transform transition-all hover:scale-105"
+          >
+            <RotateCcw className="inline mr-2" size={16} />
+            Reiniciar juego
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BilingualLearningGame;

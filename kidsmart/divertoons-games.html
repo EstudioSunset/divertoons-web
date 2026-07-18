@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divertoons - Juego Adaptable</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            /* Evita el scroll en dispositivos móviles */
+            height: 100svh; /* Usa el alto de la ventana pequeña */
+            overflow: hidden;
+            -webkit-user-select: none; /* Evita selección de texto */
+            user-select: none;
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            position: absolute;
+            top: 1vh;
+            left: 50%;
+            width: 95%;
+            max-width: 600px;
+            transform: translateX(-50%);
+            z-index: 100;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            font-size: clamp(1.5em, 5vw, 2.5em); /* Fuente adaptable */
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 5px;
+        }
+
+        .score-timer {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+            font-size: clamp(1em, 4vw, 1.5em); /* Fuente adaptable */
+            font-weight: bold;
+        }
+
+        .score { color: #4ecdc4; }
+        .timer { color: #ff6b6b; }
+
+        .video-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        #video {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+        }
+
+        .game-area {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Contenedores de Cajas y Frutas */
+        .boxes-container, .fruits-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2vmin; /* Espacio adaptable */
+            z-index: 20;
+            width: 90%;
+            justify-content: center;
+            /* IMPORTANTE: Permite que los elementos bajen de línea */
+            flex-wrap: wrap;
+        }
+
+        .boxes-container {
+            top: 20%;
+        }
+
+        .fruits-container {
+            bottom: 5%; /* Más espacio en la parte inferior */
+        }
+
+        /* Cajas y Frutas con tamaños adaptables */
+        .color-box, .fruit {
+            /* Usar vmin hace que se ajusten al lado más corto de la pantalla */
+            width: 15vmin;
+            height: 15vmin;
+            max-width: 100px; /* Límite en pantallas grandes */
+            max-height: 100px;
+            border-radius: 15px;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .fruit {
+            border-radius: 50%;
+            font-size: 8vmin; /* Emoji adaptable */
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .color-box.highlight {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.8);
+        }
+
+        .fruit.dragging {
+            transform: scale(1.2);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.8);
+            z-index: 100;
+        }
+
+        .hand-indicator {
+            position: fixed; /* Usar fixed para que no dependa del scroll */
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 107, 107, 0.8);
+            border: 3px solid #fff;
+            z-index: 50;
+            pointer-events: none;
+            transition: all 0.1s ease;
+            display: none;
+        }
+
+        .hand-indicator.active {
+            background: rgba(76, 205, 196, 0.8);
+            transform: scale(1.2);
+        }
+
+        .start-screen, .celebration {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .start-screen { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+
+        .start-content, .celebration-content {
+            background: rgba(255, 255, 255, 0.1);
+            padding: clamp(20px, 5vw, 40px);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .celebration {
+            display: none;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .celebration-content {
+             background: rgba(255, 255, 255, 0.95);
+             color: #333;
+        }
+
+        .start-content h1, .celebration h2 {
+            font-size: clamp(2.5em, 8vw, 4em);
+            margin-bottom: 20px;
+        }
+        
+        .celebration h2 { color: #ff6b6b; }
+
+        .start-content p, .celebration p {
+            font-size: clamp(1em, 4vw, 1.5em);
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="start-screen" id="startScreen">
+            <div class="start-content">
+                <h1>🎮 DIVERTOONS 🎮</h1>
+                <p>¡Arrastra las frutas a las cajas del mismo color!</p>
+                <p>📱 Asegúrate de permitir el acceso a la cámara</p>
+                <p>✋ Junta tu pulgar e índice para agarrar</p>
+                <button class="btn" id="startButton">¡EMPEZAR A JUGAR!</button>
+            </div>
+        </div>
+
+        <div class="header">
+            <div class="title">DIVERTOONS</div>
+            <div class="score-timer">
+                <div class="score">Puntos: <span id="score">0</span></div>
+                <div class="timer">Tiempo: <span id="timer">45</span></div>
+            </div>
+        </div>
+
+        <div class="video-container">
+            <video id="video" autoplay muted playsinline></video>
+        </div>
+
+        <div class="game-area">
+            <div class="boxes-container" id="boxesContainer"></div>
+            <div class="fruits-container" id="fruitsContainer"></div>
+        </div>
+
+        <div class="celebration" id="celebration">
+             <div class="celebration-content">
+                <h2 id="celebrationTitle">🎉 ¡INCREÍBLE! 🎉</h2>
+                <p id="finalScore">¡Has conseguido 0 puntos!</p>
+                <button class="btn" id="restartButton">¡JUGAR DE NUEVO!</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- JAVASCRIPT DEL JUEGO (sin cambios, pero optimizado para eventos táctiles) ---
+        
+        // Variables del juego
+        let score = 0;
+        let timeLeft = 45;
+        let gameRunning = false;
+        let gameTimer;
+        let video = document.getElementById('video');
+        let draggedFruit = null;
+        let handPosition = { x: 0, y: 0 };
+        let isHandClosed = false;
+        
+        // Elementos del DOM
+        const startScreen = document.getElementById('startScreen');
+        const celebrationScreen = document.getElementById('celebration');
+        const scoreEl = document.getElementById('score');
+        const timerEl = document.getElementById('timer');
+
+        const fruitColors = [
+            { emoji: '🍎', color: '#ff6b6b', name: 'rojo' },
+            { emoji: '🍌', color: '#ffd93d', name: 'amarillo' },
+            { emoji: '🍇', color: '#a8e6cf', name: 'verde' },
+            { emoji: '🍊', color: '#ffb74d', name: 'naranja' },
+            { emoji: '🍓', color: '#ff8a95', name: 'rosa' }
+        ];
+
+        // --- Lógica del Juego ---
+
+        async function startGame() {
+            try {
+                startScreen.style.display = 'none';
+                setupGame();
+                gameRunning = true;
+                
+                await initCamera();
+                startHandDetection();
+                startTimer();
+                
+            } catch (error) {
+                console.error('Error al inicializar:', error);
+                alert('No se pudo acceder a la cámara. Revisa los permisos y recarga.');
+            }
+        }
+
+        async function initCamera() {
+            const stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { facingMode: 'user' } 
+            });
+            video.srcObject = stream;
+            return new Promise((resolve) => {
+                video.onloadedmetadata = () => resolve(video);
+            });
+        }
+
+        function startHandDetection() {
+            if (!document.getElementById('handIndicator')) {
+                const indicator = document.createElement('div');
+                indicator.className = 'hand-indicator';
+                indicator.id = 'handIndicator';
+                document.body.appendChild(indicator);
+            }
+            document.getElementById('handIndicator').style.display = 'block';
+
+            // Unificar eventos de mouse y touch
+            document.addEventListener('mousemove', handleMove);
+            document.addEventListener('touchmove', handleMove, { passive: false });
+
+            document.addEventListener('mousedown', handlePress);
+            document.addEventListener('touchstart', handlePress, { passive: false });
+
+            document.addEventListener('mouseup', handleRelease);
+            document.addEventListener('touchend', handleRelease, { passive: false });
+        }
+
+        // --- Manejadores de eventos unificados ---
+
+        function handleMove(e) {
+            if (!gameRunning) return;
+            e.preventDefault();
+            const touch = e.touches ? e.touches[0] : e;
+            handPosition.x = touch.clientX;
+            handPosition.y = touch.clientY;
+            updateHandIndicator();
+            if(isHandClosed) checkHandInteraction();
+        }
+
+        function handlePress(e) {
+            if (!gameRunning) return;
+            e.preventDefault();
+            isHandClosed = true;
+            updateHandIndicator();
+            checkHandInteraction();
+        }
+
+        function handleRelease(e) {
+            if (!gameRunning) return;
+            e.preventDefault();
+            isHandClosed = false;
+            updateHandIndicator();
+            checkHandInteraction();
+        }
+
+        function updateHandIndicator() {
+            const indicator = document.getElementById('handIndicator');
+            if (indicator) {
+                indicator.style.left = (handPosition.x - 15) + 'px';
+                indicator.style.top = (handPosition.y - 15) + 'px';
+                indicator.classList.toggle('active', isHandClosed);
+            }
+        }
+
+        function checkHandInteraction() {
+            const fruits = document.querySelectorAll('.fruit');
+            const boxes = document.querySelectorAll('.color-box');
+
+            if (isHandClosed && !draggedFruit) {
+                for (const fruit of fruits) {
+                    if (fruit.style.display === 'none') continue;
+                    const rect = fruit.getBoundingClientRect();
+                    const isOver = handPosition.x >= rect.left && handPosition.x <= rect.right &&
+                                   handPosition.y >= rect.top && handPosition.y <= rect.bottom;
+                    if (isOver) {
+                        draggedFruit = fruit;
+                        fruit.classList.add('dragging');
+                        playSound('pickup');
+                        break;
+                    }
+                }
+            }
+            
+            if (draggedFruit) {
+                updateFruitPosition(draggedFruit);
+
+                if (!isHandClosed) {
+                    let droppedOnBox = false;
+                    for (const box of boxes) {
+                        const boxRect = box.getBoundingClientRect();
+                        const isOverBox = handPosition.x >= boxRect.left && handPosition.x <= boxRect.right &&
+                                          handPosition.y >= boxRect.top && handPosition.y <= boxRect.bottom;
+                        if (isOverBox) {
+                            checkMatch(draggedFruit, box);
+                            droppedOnBox = true;
+                            break;
+                        }
+                    }
+
+                    if (!droppedOnBox) resetFruitPosition(draggedFruit);
+                    
+                    draggedFruit.classList.remove('dragging');
+                    draggedFruit = null;
+                }
+            }
+        }
+        
+        // Resto de funciones (setup, create, checkMatch, etc.) sin cambios importantes
+        
+        function updateFruitPosition(fruit) {
+            fruit.style.position = 'fixed';
+            fruit.style.left = (handPosition.x - fruit.offsetWidth / 2) + 'px';
+            fruit.style.top = (handPosition.y - fruit.offsetHeight / 2) + 'px';
+            fruit.style.zIndex = '150';
+        }
+
+        function resetFruitPosition(fruit) {
+            fruit.style.position = '';
+            fruit.style.left = '';
+            fruit.style.top = '';
+            fruit.style.zIndex = '';
+        }
+
+        function setupGame() {
+            createBoxes();
+            createFruits();
+            score = 0;
+            timeLeft = 45;
+            updateScore();
+            updateTimer();
+        }
+
+        function createBoxes() {
+            const container = document.getElementById('boxesContainer');
+            container.innerHTML = '';
+            fruitColors.forEach(item => {
+                const box = document.createElement('div');
+                box.className = 'color-box';
+                box.style.backgroundColor = item.color;
+                box.dataset.color = item.name;
+                container.appendChild(box);
+            });
+        }
+
+        function createFruits() {
+            const container = document.getElementById('fruitsContainer');
+            container.innerHTML = '';
+            const shuffled = [...fruitColors].sort(() => Math.random() - 0.5);
+            shuffled.forEach(item => {
+                const fruit = document.createElement('div');
+                fruit.className = 'fruit';
+                fruit.style.backgroundColor = item.color;
+                fruit.textContent = item.emoji;
+                fruit.dataset.color = item.name;
+                container.appendChild(fruit);
+            });
+        }
+
+        function checkMatch(fruit, box) {
+            if (fruit.dataset.color === box.dataset.color) {
+                score += 100;
+                playSound('success');
+                fruit.style.display = 'none';
+                if (document.querySelectorAll('.fruit:not([style*="display: none"])').length === 0) {
+                    endGame(true);
+                }
+            } else {
+                score = Math.max(0, score - 20);
+                playSound('error');
+                resetFruitPosition(fruit);
+            }
+            updateScore();
+        }
+        
+        function playSound(type) {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                switch (type) {
+                    case 'success':
+                        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
+                        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.1);
+                        break;
+                    case 'error': oscillator.frequency.setValueAtTime(200, audioContext.currentTime); break;
+                    case 'pickup':
+                        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                        oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+                        break;
+                }
+                oscillator.type = 'sine';
+                if (type !== 'pickup') gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+            } catch (error) { console.log('Audio no disponible'); }
+        }
+
+        function startTimer() {
+            gameTimer = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft <= 0) {
+                    endGame(false);
+                }
+            }, 1000);
+        }
+
+        function updateScore() { scoreEl.textContent = score; }
+        function updateTimer() { timerEl.textContent = timeLeft; }
+
+        function endGame(completed) {
+            gameRunning = false;
+            clearInterval(gameTimer);
+            const finalScoreEl = document.getElementById('finalScore');
+            const celebrationTitle = document.getElementById('celebrationTitle');
+            
+            if (completed) {
+                score += timeLeft * 10;
+                celebrationTitle.textContent = '🎉 ¡NIVEL COMPLETADO! 🎉';
+                finalScoreEl.textContent = `¡Increíble! Has conseguido ${score} puntos`;
+            } else {
+                celebrationTitle.textContent = '⏰ ¡TIEMPO AGOTADO! ⏰';
+                finalScoreEl.textContent = `¡Buen intento! Has conseguido ${score} puntos`;
+            }
+            updateScore();
+            celebrationScreen.style.display = 'flex';
+            playSound('success');
+        }
+
+        function restartGame() {
+            celebrationScreen.style.display = 'none';
+            draggedFruit = null;
+            setupGame();
+            startTimer();
+            gameRunning = true;
+        }
+
+        // --- Conectar Botones ---
+        document.getElementById('startButton').addEventListener('click', startGame);
+        document.getElementById('restartButton').addEventListener('click', restartGame);
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+/* ═══ Mapa del tesoro ═══ */
+.mapa-marco {
+  border: var(--borde-grueso);
+  border-radius: var(--radio);
+  background: var(--pergamino-osc);
+  overflow: hidden;
+  position: relative;
+  touch-action: none; /* los gestos los maneja map-controller */
+  margin-top: var(--esp-2);
+}
+.mapa-marco svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform-origin: 0 0;
+}
+
+.mapa-marco__ayuda {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255,255,255,0.9);
+  border: 2px solid var(--texto);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: var(--texto-xs);
+  font-weight: 700;
+  pointer-events: none;
+}
+
+/* ─── Estados de las áreas (clases puestas por JS en cada <g.area>) ───
+   bloqueada  → niebla rayada + candado
+   disponible → visible, sin marca
+   actual     → visible + borde animado + estrella
+   completada → visible + palomita
+   tesoro     → X roja visible                                            */
+
+.area { cursor: pointer; }
+.area:focus-visible .suelo { outline: 5px dashed var(--azul-intenso); outline-offset: 3px; }
+
+.area .niebla,
+.area .candado { transition: opacity 0.7s ease; }
+
+.area.disponible .niebla,
+.area.disponible .candado,
+.area.actual .niebla,
+.area.actual .candado,
+.area.completada .niebla,
+.area.completada .candado {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Zona de la pista actual: borde punteado que "camina" */
+.area.actual .suelo {
+  stroke: var(--rojo-pirata);
+  stroke-width: 7;
+  stroke-dasharray: 16 10;
+  animation: hormigas 1.6s linear infinite;
+}
+@keyframes hormigas { to { stroke-dashoffset: -52; } }
+
+/* Revelado de zona: pequeño brinco del grupo */
+.area.recien-revelada { animation: brinco 0.7s ease; transform-box: fill-box; transform-origin: center; }
+
+/* Etiquetas apagables desde configuración */
+.mapa-sin-etiquetas .etiqueta { display: none; }
+
+.area.completada .suelo { opacity: 0.92; }
+
+/* La ruta punteada del tesoro */
+#ruta-tesoro { transition: opacity 0.5s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .area.actual .suelo { animation: none; }
+}

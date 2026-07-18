@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurador de pistas · Buscando el Tesoro</title>
+  <link rel="icon" href="assets/img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <style>
+    body { background: #f2f2f2; padding: 20px; }
+    .panel { max-width: 900px; margin-inline: auto; }
+    .nota {
+      background: #FFF6D6;
+      border: 2px solid var(--amarillo);
+      border-radius: var(--radio);
+      padding: 14px 18px;
+      margin: 14px 0;
+    }
+    .pista-editor {
+      background: var(--blanco);
+      border: var(--borde-grueso);
+      border-radius: var(--radio);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    .pista-editor__cabecera { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .pista-editor__cabecera h3 { margin: 0; flex: 1; }
+    .fila { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+    .fila--una { grid-template-columns: 1fr; }
+    .campo--peq { min-height: 40px; padding: 6px 12px; }
+    textarea.campo { min-height: 64px; resize: vertical; }
+    .errores { color: var(--error); font-weight: 700; white-space: pre-line; }
+    .controles { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+    label { font-size: 0.85rem; }
+    @media (max-width: 640px) { .fila { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h1>🛠️ Configurador de la aventura</h1>
+
+    <div class="nota">
+      <strong>Importante:</strong> esta página es estática, así que <strong>no puede guardar cambios
+      directamente en el servidor</strong>. Aquí editas las pistas y descargas un nuevo
+      <code>aventura-001.json</code>, que luego debes subir tú a la carpeta <code>data/</code> del sitio
+      (reemplazando el anterior). Si cambias códigos o pistas, vuelve a imprimir las tarjetas con el
+      <a href="generador-qr.html">generador de QR</a>.
+    </div>
+
+    <div class="controles">
+      <button class="btn btn--primario" id="btn-cargar-actual" type="button">📂 Cargar aventura actual</button>
+      <label class="btn" style="cursor:pointer;">
+        ⬆️ Subir un archivo JSON
+        <input type="file" id="archivo-json" accept=".json,application/json" class="visually-hidden">
+      </label>
+      <button class="btn btn--secundario" id="btn-agregar" type="button" disabled>➕ Añadir pista</button>
+      <button class="btn btn--aventura" id="btn-descargar" type="button" disabled>⬇️ Descargar JSON</button>
+    </div>
+
+    <p class="errores" id="errores" aria-live="polite"></p>
+    <div id="editor"></div>
+  </div>
+
+  <script>
+    let config = null;
+    const $ = id => document.getElementById(id);
+
+    /* ─── Carga ─── */
+    $('btn-cargar-actual').addEventListener('click', async () => {
+      try {
+        const resp = await fetch('data/aventura-001.json');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        config = await resp.json();
+        pintar();
+      } catch (e) {
+        $('errores').textContent = 'No se pudo cargar data/aventura-001.json. ' +
+          'Abre esta página desde un servidor (no con file://).';
+      }
+    });
+
+    $('archivo-json').addEventListener('change', e => {
+      const archivo = e.target.files[0];
+      if (!archivo) return;
+      const lector = new FileReader();
+      lector.onload = () => {
+        try {
+          config = JSON.parse(lector.result);
+          pintar();
+        } catch (err) {
+          $('errores').textContent = 'El archivo no es un JSON válido: ' + err.message;
+        }
+      };
+      lector.readAsText(archivo);
+    });
+
+    /* ─── Editor ─── */
+    function pintar() {
+      $('errores').textContent = '';
+      $('btn-agregar').disabled = false;
+      $('btn-descargar').disabled = false;
+      const cont = $('editor');
+      cont.innerHTML = '';
+      const areas = Object.keys(config.areas || {});
+
+      (config.clues || []).forEach((pista, i) => {
+        const caja = document.createElement('article');
+        caja.className = 'pista-editor';
+        caja.innerHTML = `
+          <div class="pista-editor__cabecera">
+            <h3>Pista ${i + 1}</h3>
+            <button class="btn campo--peq" data-mover="-1" ${i === 0 ? 'disabled' : ''}>⬆️</button>
+            <button class="btn campo--peq" data-mover="1" ${i === config.clues.length - 1 ? 'disabled' : ''}>⬇️</button>
+            <button class="btn btn--peligro campo--peq" data-borrar>🗑️ Quitar</button>
+          </div>
+          <div class="fila">
+            <div><label>Título</label><input class="campo campo--peq" data-campo="title" value=""></div>
+            <div><label>Zona del mapa</label>
+              <select class="campo campo--peq" data-campo="areaId">
+                ${areas.map(a => `<option value="${a}">${config.areas[a]} (${a})</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div class="fila fila--una">
+            <div><label>Acertijo que leerán los niños</label><textarea class="campo" data-campo="riddle"></textarea></div>
+          </div>
+          <div class="fila">
+            <div><label>Código del QR (token)</label><input class="campo campo--peq" data-campo="qrToken"></div>
+            <div><label>Código manual de respaldo</label><input class="campo campo--peq" data-campo="manualCode"></div>
+          </div>
+          <div class="fila">
+            <div><label>Letra que gana (para el cofre)</label><input class="campo campo--peq" maxlength="1" data-campo="letra"></div>
+            <div><label>Zona que desbloquea al completarse</label>
+              <select class="campo campo--peq" data-campo="unlocksArea">
+                <option value="">— Ninguna —</option>
+                ${areas.map(a => `<option value="${a}">${config.areas[a]} (${a})</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div class="fila fila--una">
+            <div><label>Ayudas (una por línea, máximo 3)</label><textarea class="campo" data-campo="hints"></textarea></div>
+          </div>`;
+
+        // Rellenar valores actuales de forma segura
+        caja.querySelector('[data-campo="title"]').value = pista.title || '';
+        caja.querySelector('[data-campo="areaId"]').value = pista.areaId || areas[0] || '';
+        caja.querySelector('[data-campo="riddle"]').value = pista.riddle || '';
+        caja.querySelector('[data-campo="qrToken"]').value = pista.qrToken || '';
+        caja.querySelector('[data-campo="manualCode"]').value = pista.manualCode || '';
+        caja.querySelector('[data-campo="letra"]').value = pista.letra || '';
+        caja.querySelector('[data-campo="unlocksArea"]').value = pista.unlocksArea || '';
+        caja.querySelector('[data-campo="hints"]').value = (pista.hints || []).join('\n');
+
+        // Guardar cambios al escribir
+        caja.querySelectorAll('[data-campo]').forEach(campo => {
+          campo.addEventListener('input', () => {
+            const nombre = campo.dataset.campo;
+            if (nombre === 'hints') {
+              pista.hints = campo.value.split('\n').map(s => s.trim()).filter(Boolean).slice(0, 3);
+            } else if (nombre === 'unlocksArea') {
+              pista.unlocksArea = campo.value || null;
+            } else {
+              pista[nombre] = campo.value;
+            }
+          });
+        });
+
+        caja.querySelector('[data-borrar]').addEventListener('click', () => {
+          if (confirm('¿Quitar esta pista?')) {
+            config.clues.splice(i, 1);
+            renumerar();
+            pintar();
+          }
+        });
+        caja.querySelectorAll('[data-mover]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const destino = i + parseInt(btn.dataset.mover, 10);
+            const [movida] = config.clues.splice(i, 1);
+            config.clues.splice(destino, 0, movida);
+            renumerar();
+            pintar();
+          });
+        });
+
+        cont.appendChild(caja);
+      });
+    }
+
+    function renumerar() {
+      config.clues.forEach((c, i) => {
+        c.order = i + 1;
+        if (!c.id) c.id = 'pista-' + (i + 1);
+      });
+    }
+
+    $('btn-agregar').addEventListener('click', () => {
+      const n = config.clues.length + 1;
+      config.clues.push({
+        id: 'pista-' + n + '-' + Date.now(),
+        order: n,
+        character: (config.personajes && config.personajes[0]?.id) || 'xan',
+        areaId: Object.keys(config.areas || {})[0] || '',
+        title: 'Nueva pista',
+        riddle: '',
+        qrToken: 'DT-001-P' + n + '-' + Math.random().toString(36).slice(2, 6).toUpperCase(),
+        manualCode: 'NUE-' + Math.floor(100 + Math.random() * 900),
+        letra: '',
+        unlocksArea: null,
+        successMessage: '¡Pista encontrada!',
+        hints: [],
+        temperatura: '',
+        revelado: 'normal',
+        challenge: null
+      });
+      pintar();
+    });
+
+    /* ─── Validación y descarga ─── */
+    function validar() {
+      const errores = [];
+      const tokens = new Set(), manuales = new Set();
+      (config.clues || []).forEach((c, i) => {
+        const n = 'Pista ' + (i + 1) + ': ';
+        if (!c.riddle) errores.push(n + 'falta el acertijo.');
+        if (!c.qrToken) errores.push(n + 'falta el código QR.');
+        if (!c.manualCode) errores.push(n + 'falta el código manual.');
+        if (tokens.has(c.qrToken)) errores.push(n + 'el código QR está repetido.');
+        if (manuales.has(c.manualCode)) errores.push(n + 'el código manual está repetido.');
+        tokens.add(c.qrToken); manuales.add(c.manualCode);
+      });
+      const palabra = config.opciones?.palabraFinal;
+      if (palabra) {
+        const letras = (config.clues || []).map(c => c.letra || '').join('');
+        if (letras.length !== palabra.length) {
+          errores.push('La palabra final "' + palabra + '" tiene ' + palabra.length +
+            ' letras, pero las pistas reparten ' + letras.length +
+            '. Ajusta las letras o cambia opciones.palabraFinal.');
+        }
+      }
+      return errores;
+    }
+
+    $('btn-descargar').addEventListener('click', () => {
+      renumerar();
+      const errores = validar();
+      $('errores').textContent = errores.join('\n');
+      if (errores.length && !confirm('Hay avisos de validación. ¿Descargar de todas formas?')) return;
+
+      // Subir la versión para que el juego detecte el cambio
+      config.version = (config.version || 1) + 1;
+      const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'aventura-001.json';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      $('errores').textContent = (errores.length ? errores.join('\n') + '\n' : '') +
+        '✅ Descargado. Súbelo a la carpeta data/ del sitio. La versión subió a ' + config.version +
+        ', así que los progresos guardados pedirán reiniciar (esto es correcto tras cambiar pistas).';
+    });
+  </script>
+</body>
+</html>

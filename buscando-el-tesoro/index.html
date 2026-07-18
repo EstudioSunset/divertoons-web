@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Buscando el Tesoro · Divertoons</title>
+  <meta name="description" content="Una búsqueda del tesoro interactiva con los personajes de Divertoons. ¡Sigue el mapa, resuelve acertijos y escanea las pistas!">
+  <meta name="theme-color" content="#67D5FF">
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/game.css">
+</head>
+<body class="cielo">
+
+  <main class="pantalla portada activa" id="pantalla-portada">
+    <img class="portada__logo" src="assets/img/logo.png"
+         alt="Buscando el Tesoro con Divertoons: tres personajes alegres con lupa, catalejo y mapa junto a un cofre dorado">
+
+    <p>¡El Cofre Dorado desapareció! ¿Nos ayudas a encontrarlo?</p>
+
+    <p id="aviso-version" class="oculto">
+      ⚠️ La aventura se actualizó y el progreso guardado ya no es compatible.
+      Reinicia la aventura para volver a jugar.
+    </p>
+
+    <div class="portada__acciones">
+      <a class="btn btn--aventura" href="juego.html">🗺️ Comenzar aventura</a>
+      <a class="btn btn--primario oculto" id="btn-continuar" href="juego.html?continuar=1">▶️ Continuar aventura</a>
+    </div>
+
+    <div class="portada__extras">
+      <button class="btn btn--icono" id="btn-sonido" type="button" aria-label="Silenciar sonidos">🔊</button>
+      <button class="btn btn--peligro oculto" id="btn-reiniciar" type="button">Reiniciar aventura</button>
+    </div>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

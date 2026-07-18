@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de tarjetas QR · Buscando el Tesoro</title>
+  <link rel="icon" href="assets/img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <!-- Librería ligera de generación QR, sin backend -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <style>
+    body { background: #f2f2f2; padding: 20px; }
+    .panel { max-width: 860px; margin-inline: auto; }
+    .tarjetas { display: grid; gap: 20px; margin-top: 20px; }
+
+    .tarjeta {
+      background: var(--blanco);
+      border: 3px dashed var(--madera);
+      border-radius: var(--radio);
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 16px;
+      align-items: center;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .tarjeta__qr { width: 150px; height: 150px; }
+    .tarjeta__qr img, .tarjeta__qr canvas { width: 150px !important; height: 150px !important; }
+    .tarjeta__numero {
+      font-family: var(--fuente-titulos);
+      font-weight: 800;
+      color: var(--azul-intenso);
+    }
+    .tarjeta__codigo {
+      font-family: var(--fuente-titulos);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      background: var(--pergamino);
+      border: 2px solid var(--madera);
+      border-radius: 10px;
+      padding: 4px 12px;
+      display: inline-block;
+    }
+    .tarjeta__pie { font-size: 0.85rem; color: #555; margin-top: 6px; }
+
+    /* Sección solo para el adulto (se recorta o dobla hacia atrás) */
+    .solo-adulto {
+      grid-column: 1 / -1;
+      border-top: 2px dotted #bbb;
+      padding-top: 10px;
+      font-size: 0.85rem;
+      color: #444;
+    }
+    .solo-adulto strong { color: var(--rojo-pirata); }
+
+    .controles { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .no-imprimir { display: none !important; }
+      .tarjeta { border-color: #888; }
+      .solo-adulto.ocultar-impresion { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <div class="no-imprimir">
+      <h1>🖨️ Generador de tarjetas QR</h1>
+      <p>Esta herramienta lee <code>data/aventura-001.json</code> y crea una tarjeta imprimible por cada pista.
+         Recorta cada tarjeta y escóndela en el lugar indicado.</p>
+      <div class="controles">
+        <button class="btn btn--primario" id="btn-imprimir" type="button">🖨️ Imprimir tarjetas</button>
+        <label style="display:flex; align-items:center; gap:8px; font-weight:700;">
+          <input type="checkbox" id="chk-solucion" checked>
+          Incluir la sección "solo para el adulto" al imprimir
+        </label>
+      </div>
+      <p id="estado" style="margin-top:10px; font-weight:700;"></p>
+    </div>
+
+    <div class="tarjetas" id="tarjetas"></div>
+  </div>
+
+  <script>
+    const RUTA_CONFIG = 'data/aventura-001.json';
+
+    async function iniciar() {
+      const estado = document.getElementById('estado');
+      let config;
+      try {
+        const resp = await fetch(RUTA_CONFIG);
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        config = await resp.json();
+      } catch (e) {
+        estado.textContent = '⚠️ No se pudo leer ' + RUTA_CONFIG +
+          '. Abre esta página desde un servidor (no con file://) y revisa que el JSON sea válido.';
+        return;
+      }
+      if (typeof QRCode === 'undefined') {
+        estado.textContent = '⚠️ La librería de códigos QR no cargó. Revisa tu conexión a internet.';
+        return;
+      }
+
+      const cont = document.getElementById('tarjetas');
+      const clues = [...(config.clues || [])].sort((a, b) => a.order - b.order);
+
+      clues.forEach(pista => {
+        const tarjeta = document.createElement('article');
+        tarjeta.className = 'tarjeta';
+        tarjeta.innerHTML = `
+          <div class="tarjeta__qr" id="qr-${pista.id}"></div>
+          <div>
+            <div class="tarjeta__numero">Pista ${pista.order} de ${clues.length} · ${config.title || ''}</div>
+            <h2 style="margin:4px 0 8px;">${pista.title || ''}</h2>
+            <p style="margin:0 0 8px;">Si el escáner no funciona, escribe este código en el juego:</p>
+            <span class="tarjeta__codigo">${pista.manualCode}</span>
+            <p class="tarjeta__pie">🏴‍☠️ Buscando el Tesoro · Divertoons</p>
+          </div>
+          <div class="solo-adulto" id="adulto-${pista.id}">
+            ✂️ <strong>Solo para el adulto (recorta o dobla esta parte):</strong>
+            Esconde esta tarjeta en: <strong>${(config.areas && config.areas[pista.areaId]) || pista.areaId}</strong>.
+            Acertijo que verán los niños: “${pista.riddle}”.
+            ${pista.hints && pista.hints.length ? 'Última ayuda: “' + pista.hints[pista.hints.length - 1] + '”.' : ''}
+          </div>`;
+        cont.appendChild(tarjeta);
+        new QRCode(document.getElementById('qr-' + pista.id), {
+          text: pista.qrToken,
+          width: 150, height: 150,
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      });
+
+      estado.textContent = '✅ ' + clues.length + ' tarjetas generadas. Los QR solo contienen el token del juego (sin direcciones ni datos personales).';
+
+      document.getElementById('btn-imprimir').addEventListener('click', () => {
+        const incluir = document.getElementById('chk-solucion').checked;
+        document.querySelectorAll('.solo-adulto').forEach(el =>
+          el.classList.toggle('ocultar-impresion', !incluir));
+        window.print();
+      });
+    }
+
+    // Esperar a que cargue la librería QR (defer)
+    window.addEventListener('DOMContentLoaded', () => setTimeout(iniciar, 50));
+  </script>
+</body>
+</html>

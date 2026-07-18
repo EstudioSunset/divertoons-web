@@ -1,0 +1,191 @@
+{
+  "gameId": "tesoro-divertoons-001",
+  "title": "El Cofre Dorado",
+  "version": 1,
+  "minimumAge": 5,
+  "opciones": {
+    "mostrarEtiquetas": true,
+    "sistemaEstrellas": true,
+    "vibracion": true,
+    "palabraFinal": "COFRE"
+  },
+  "personajes": [
+    {
+      "id": "xan",
+      "nombre": "Xan",
+      "cara": "🔵",
+      "descripcion": "El explorador con lupa"
+    },
+    {
+      "id": "soli",
+      "nombre": "Soli",
+      "cara": "🌞",
+      "descripcion": "El sol aventurero"
+    },
+    {
+      "id": "piri",
+      "nombre": "Piri",
+      "cara": "🏴‍☠️",
+      "descripcion": "El pirata del catalejo"
+    }
+  ],
+  "villano": {
+    "nombre": "El Loro Travieso",
+    "cara": "🦜",
+    "burlas": [
+      "¡Jaja! ¡Ese código no es! — El Loro Travieso",
+      "¡Cuac! ¡Frío, frío, muy frío! — El Loro Travieso",
+      "¿Eso es todo lo que tienes, pequeño pirata? ¡Cuac!",
+      "¡El Loro se está riendo! ¡Intenta otra vez!"
+    ]
+  },
+  "areas": {
+    "dormitorio-principal": "Dormitorio grande",
+    "bano-principal": "Baño 1",
+    "dormitorio-2": "Cuarto de juegos",
+    "sala": "Sala",
+    "cocina": "Cocina",
+    "pasillo": "Pasillo",
+    "entrada": "Entrada",
+    "patio": "Patio",
+    "bano-2": "Baño 2",
+    "dormitorio-3": "Dormitorio pequeño"
+  },
+  "areaInicial": "entrada",
+  "clues": [
+    {
+      "id": "pista-1",
+      "order": 1,
+      "character": "xan",
+      "areaId": "sala",
+      "title": "La primera señal",
+      "riddle": "Tengo brazos pero no manos, tengo espalda pero no huesos, y cuando la familia ve la tele… ¡todos se sientan encima de mí! Busca entre mis cojines.",
+      "qrToken": "DT-001-P1-X7K9",
+      "manualCode": "XAN-482",
+      "letra": "C",
+      "unlocksArea": "cocina",
+      "successMessage": "¡Encontraste la primera parte del mapa!",
+      "hints": [
+        "No es una persona, aunque tiene brazos y espalda.",
+        "Está en la sala y es muy cómodo.",
+        "Levanta los cojines del sofá."
+      ],
+      "temperatura": "Si estás cerca del televisor… ¡estás que quemas! 🔥",
+      "revelado": "normal",
+      "challenge": null
+    },
+    {
+      "id": "pista-2",
+      "order": 2,
+      "character": "soli",
+      "areaId": "cocina",
+      "title": "Olores deliciosos",
+      "riddle": "Tengo puerta pero no soy casa, guardo comida pero nunca me da hambre. Por dentro soy puro invierno… ¡y vivo en la cocina!",
+      "qrToken": "DT-001-P2-M3T8",
+      "manualCode": "SOL-915",
+      "letra": "O",
+      "unlocksArea": "dormitorio-2",
+      "successMessage": "¡Qué buen olfato de explorador!",
+      "hints": [
+        "Su puerta se abre muchas veces al día.",
+        "Adentro hace mucho frío.",
+        "Abre el refrigerador y mira bien."
+      ],
+      "temperatura": "Cerca del refrigerador el aire está frío… ¡pero tú estás caliente! 🔥",
+      "revelado": "linterna",
+      "challenge": {
+        "tipo": "opcion-multiple",
+        "pregunta": "Antes de buscar: ¿qué usamos para mantener la comida fría?",
+        "opciones": [
+          "El horno 🔥",
+          "El refrigerador ❄️",
+          "La tostadora 🍞"
+        ],
+        "correcta": 1,
+        "mensajeExito": "¡Exacto! ¡El refrigerador! Ahora ve a buscar la pista."
+      }
+    },
+    {
+      "id": "pista-3",
+      "order": 3,
+      "character": "piri",
+      "areaId": "dormitorio-2",
+      "title": "El escondite de los juguetes",
+      "riddle": "No soy un cofre pirata, pero guardo tesoros: peluches, carritos y cosas que ruedan. Cuando el juego termina, todo vuelve a mi panza.",
+      "qrToken": "DT-001-P3-R6W2",
+      "manualCode": "PIR-347",
+      "letra": "F",
+      "unlocksArea": "dormitorio-principal",
+      "successMessage": "¡Los juguetes te ayudaron a encontrarla!",
+      "hints": [
+        "Guarda cosas con las que te diviertes.",
+        "Está en el cuarto de juegos.",
+        "Busca dentro de la caja de los juguetes."
+      ],
+      "temperatura": "Si un peluche te está mirando… ¡caliente, caliente! 🔥",
+      "revelado": "normal",
+      "challenge": {
+        "tipo": "fisico",
+        "mision": "¡Misión pirata! Salta 10 veces como un pirata en su barco antes de buscar la pista. 🏴‍☠️",
+        "boton": "¡Misión completada!"
+      }
+    },
+    {
+      "id": "pista-4",
+      "order": 4,
+      "character": "xan",
+      "areaId": "dormitorio-principal",
+      "title": "Sueños gigantes",
+      "riddle": "Tengo cuatro patas pero no camino, de noche trabajo sosteniendo tus sueños. Agáchate sin miedo… la pista duerme debajo de mi barriga.",
+      "qrToken": "DT-001-P4-K9J4",
+      "manualCode": "XAN-620",
+      "letra": "R",
+      "unlocksArea": "patio",
+      "successMessage": "¡Shhh! ¡No despiertes a los sueños!",
+      "hints": [
+        "Es un mueble donde se duerme.",
+        "Es la cama más grande de la casa.",
+        "Mira debajo de la cama grande."
+      ],
+      "temperatura": "Si tus rodillas tocan el suelo junto a la cama… ¡te quemas! 🔥",
+      "revelado": "normal",
+      "challenge": null
+    },
+    {
+      "id": "pista-5",
+      "order": 5,
+      "character": "piri",
+      "areaId": "patio",
+      "title": "El escondite final",
+      "riddle": "Soy la casita de una planta: tengo tierra pero no soy jardín, y la abrazo para que crezca feliz. En el patio me encuentras… ¡soy la más grandota de todas!",
+      "qrToken": "DT-001-P5-Q2Z7",
+      "manualCode": "PIR-888",
+      "letra": "E",
+      "unlocksArea": null,
+      "successMessage": "¡Tienes todas las letras del cofre!",
+      "hints": [
+        "Ya no está dentro de la casa.",
+        "Las plantas viven dentro de ella.",
+        "Revisa la maceta más grande del patio."
+      ],
+      "temperatura": "Si hueles las flores… ¡estás ardiendo! 🔥",
+      "revelado": "normal",
+      "challenge": {
+        "tipo": "opcion-multiple",
+        "pregunta": "Última prueba del Loro: ¿de qué color es el cofre del tesoro de Divertoons?",
+        "opciones": [
+          "Verde 🟢",
+          "Morado 🟣",
+          "Dorado 🟡"
+        ],
+        "correcta": 2,
+        "mensajeExito": "¡Dorado como el sol! ¡Ve por la última pista!"
+      }
+    }
+  ],
+  "treasure": {
+    "areaId": "patio",
+    "message": "¡El Cofre Dorado está enterrado en el patio! Escribe la palabra secreta con las letras que ganaste.",
+    "finalCode": "TESORO-777"
+  }
+}

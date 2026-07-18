@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tienda Divertoons</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+  /* ---------- variables y reset ---------- */
+  :root{
+    --c-primary:#0077be;
+    --c-light:#7de2ff;
+    --c-highlight:#ffdc5b;
+    --c-hover:#ff914d;
+    --c-card:#fff;
+    --radius:16px;
+    --shadow:0 4px 10px rgba(0,0,0,.15);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Quicksand',sans-serif;
+    background:var(--c-light);
+    color:var(--c-primary);
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky;top:0;z-index:1000;
+    background:linear-gradient(90deg,var(--c-highlight),var(--c-hover));
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.8rem 1rem;font-family:'Fredoka One',cursive;box-shadow:var(--shadow);
+  }
+  .brand{font-size:1.6rem;}
+  .burger{font-size:1.8rem;background:none;border:none;color:var(--c-primary);cursor:pointer}
+  .links{display:none;flex-direction:column;gap:.6rem;margin-top:.6rem}
+  .links a{background:#005f9e;color:#fff;font-weight:600;padding:.55rem 1rem;border-radius:50px;box-shadow:0 2px 5px rgba(0,0,0,.2)}
+  .links.show{display:flex}
+  @media(min-width:600px){.links{display:flex;flex-direction:row;margin:0}.burger{display:none}}
+
+  /* ---------- hero ---------- */
+  header{
+    padding:2rem 1rem;text-align:center;
+    background:linear-gradient(135deg,var(--c-highlight),var(--c-hover));
+    color:var(--c-primary);text-shadow:2px 2px 4px rgba(0,0,0,.25);
+  }
+  header h1{font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,5vw,2.7rem)}
+
+  /* ---------- search + categories ---------- */
+  .toolbar{padding:1rem;display:flex;flex-direction:column;gap:.8rem;max-width:1000px;margin:auto}
+  .toolbar input{
+    padding:.65rem 1rem;border-radius:50px;border:1px solid #ccc;font-size:1rem
+  }
+  .categories{display:flex;gap:.6rem;overflow-x:auto}
+  .categories button{
+    flex:0 0 auto;background:#005f9e;color:#fff;border:none;padding:.55rem 1rem;
+    border-radius:50px;font-weight:600;cursor:pointer;transition:.2s
+  }
+  .categories button.active,
+  .categories button:focus-visible{background:var(--c-hover);outline:none}
+
+  /* ---------- product grid ---------- */
+  .grid{
+    display:grid;gap:1rem;padding:1.5rem;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    max-width:1000px;margin:auto
+  }
+  .card{
+    background:var(--c-card);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:1rem;text-align:center;display:flex;flex-direction:column;gap:.6rem
+  }
+  .card h3{font-family:'Fredoka One',cursive;font-size:1.1rem}
+  .price{font-weight:700}
+  .card button{
+    margin-top:auto;background:var(--c-highlight);border:none;border-radius:50px;
+    padding:.55rem 1rem;font-weight:700;cursor:pointer;transition:.2s
+  }
+  .card button:hover{background:var(--c-hover);color:#fff}
+
+  /* ---------- toast ---------- */
+  #toast{
+    position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);
+    background:var(--c-hover);color:#fff;padding:.8rem 1.2rem;border-radius:50px;
+    font-weight:700;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.4s
+  }
+  #toast.show{opacity:1}
+
+  /* ---------- scroll padding ---------- */
+  section[id]{scroll-margin-top:90px}
+  </style>
+</head>
+<body>
+
+  <!-- nav -->
+  <nav>
+    <span class="brand">Divertoons</span>
+    <button class="burger" id="burgerBtn">&#9776;</button>
+    <div class="links" id="navLinks">
+      <a href="index.html">Inicio</a>
+      <a href="#tienda">Merch</a>
+      <a href="games.html">Juegos</a>
+    </div>
+  </nav>
+
+  <!-- hero -->
+  <header>
+    <h1>¡Bienvenido a la Tienda Divertoons!</h1>
+  </header>
+
+  <!-- toolbar -->
+  <div class="toolbar">
+    <input id="searchInput" placeholder="Buscar producto…" aria-label="Buscar">
+    <div class="categories" id="catBar">
+      <!-- categorías se renderizan por JS -->
+    </div>
+  </div>
+
+  <!-- productos -->
+  <main id="tienda">
+    <div class="grid" id="productGrid">
+      <!-- productos dummy -->
+      <div class="card" data-cat="ropa">
+        <img src="/assets/Merch/divertoons-playera.jpg" alt="Playera Divertoons">
+        <h3>Playera Azul</h3>
+        <span class="price">$19.99</span>
+        <button>Añadir</button>
+      </div>
+      <div class="card" data-cat="accesorios">
+        <img src="/assets/Merch/divertoons-gorra.jpg" alt="Gorra Divertoons">
+        <h3>Gorra Cool</h3>
+        <span class="price">$14.99</span>
+        <button>Añadir</button>
+      </div>
+      <div class="card" data-cat="hogar">
+        <img src="/assets/Merch/divertoons-taza.jpg" alt="Taza Divertoons">
+        <h3>Taza Aventura</h3>
+        <span class="price">$9.99</span>
+        <button>Añadir</button>
+      </div>
+      <!-- duplica según necesites -->
+    </div>
+  </main>
+
+  <!-- toast -->
+  <div id="toast">Añadido al carrito</div>
+
+  <!-- scripts -->
+  <script>
+  /* nav burger */
+  document.getElementById('burgerBtn').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('show'));
+
+  /* categorías dinámicas */
+  const CATEGORIES=['todo','ropa','accesorios','hogar'];
+  const catBar=document.getElementById('catBar');
+  CATEGORIES.forEach(cat=>{
+    const btn=document.createElement('button');
+    btn.textContent=cat.charAt(0).toUpperCase()+cat.slice(1);
+    btn.dataset.cat=cat;
+    if(cat==='todo')btn.classList.add('active');
+    catBar.appendChild(btn);
+  });
+
+  /* filtrado */
+  const cards=[...document.querySelectorAll('.card')];
+  function filter(cat,term=''){
+    cards.forEach(c=>{
+      const matchCat=(cat==='todo'||c.dataset.cat===cat);
+      const matchTerm=c.textContent.toLowerCase().includes(term.toLowerCase());
+      c.style.display=matchCat&&matchTerm?'':'none';
+    });
+  }
+  catBar.addEventListener('click',e=>{
+    if(e.target.tagName!=='BUTTON')return;
+    document.querySelectorAll('.categories button').forEach(b=>b.classList.remove('active'));
+    e.target.classList.add('active');
+    filter(e.target.dataset.cat,document.getElementById('searchInput').value);
+  });
+  document.getElementById('searchInput').addEventListener('input',e=>{
+    const active=document.querySelector('.categories button.active').dataset.cat;
+    filter(active,e.target.value);
+  });
+
+  /* toast añadir */
+  const toast=document.getElementById('toast');
+  document.getElementById('productGrid').addEventListener('click',e=>{
+    if(e.target.tagName!=='BUTTON')return;
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'),1500);
+  });
+  </script>
+</body>
+</html>

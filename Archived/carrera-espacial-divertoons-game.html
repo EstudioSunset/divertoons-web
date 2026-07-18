@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Salta con Divertoons!</title>
+    <link rel="stylesheet" href="carrera-espacial-divertoons.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>¡Salta con Divertoons!</h1>
+
+        <div class="character-selection">
+            <h2>Elige tu personaje:</h2>
+            <div class="characters">
+                <div class="character" id="sun">☀️</div>
+                <div class="character" id="moon">🌙</div>
+                <div class="character" id="cool-emoji">😎</div>
+            </div>
+        </div>
+
+        <div class="game-area hidden">
+            <div class="score">Puntuación: <span id="score">0</span></div>
+            <div class="timer">Tiempo: <span id="time">0</span></div>
+            <div class="level">Nivel: <span id="level">1</span></div>
+            <div class="platform"></div>
+            <div id="player" class="sun-player">☀️</div>
+            <div id="obstacle"></div>
+        </div>
+
+        <div class="game-over hidden">
+            <h2>¡Game Over!</h2>
+            <p>Tu puntuación final: <span id="final-score"></span></p>
+            <p id="discount-message" class="hidden">¡Felicidades! Aquí tienes un código de descuento: <span id="discount-code">DIVERTODESC</span></p>
+            <button id="restart-button">Jugar de Nuevo</button>
+        </div>
+
+        <p class="instructions">Usa la barra espaciadora para saltar.</p>
+    </div>
+
+    <script src="carrera-espacial-divertoons.js"></script>
+</body>
+</html>

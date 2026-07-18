@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-labelledby="mapTitle" id="mapa-casa">
+  <title id="mapTitle">Mapa del tesoro de la casa</title>
+  <defs>
+    <!-- Textura suave de pergamino -->
+    <radialGradient id="pergamino" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#F8ECCB"/>
+      <stop offset="80%" stop-color="#EFDCA9"/>
+      <stop offset="100%" stop-color="#E3C98B"/>
+    </radialGradient>
+    <filter id="papel" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .04 0" result="na"/>
+      <feComposite in="na" in2="SourceGraphic" operator="over"/>
+    </filter>
+    <!-- Patrón de rayas para zonas bloqueadas (no depende solo del color) -->
+    <pattern id="niebla" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="14" height="14" fill="#C9B489"/>
+      <rect width="7" height="14" fill="#BBA477"/>
+    </pattern>
+  </defs>
+
+  <!-- Fondo pergamino con bordes rasgados -->
+  <path filter="url(#papel)" fill="url(#pergamino)" stroke="#B08D4F" stroke-width="4" stroke-linejoin="round"
+    d="M28 34 Q60 18 120 26 Q220 12 330 24 Q470 10 610 22 Q760 12 880 24 Q950 20 972 40
+       Q986 120 976 200 Q988 300 974 380 Q982 430 950 448 Q820 462 700 452 Q540 466 400 454
+       Q240 468 120 452 Q48 460 26 436 Q14 350 24 260 Q12 150 28 34 Z"/>
+
+  <!-- Decoración: brújula -->
+  <g transform="translate(925,405)" opacity="0.85" aria-hidden="true">
+    <circle r="34" fill="#F6E7BF" stroke="#8B5E3C" stroke-width="3"/>
+    <circle r="26" fill="none" stroke="#8B5E3C" stroke-width="1.5" stroke-dasharray="3 4"/>
+    <path d="M0-22 L6 0 L0 22 L-6 0 Z" fill="#D9534F"/>
+    <path d="M-22 0 L0 6 L22 0 L0-6 Z" fill="#0077BE"/>
+    <circle r="4" fill="#183153"/>
+    <text y="-27" text-anchor="middle" font-size="12" font-weight="bold" fill="#8B5E3C">N</text>
+  </g>
+
+  <!-- ══════════ CASA (distribución calcada del plano real) ══════════ -->
+  <!-- Cada grupo .area tiene: forma coloreada, icono, etiqueta y capa de niebla -->
+  <g id="areas" font-family="'Baloo 2','Nunito',sans-serif">
+
+    <!-- Dormitorio principal (arriba izquierda) -->
+    <g class="area" data-area="dormitorio-principal" tabindex="0" role="button" aria-label="Dormitorio grande">
+      <rect class="suelo" x="40" y="70" width="180" height="130" rx="10" fill="#FFD93B" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="icono" x="130" y="128" text-anchor="middle" font-size="40">🛏️</text>
+      <text class="etiqueta" x="130" y="176" text-anchor="middle" font-size="17" font-weight="700" fill="#183153">Dormitorio grande</text>
+      <rect class="niebla" x="40" y="70" width="180" height="130" rx="10" fill="url(#niebla)" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="candado" x="130" y="148" text-anchor="middle" font-size="34">🔒</text>
+      <text class="estado" x="196" y="98" text-anchor="middle" font-size="26"></text>
+    </g>
+
+    <!-- Baño principal -->
+    <g class="area" data-area="bano-principal" tabindex="0" role="button" aria-label="Baño 1">
+      <rect class="suelo" x="228" y="70" width="100" height="130" rx="10" fill="#7DE2D1" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="icono" x="278" y="128" text-anchor="middle" font-size="34">🛁</text>
+      <text class="etiqueta" x="278" y="176" text-anchor="middle" font-size="16" font-weight="700" fill="#183153">Baño 1</text>
+      <rect class="niebla" x="228" y="70" width="100" height="130" rx="10" fill="url(#niebla)" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="candado" x="278" y="145" text-anchor="middle" font-size="30">🔒</text>
+      <text class="estado" x="308" y="96" text-anchor="middle" font-size="24"></text>
+    </g>
+
+    <!-- Dormitorio 2 / cuarto de juegos (arriba, centro-izquierda) -->
+    <g class="area" data-area="dormitorio-2" tabindex="0" role="button" aria-label="Cuarto de juegos">
+      <rect class="suelo" x="336" y="70" width="150" height="130" rx="10" fill="#FF6FA7" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="icono" x="411" y="128" text-anchor="middle" font-size="36">🧸</text>
+      <text class="etiqueta" x="411" y="176" text-anchor="middle" font-size="16" font-weight="700" fill="#183153">Cuarto de juegos</text>
+      <rect class="niebla" x="336" y="70" width="150" height="130" rx="10" fill="url(#niebla)" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="candado" x="411" y="145" text-anchor="middle" font-size="30">🔒</text>
+      <text class="estado" x="462" y="96" text-anchor="middle" font-size="24"></text>
+    </g>
+
+    <!-- Sala (arriba, centro-derecha) -->
+    <g class="area" data-area="sala" tabindex="0" role="button" aria-label="Sala">
+      <rect class="suelo" x="494" y="70" width="256" height="130" rx="10" fill="#FF914D" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="icono" x="622" y="128" text-anchor="middle" font-size="40">🛋️</text>
+      <text class="etiqueta" x="622" y="176" text-anchor="middle" font-size="17" font-weight="700" fill="#183153">Sala</text>
+      <rect class="niebla" x="494" y="70" width="256" height="130" rx="10" fill="url(#niebla)" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="candado" x="622" y="148" text-anchor="middle" font-size="34">🔒</text>
+      <text class="estado" x="726" y="98" text-anchor="middle" font-size="26"></text>
+    </g>
+
+    <!-- Cocina y comedor (extremo derecho) -->
+    <g class="area" data-area="cocina" tabindex="0" role="button" aria-label="Cocina">
+      <rect class="suelo" x="758" y="70" width="200" height="130" rx="10" fill="#67D5FF" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="icono" x="858" y="128" text-anchor="middle" font-size="40">🍳</text>
+      <text class="etiqueta" x="858" y="176" text-anchor="middle" font-size="17" font-weight="700" fill="#183153">Cocina</text>
+      <rect class="niebla" x="758" y="70" width="200" height="130" rx="10" fill="url(#niebla)" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="candado" x="858" y="148" text-anchor="middle" font-size="34">🔒</text>
+      <text class="estado" x="934" y="98" text-anchor="middle" font-size="26"></text>
+    </g>
+
+    <!-- Pasillo (bajo el ala izquierda) -->
+    <g class="area" data-area="pasillo" tabindex="0" role="button" aria-label="Pasillo">
+      <rect class="suelo" x="40" y="208" width="500" height="52" rx="10" fill="#F6E7BF" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="icono" x="70" y="243" text-anchor="middle" font-size="24">👣</text>
+      <text class="etiqueta" x="290" y="242" text-anchor="middle" font-size="16" font-weight="700" fill="#183153">Pasillo</text>
+      <rect class="niebla" x="40" y="208" width="500" height="52" rx="10" fill="url(#niebla)" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="candado" x="290" y="242" text-anchor="middle" font-size="24">🔒</text>
+      <text class="estado" x="516" y="230" text-anchor="middle" font-size="22"></text>
+    </g>
+
+    <!-- Entrada (junto al pasillo, lado derecho) -->
+    <g class="area" data-area="entrada" tabindex="0" role="button" aria-label="Entrada">
+      <rect class="suelo" x="548" y="208" width="90" height="52" rx="10" fill="#FFD93B" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="icono" x="593" y="238" text-anchor="middle" font-size="24">🚪</text>
+      <text class="etiqueta" x="593" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#183153">Entrada</text>
+      <rect class="niebla" x="548" y="208" width="90" height="52" rx="10" fill="url(#niebla)" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="candado" x="593" y="240" text-anchor="middle" font-size="22">🔒</text>
+      <text class="estado" x="622" y="228" text-anchor="middle" font-size="20"></text>
+    </g>
+
+    <!-- Patio techado (abajo izquierda, área grande) -->
+    <g class="area" data-area="patio" tabindex="0" role="button" aria-label="Patio">
+      <rect class="suelo" x="40" y="268" width="280" height="160" rx="10" fill="#9BE58B" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="icono" x="180" y="336" text-anchor="middle" font-size="44">🌳</text>
+      <text class="etiqueta" x="180" y="392" text-anchor="middle" font-size="17" font-weight="700" fill="#183153">Patio</text>
+      <rect class="niebla" x="40" y="268" width="280" height="160" rx="10" fill="url(#niebla)" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="candado" x="180" y="356" text-anchor="middle" font-size="38">🔒</text>
+      <text class="estado" x="296" y="296" text-anchor="middle" font-size="26"></text>
+      <!-- La X del tesoro: oculta hasta el final -->
+      <g class="marca-tesoro" opacity="0" aria-hidden="true">
+        <text x="180" y="330" text-anchor="middle" font-size="64" font-weight="800" fill="#D9534F" stroke="#8B2E2A" stroke-width="2" font-family="'Baloo 2',sans-serif">✕</text>
+        <text x="180" y="288" text-anchor="middle" font-size="30">💰</text>
+      </g>
+    </g>
+
+    <!-- Baño 2 (abajo centro) -->
+    <g class="area" data-area="bano-2" tabindex="0" role="button" aria-label="Baño 2">
+      <rect class="suelo" x="328" y="268" width="90" height="160" rx="10" fill="#7DE2D1" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="icono" x="373" y="340" text-anchor="middle" font-size="32">🚿</text>
+      <text class="etiqueta" x="373" y="392" text-anchor="middle" font-size="15" font-weight="700" fill="#183153">Baño 2</text>
+      <rect class="niebla" x="328" y="268" width="90" height="160" rx="10" fill="url(#niebla)" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="candado" x="373" y="356" text-anchor="middle" font-size="30">🔒</text>
+      <text class="estado" x="398" y="294" text-anchor="middle" font-size="22"></text>
+    </g>
+
+    <!-- Dormitorio 3 (abajo derecha) -->
+    <g class="area" data-area="dormitorio-3" tabindex="0" role="button" aria-label="Dormitorio pequeño">
+      <rect class="suelo" x="426" y="268" width="212" height="160" rx="10" fill="#C9A0FF" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="icono" x="532" y="340" text-anchor="middle" font-size="40">🛌</text>
+      <text class="etiqueta" x="532" y="392" text-anchor="middle" font-size="16" font-weight="700" fill="#183153">Dormitorio pequeño</text>
+      <rect class="niebla" x="426" y="268" width="212" height="160" rx="10" fill="url(#niebla)" stroke="#8B5E3C" stroke-width="5"/>
+      <text class="candado" x="532" y="356" text-anchor="middle" font-size="34">🔒</text>
+      <text class="estado" x="614" y="294" text-anchor="middle" font-size="26"></text>
+    </g>
+  </g>
+
+  <!-- Ruta del tesoro: línea punteada que se dibuja al avanzar (la controla JS) -->
+  <path id="ruta-tesoro" fill="none" stroke="#8B5E3C" stroke-width="6" stroke-dasharray="2 14"
+        stroke-linecap="round" opacity="0" d=""/>
+</svg>

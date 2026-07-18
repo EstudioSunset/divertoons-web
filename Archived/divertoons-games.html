@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Divertoons Games</title>
+    <style>
+        body {
+            background: #222;
+            color: #fff;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            /* Eliminado overflow:hidden para permitir scroll con rueda */
+        }
+        h1 {
+            margin-top: 20px;
+            font-size: 2.5em;
+            color: #ffeb3b;
+            text-shadow: 2px 2px 0 #333;
+        }
+        #gameCanvas {
+            background: #333;
+            display: block;
+            margin: 30px auto 10px auto;
+            border: 4px solid #ffeb3b;
+            border-radius: 12px;
+            box-shadow: 0 0 20px #ffeb3b88;
+        }
+        .links {
+            margin: 20px 0;
+        }
+        .links a {
+            color: #ffeb3b;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .links a:hover {
+            color: #fff;
+            text-shadow: 0 0 5px #ffeb3b;
+        }
+        #instructions {
+            margin: 10px 0;
+            font-size: 1.1em;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Divertoons Games</h1>
+    <div class="links">
+        <a href="https://www.youtube.com/@Divertoonsmx" target="_blank">YouTube</a>
+        <a href="https://www.facebook.com/divertoonsmx" target="_blank">Facebook</a>
+        <a href="https://www.tiktok.com/@divertoonsmx" target="_blank">TikTok</a>
+    </div>
+    <div id="instructions">
+        Use <b>Arrow keys</b> to move. Press <b>Space</b> to shoot!<br>
+        Try to hit the funny aliens!
+    </div>
+    <canvas id="gameCanvas" width="480" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let level = 1;
+        let score = 0;
+        let gameOver = false;
+        let gameWon = false;
+        let alienTimer = 0;
+
+        const ship = {
+            x: canvas.width / 2,
+            y: canvas.height - 60,
+            w: 40,
+            h: 40,
+            speed: 5,
+            dx: 0,
+            dy: 0
+        };
+
+        const bullets = [];
+        const aliens = [];
+        const alienFaces = ['👾', '🤖', '😜', '😺', '🐸', '🦄', '👽', '😎'];
+
+        function drawShip() {
+            ctx.save();
+            ctx.translate(ship.x, ship.y);
+            ctx.rotate(Math.sin(Date.now() / 200) / 10);
+            ctx.font = "36px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("🚀", 0, 0);
+            ctx.restore();
+        }
+
+        function drawBullets() {
+            ctx.font = "24px Arial";
+            bullets.forEach(b => {
+                ctx.fillText("💥", b.x, b.y);
+            });
+        }
+
+        function drawAliens() {
+            ctx.font = "32px Arial";
+            aliens.forEach(a => {
+                ctx.fillText(a.face, a.x, a.y);
+            });
+        }
+
+        function drawScoreAndLevel() {
+            ctx.font = "20px Arial";
+            ctx.fillStyle = "#ffeb3b";
+            ctx.fillText("Score: " + score + "  Level: " + level, 70, 30);
+        }
+
+        function drawGameOver() {
+            ctx.font = "40px Arial";
+            ctx.fillStyle = "#ffeb3b";
+            ctx.textAlign = "center";
+            ctx.fillText("GAME OVER!", canvas.width / 2, canvas.height / 2);
+            ctx.font = "24px Arial";
+            ctx.fillText("Refresh to play again!", canvas.width / 2, canvas.height / 2 + 40);
+        }
+
+        function drawGameWon() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = "40px Arial";
+            ctx.fillStyle = "#ffeb3b";
+            ctx.textAlign = "center";
+            ctx.fillText("¡FELICIDADES!", canvas.width / 2, canvas.height / 2 - 40);
+            ctx.font = "30px Arial";
+            ctx.fillText("🏆 Premio: ¡Tu valor y habilidad!", canvas.width / 2, canvas.height / 2 + 10);
+            ctx.font = "24px Arial";
+            ctx.fillText("Gracias por jugar a Divertoons Games", canvas.width / 2, canvas.height / 2 + 60);
+        }
+
+        function clear() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function updateShip() {
+            ship.x += ship.dx;
+            ship.y += ship.dy;
+            if (ship.x < 20) ship.x = 20;
+            if (ship.x > canvas.width - 20) ship.x = canvas.width - 20;
+            if (ship.y < 40) ship.y = 40;
+            if (ship.y > canvas.height - 20) ship.y = canvas.height - 20;
+        }
+
+        function updateBullets() {
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                bullets[i].y -= 8;
+                if (bullets[i].y < 0) bullets.splice(i, 1);
+            }
+        }
+
+        function updateAliens() {
+            for (let i = aliens.length - 1; i >= 0; i--) {
+                aliens[i].y += aliens[i].speed;
+                if (
+                    Math.abs(aliens[i].x - ship.x) < 30 &&
+                    Math.abs(aliens[i].y - ship.y) < 30
+                ) {
+                    gameOver = true;
+                }
+                if (aliens[i].y > canvas.height + 30) aliens.splice(i, 1);
+            }
+        }
+
+        function checkCollisions() {
+            for (let i = aliens.length - 1; i >= 0; i--) {
+                for (let j = bullets.length - 1; j >= 0; j--) {
+                    if (
+                        Math.abs(aliens[i].x - bullets[j].x) < 25 &&
+                        Math.abs(aliens[i].y - bullets[j].y) < 25
+                    ) {
+                        aliens.splice(i, 1);
+                        bullets.splice(j, 1);
+                        score += 1;
+                        return;
+                    }
+                }
+            }
+        }
+
+        function spawnAlien() {
+            const x = 40 + Math.random() * (canvas.width - 80);
+            const face = alienFaces[Math.floor(Math.random() * alienFaces.length)];
+            const baseSpeed = 1.5 + Math.random() * 1.5;
+            const speedLevel = baseSpeed + (level - 1) * 0.5;
+            aliens.push({
+                x: x,
+                y: -30,
+                face: face,
+                speed: speedLevel
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", " ", "Spacebar"].includes(e.key)) {
+                e.preventDefault();
+            }
+            if (gameOver || gameWon) return;
+
+            if (e.key === 'ArrowLeft') ship.dx = -ship.speed;
+            if (e.key === 'ArrowRight') ship.dx = ship.speed;
+            if (e.key === 'ArrowUp') ship.dy = -ship.speed;
+            if (e.key === 'ArrowDown') ship.dy = ship.speed;
+            if (e.key === ' ' || e.key === 'Spacebar') {
+                bullets.push({ x: ship.x, y: ship.y - 25 });
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') ship.dx = 0;
+            if (e.key === 'ArrowUp' || e.key === 'ArrowDown') ship.dy = 0;
+        });
+
+        function gameLoop() {
+            clear();
+
+            if (gameOver) {
+                drawAliens();
+                drawShip();
+                drawGameOver();
+                return;
+            }
+
+            if (gameWon) {
+                drawGameWon();
+                return;
+            }
+
+            updateShip();
+            updateBullets();
+            updateAliens();
+            checkCollisions();
+
+            drawShip();
+            drawBullets();
+            drawAliens();
+            drawScoreAndLevel();
+
+            if (score >= level * 10) {
+                if (level < 5) {
+                    level++;
+                } else {
+                    gameWon = true;
+                    return;
+                }
+            }
+
+            const spawnInterval = 40 - (level - 1) * 5;
+            alienTimer++;
+            if (alienTimer > spawnInterval) {
+                spawnAlien();
+                alienTimer = 0;
+            }
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body >
+</htm l    >
+ 

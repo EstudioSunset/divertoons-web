@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Divertoons – Diversión sin fin</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Variables y reset básicos ---------- */
+    :root{
+      --c-primary:#0077BE;
+      --c-highlight:#FFDC5B;
+      --c-hover:#FF914D;
+      --c-light:#7DE2FF;
+      --c-card:#FFFFFF;
+      --radius:16px;
+      --shadow:0 4px 10px rgba(0,0,0,.15);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Quicksand',sans-serif;
+      background:var(--c-light);
+      color:var(--c-primary);
+      line-height:1.4;
+    }
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+
+    /* ---------- Navbar ---------- */
+    .navbar{
+      position:sticky;top:0;z-index:1000;
+      background:linear-gradient(90deg,var(--c-highlight),var(--c-hover));
+      box-shadow:var(--shadow);
+      display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+      padding:.75rem 1rem;
+    }
+    .navbar__brand{
+      font-family:'Fredoka One',cursive;font-size:1.6rem;
+      flex:0 0 auto;
+    }
+    .search-bar{
+      flex:1 1 250px;display:flex;gap:.5rem;align-items:center;
+    }
+    .search-bar input{
+      flex:1;border:1px solid #ccc;border-radius:50px;
+      padding:.45rem 1rem;font-size:1rem;
+    }
+    .search-bar button{
+      background:var(--c-primary);color:#fff;border:none;
+      border-radius:50px;padding:.45rem 1rem;cursor:pointer;
+      font-size:.9rem;transition:transform .2s;
+    }
+    .search-bar button:hover{transform:scale(1.05)}
+
+    /* Nav links */
+    .nav-links{
+      display:flex;gap:.75rem;flex:1 1 100%;
+      justify-content:center;flex-wrap:wrap;
+    }
+    .nav-links a{
+      background:#005f9e;color:#fff;font-weight:600;
+      padding:.45rem 1rem;border-radius:50px;transition:.25s;
+      box-shadow:0 2px 5px rgba(0,0,0,.2);
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible{
+      background:var(--c-hover);transform:scale(1.05);
+      outline:none;
+    }
+
+    /* Hamburger (visible ≤768px) */
+    .burger{
+      display:none;font-size:1.8rem;cursor:pointer;background:none;border:none;color:var(--c-primary);
+    }
+    @media(max-width:768px){
+      .burger{display:block;margin-left:auto}
+      .nav-links{display:none;width:100%;flex-direction:column;align-items:center}
+      .nav-links.show{display:flex}
+    }
+
+    /* ---------- Layout ---------- */
+    .layout{display:flex;gap:2rem;padding:2rem;max-width:1200px;margin:auto}
+    main{flex:3 1 0}
+    aside{flex:1 1 260px;background:var(--c-card);border-radius:var(--radius);padding:1rem;box-shadow:var(--shadow)}
+    @media(max-width:768px){.layout{flex-direction:column}}
+
+    /* ---------- Header / Hero ---------- */
+    header{
+      background:linear-gradient(135deg,var(--c-highlight),var(--c-hover));
+      padding:2rem;border-radius:var(--radius);margin-bottom:2rem;
+      box-shadow:var(--shadow);
+    }
+    header h2{
+      font-family:'Fredoka One',cursive;font-size:clamp(2rem,6vw,3rem);
+      color:var(--c-primary);text-shadow:2px 2px 4px rgba(0,0,0,.25)
+    }
+
+    /* ---------- Intro + vídeo ---------- */
+    .intro{padding:1.5rem;background:var(--c-card);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .intro p{font-size:clamp(1.1rem,2.5vw,1.35rem);margin-bottom:1.5rem}
+    .video-wrapper{position:relative;width:100%;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;margin-bottom:1rem;box-shadow:var(--shadow)}
+    .video-wrapper iframe{position:absolute;width:100%;height:100%;inset:0}
+
+    .cta-buttons{display:flex;gap:1rem;flex-wrap:wrap}
+    .cta-buttons a{
+      background:var(--c-highlight);color:var(--c-primary);font-weight:700;
+      padding:.8rem 1.4rem;border-radius:50px;transition:.25s;box-shadow:var(--shadow)
+    }
+    .cta-buttons a:hover,
+    .cta-buttons a:focus-visible{
+      background:var(--c-hover);color:#fff;transform:scale(1.05);outline:none
+    }
+
+    /* ---------- Cards reutilizables ---------- */
+    .card-grid{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center}
+    .card{
+      background:var(--c-card);border-radius:var(--radius);width:190px;
+      padding:1rem;text-align:center;box-shadow:var(--shadow);
+      transition:transform .25s;
+    }
+    .card:hover{transform:translateY(-6px)}
+    .card h3{font-family:'Fredoka One',cursive;margin:.5rem 0}
+
+    /* ---------- Secciones ---------- */
+    section[id]{scroll-margin-top:90px}
+    .section-title{
+      font-family:'Fredoka One',cursive;
+      font-size:clamp(1.6rem,4vw,2.2rem);margin-bottom:1rem;text-align:center
+    }
+
+    /* ---------- Sidebar ---------- */
+    .sidebar-block:not(:last-child){margin-bottom:1.5rem}
+    form{display:flex;flex-direction:column;gap:.6rem}
+    input,textarea{border:1px solid #ccc;border-radius:8px;padding:.5rem;font-size:1rem;font-family:inherit}
+    textarea{resize:vertical;min-height:90px}
+    button[type="submit"]{
+      background:var(--c-highlight);border:none;border-radius:50px;padding:.65rem;
+      font-weight:700;cursor:pointer;transition:.25s
+    }
+    button[type="submit"]:hover{background:var(--c-hover);color:#fff}
+
+    /* ---------- Misc ---------- */
+    #toTopBtn{
+      position:fixed;right:20px;bottom:20px;background:var(--c-primary);
+      color:#fff;border:none;border-radius:50%;padding:.6rem 1rem;font-size:1.2rem;
+      cursor:pointer;display:none;box-shadow:var(--shadow);z-index:1200
+    }
+    #toTopBtn.show{display:block}
+    /* Animaciones (se activan con JS) */
+    .fade-in{opacity:0;transform:translateY(20px);transition:all .8s ease}
+    .fade-in.visible{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+
+  <!-- ---------- NAVBAR ---------- -->
+  <nav class="navbar" aria-label="Barra de navegación principal">
+    <span class="navbar__brand">Divertoons</span>
+
+    <button class="burger" aria-label="Abrir menú" id="burgerBtn">&#9776;</button>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Buscar aventuras…" aria-label="Buscar">
+      <button onclick="document.querySelector('#contacto').scrollIntoView({behavior:'smooth'})">Contacto</button>
+    </div>
+
+    <div class="nav-links" id="navLinks">
+      <a href="#inicio">Inicio</a>
+      <a href="/merch.html">Merch</a>
+      <a href="/juegos.html">Juegos</a>
+      <a href="#videos">Videos</a>
+      <a href="#promos">Promos</a>
+    </div>
+  </nav>
+
+  <!-- ---------- LAYOUT ---------- -->
+  <div class="layout">
+    <main>
+
+      <!-- HERO -->
+      <header id="inicio">
+        <h2>¡Bienvenidos a Divertoons!</h2>
+      </header>
+
+      <!-- INTRO + VIDEO -->
+      <section class="intro fade-in">
+        <p>¡Descubre un mundo de aventuras, música y diversión sin fin! 🎶✨</p>
+
+        <div class="video-wrapper" id="videos">
+          <iframe 
+            src="https://www.youtube.com/embed/oht2d79DjTk" 
+            title="¿Quién aguantará más? – Divertoons" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            loading="lazy"></iframe>
+        </div>
+
+        <div class="cta-buttons">
+          <a href="https://youtube.com/@Divertoonsmx" target="_blank" rel="noopener">Ver en YouTube</a>
+          <a href="#merch">Ver Merch</a>
+        </div>
+      </section>
+
+      <!-- MERCH -->
+      <section id="merch" class="fade-in" style="margin-top:2rem">
+        <h2 class="section-title">¡Nuestra Merch Oficial!</h2>
+
+        <div class="card-grid" id="merchItems">
+          <div class="card">
+            <img src="/assets/Merch/divertoons-playera.jpg" alt="Camiseta Divertoons">
+            <h3>Camisetas</h3>
+            <p>Luce la diversión con estilo.</p>
+          </div>
+          <div class="card">
+            <img src="/assets/Merch/divertoons-taza.jpg" alt="Taza Divertoons">
+            <h3>Tazas</h3>
+            <p>Empieza tu día con alegría.</p>
+          </div>
+          <div class="card">
+            <img src="/assets/Merch/divertoons-gorra.jpg" alt="Gorra Divertoons">
+            <h3>Gorras</h3>
+            <p>Protege tu cabeza con onda.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- JUEGOS -->
+      <section id="juegos" class="fade-in" style="margin-top:2rem">
+        <h2 class="section-title">Zona de Juegos</h2>
+
+        <div class="card-grid">
+          <div class="card">
+            <img src="https://via.placeholder.com/190x160/67D5FF/ffffff?text=Próximamente" alt="Juego 1">
+            <h3>Próximamente</h3>
+            <p>Nuevos minijuegos en desarrollo.</p>
+          </div>
+          <div class="card">
+            <img src="https://via.placeholder.com/190x160/67D5FF/ffffff?text=Próximamente" alt="Juego 2">
+            <h3>Próximamente</h3>
+            <p>¡Mantente atento!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer style="background:var(--c-primary);color:#fff;text-align:center;padding:1rem;margin-top:2rem">
+        © 2025 Divertoons – Todos los derechos reservados.
+      </footer>
+
+    </main>
+
+    <!-- ---------- SIDEBAR ---------- -->
+    <aside>
+      <div class="sidebar-block">
+        <img src="https://via.placeholder.com/300x300.png?text=Divertoons" alt="Personaje Divertoons con celular">
+      </div>
+
+      <div class="sidebar-block" id="contacto">
+        <h3 class="section-title" style="font-size:1.4rem">Contáctanos</h3>
+        <form>
+          <input type="text" name="nombre" placeholder="Nombre" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <textarea name="mensaje" placeholder="Mensaje" required></textarea>
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+
+      <div class="sidebar-block" id="promos">
+        <h3 class="section-title" style="font-size:1.4rem">Publicidad</h3>
+        <div style="height:250px;background:#ddd;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:#666">Espacio publicitario</div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ---------- BOTÓN IR ARRIBA ---------- -->
+  <button id="toTopBtn" aria-label="Volver arriba">↑</button>
+
+  <!-- ---------- SCRIPTS ---------- -->
+  <script>
+    /* Buscador de merch */
+    document.getElementById('searchInput').addEventListener('input', e=>{
+      const term=e.target.value.toLowerCase();
+      document.querySelectorAll('#merchItems .card').forEach(card=>{
+        card.style.display=card.textContent.toLowerCase().includes(term)?'':'none';
+      })
+    });
+
+    /* Mostrar / ocultar toTop */
+    const toTop=document.getElementById('toTopBtn');
+    window.addEventListener('scroll',()=>toTop.classList.toggle('show',window.scrollY>300));
+
+    /* Navbar burger */
+    const burger=document.getElementById('burgerBtn');
+    burger.addEventListener('click',()=>{
+      document.getElementById('navLinks').classList.toggle('show');
+    });
+
+    /* Fade-in animación con Intersection Observer */
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(el=>{
+        if(el.isIntersecting){el.target.classList.add('visible');observer.unobserve(el.target)}
+      })
+    },{threshold:.15});
+    document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+  </script>
+</body>
+<footer style="background:var(--c-primary);color:#fff;padding:2rem;text-align:center;margin-top:2rem">
+  <div style="margin-bottom:1rem">
+    <img src="/assets/divertoons-logo.png" alt="Divertoons Logo" style="max-width:150px">
+  </div>
+  <nav aria-label="Footer links" style="margin-bottom:1rem">
+    <a href="https://youtube.com/@Divertoonsmx" target="_blank" rel="noopener" style="color:#fff;margin:0 .5rem">YouTube</a>
+    <a href="https://pinterest.com/divertoons" target="_blank" rel="noopener" style="color:#fff;margin:0 .5rem">Pinterest</a>
+    <a href="https://facebook.com/divertoons" target="_blank" rel="noopener" style="color:#fff;margin:0 .5rem">Facebook</a>
+    <a href="https://instagram.com/divertoons" target="_blank" rel="noopener" style="color:#fff;margin:0 .5rem">Instagram</a>
+  </nav>
+  <p style="font-size:.9rem">© 2025 Divertoons – Todos los derechos reservados.</p>
+  <p style="font-size:.8rem">Política de privacidad | Términos y condiciones</p>
+</footer>
+</html>
