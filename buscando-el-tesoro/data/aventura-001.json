@@ -1,7 +1,7 @@
 {
   "gameId": "tesoro-divertoons-001",
   "title": "El Cofre Dorado",
-  "version": 1,
+  "version": 3,
   "minimumAge": 5,
   "opciones": {
     "mostrarEtiquetas": true,
@@ -11,22 +11,22 @@
   },
   "personajes": [
     {
-      "id": "xan",
-      "nombre": "Xan",
-      "cara": "🔵",
-      "descripcion": "El explorador con lupa"
-    },
-    {
-      "id": "soli",
-      "nombre": "Soli",
-      "cara": "🌞",
+      "id": "solovino",
+      "nombre": "Solovino",
+      "cara": "☀️",
       "descripcion": "El sol aventurero"
     },
     {
-      "id": "piri",
-      "nombre": "Piri",
-      "cara": "🏴‍☠️",
-      "descripcion": "El pirata del catalejo"
+      "id": "muni",
+      "nombre": "Muni",
+      "cara": "🌙",
+      "descripcion": "La luna que ve en la oscuridad"
+    },
+    {
+      "id": "xhan",
+      "nombre": "Xhan",
+      "cara": "🌍",
+      "descripcion": "El planeta Tierra con gorro de explorador"
     }
   ],
   "villano": {
@@ -40,135 +40,155 @@
     ]
   },
   "areas": {
-    "dormitorio-principal": "Dormitorio grande",
-    "bano-principal": "Baño 1",
-    "dormitorio-2": "Cuarto de juegos",
-    "sala": "Sala",
-    "cocina": "Cocina",
-    "pasillo": "Pasillo",
-    "entrada": "Entrada",
-    "patio": "Patio",
+    "sala": "La Sala",
+    "cocina": "La Cocina",
+    "habitacion-1": "Habitación 1",
+    "habitacion-2": "Habitación 2",
+    "habitacion-nino": "Cuarto del niño",
+    "bano-1": "Baño 1",
     "bano-2": "Baño 2",
-    "dormitorio-3": "Dormitorio pequeño"
+    "lavanderia": "La Lavandería",
+    "pasillo-sala-habitacion": "El Pasillo",
+    "espacio-vacio": "Espacio vacío",
+    "pasillo-del-terror": "Pasillo del Terror",
+    "porche": "El Porche",
+    "jardin": "El Jardín",
+    "jardin-2": "Jardín de Atrás",
+    "estacionamiento": "El Estacionamiento",
+    "pasillo-a-la-calle": "Pasillo a la Calle",
+    "parte-trasera-de-la-casa": "Parte de Atrás",
+    "tendedero": "El Tendedero",
+    "arbol-de-tamarindo": "Árbol de Tamarindo",
+    "esquina-arbol": "Esquina del Árbol",
+    "area-de-juegos-cesped": "Área de Juegos",
+    "calle": "La Calle",
+    "calle2": "La Calle",
+    "casa-de-los-maestros-inaccesible": "Casa de los Maestros",
+    "casa-de-los-maestros-2-inaccesible": "Casa de los Maestros",
+    "area-prohibida-casa-del-pirata-grumpy": "Casa del Pirata Grumpy",
+    "reino-lejano-prohibido": "El Reino Lejano",
+    "area-prohibida-2": "Zona Prohibida",
+    "area-prohibida-3": "Zona Prohibida",
+    "area-de-peligro-chucho-feroz-y-minas-de-caca": "Territorio del Chucho Feroz"
   },
-  "areaInicial": "entrada",
+  "areaInicial": "porche",
   "clues": [
     {
       "id": "pista-1",
       "order": 1,
-      "character": "xan",
-      "areaId": "sala",
-      "title": "La primera señal",
-      "riddle": "Tengo brazos pero no manos, tengo espalda pero no huesos, y cuando la familia ve la tele… ¡todos se sientan encima de mí! Busca entre mis cojines.",
+      "character": "xhan",
+      "areaId": "habitacion-1",
+      "title": "El barco que nunca zarpa",
+      "riddle": "No tengo timón ni velas, pero cada noche zarpo sin moverme ni un centímetro. Cuatro patas firmes me sostienen, una sábana blanca es mi bandera, y los sueños son mi tripulación silenciosa. Cuando el capitán despierta, revisa bien bajo mi casco.",
       "qrToken": "DT-001-P1-X7K9",
       "manualCode": "XAN-482",
       "letra": "C",
-      "unlocksArea": "cocina",
-      "successMessage": "¡Encontraste la primera parte del mapa!",
+      "unlocksArea": "jardin",
+      "successMessage": "¡El barco de los sueños guardaba la primera parte del mapa!",
       "hints": [
-        "No es una persona, aunque tiene brazos y espalda.",
-        "Está en la sala y es muy cómodo.",
-        "Levanta los cojines del sofá."
+        "No es un barco de verdad, aunque 'zarpa' cada noche.",
+        "Es el mueble donde duermes, en la Habitación 1.",
+        "Agáchate y busca debajo de la cama."
       ],
-      "temperatura": "Si estás cerca del televisor… ¡estás que quemas! 🔥",
+      "temperatura": "Si tus rodillas tocan el suelo junto a la cama… ¡ardes! 🔥",
       "revelado": "normal",
       "challenge": null
     },
     {
       "id": "pista-2",
       "order": 2,
-      "character": "soli",
-      "areaId": "cocina",
-      "title": "Olores deliciosos",
-      "riddle": "Tengo puerta pero no soy casa, guardo comida pero nunca me da hambre. Por dentro soy puro invierno… ¡y vivo en la cocina!",
+      "character": "solovino",
+      "areaId": "jardin",
+      "title": "El vestido que nunca se lava",
+      "riddle": "Me visto de colores sin tener un ropero, perfumo el aire sin usar ni una gota de perfume, y las abejas me visitan aunque nunca las invito. No crezco en macetas de la casa: vivo libre bajo el cielo del patio. Búscame entre los pétalos, donde el jardín se pone más colorido.",
       "qrToken": "DT-001-P2-M3T8",
       "manualCode": "SOL-915",
       "letra": "O",
-      "unlocksArea": "dormitorio-2",
-      "successMessage": "¡Qué buen olfato de explorador!",
+      "unlocksArea": "cocina",
+      "successMessage": "¡Las flores más bonitas del jardín guardaban tu siguiente pista!",
       "hints": [
-        "Su puerta se abre muchas veces al día.",
-        "Adentro hace mucho frío.",
-        "Abre el refrigerador y mira bien."
+        "No soy un animal ni una persona: soy parte de la naturaleza.",
+        "Tengo pétalos de colores y estoy en El Jardín.",
+        "Busca agachándote junto a las flores."
       ],
-      "temperatura": "Cerca del refrigerador el aire está frío… ¡pero tú estás caliente! 🔥",
-      "revelado": "linterna",
+      "temperatura": "Si hueles una flor… ¡estás que ardes! 🔥",
+      "revelado": "normal",
       "challenge": {
-        "tipo": "opcion-multiple",
-        "pregunta": "Antes de buscar: ¿qué usamos para mantener la comida fría?",
-        "opciones": [
-          "El horno 🔥",
-          "El refrigerador ❄️",
-          "La tostadora 🍞"
-        ],
-        "correcta": 1,
-        "mensajeExito": "¡Exacto! ¡El refrigerador! Ahora ve a buscar la pista."
+        "tipo": "fisico",
+        "mision": "¡Baila como una flor al viento! Da 5 vueltas girando con los brazos abiertos antes de buscar la pista. 🌸💃",
+        "boton": "¡Misión completada!"
       }
     },
     {
       "id": "pista-3",
       "order": 3,
-      "character": "piri",
-      "areaId": "dormitorio-2",
-      "title": "El escondite de los juguetes",
-      "riddle": "No soy un cofre pirata, pero guardo tesoros: peluches, carritos y cosas que ruedan. Cuando el juego termina, todo vuelve a mi panza.",
+      "character": "muni",
+      "areaId": "cocina",
+      "title": "La caja que hace magia caliente",
+      "riddle": "Tengo una ventanita pero no soy televisión, giro la comida sin tener manos, y en un abrir y cerrar de ojos hago magia caliente sin usar fuego. Cuento hacia atrás antes de terminar mi hechizo. Ábreme con cuidado y mira bien adentro.",
       "qrToken": "DT-001-P3-R6W2",
       "manualCode": "PIR-347",
       "letra": "F",
-      "unlocksArea": "dormitorio-principal",
-      "successMessage": "¡Los juguetes te ayudaron a encontrarla!",
+      "unlocksArea": "habitacion-2",
+      "successMessage": "¡La magia caliente escondía tu siguiente letra!",
       "hints": [
-        "Guarda cosas con las que te diviertes.",
-        "Está en el cuarto de juegos.",
-        "Busca dentro de la caja de los juguetes."
+        "Está en la cocina y tiene una puerta con ventanita.",
+        "Calienta la comida rapidísimo, sin necesitar fuego.",
+        "Abre la puerta del microondas y revisa adentro."
       ],
-      "temperatura": "Si un peluche te está mirando… ¡caliente, caliente! 🔥",
-      "revelado": "normal",
+      "temperatura": "Cerca de esta caja mágica… ¡todo se calienta, y tú también! 🔥",
+      "revelado": "linterna",
       "challenge": {
-        "tipo": "fisico",
-        "mision": "¡Misión pirata! Salta 10 veces como un pirata en su barco antes de buscar la pista. 🏴‍☠️",
-        "boton": "¡Misión completada!"
+        "tipo": "opcion-multiple",
+        "pregunta": "Antes de buscar: ¿qué SÍ podemos calentar en el microondas?",
+        "opciones": [
+          "Un tenedor de metal 🍴",
+          "Un plato con comida 🍽️",
+          "Una pila o batería 🔋"
+        ],
+        "correcta": 1,
+        "mensajeExito": "¡Correcto! El metal nunca va al microondas. Ahora ve a buscar la pista."
       }
     },
     {
       "id": "pista-4",
       "order": 4,
-      "character": "xan",
-      "areaId": "dormitorio-principal",
-      "title": "Sueños gigantes",
-      "riddle": "Tengo cuatro patas pero no camino, de noche trabajo sosteniendo tus sueños. Agáchate sin miedo… la pista duerme debajo de mi barriga.",
+      "character": "xhan",
+      "areaId": "habitacion-2",
+      "title": "El rincón de los papeles importantes",
+      "riddle": "No como, pero tengo cajones llenos de sorpresas; sostengo lápices y una lámpara que jamás se cansa de alumbrar. Papá se sienta frente a mí cuando trabaja o revisa sus cuentas. Abre mis cajones con cuidado: algo se esconde entre mis cosas.",
       "qrToken": "DT-001-P4-K9J4",
       "manualCode": "XAN-620",
       "letra": "R",
-      "unlocksArea": "patio",
-      "successMessage": "¡Shhh! ¡No despiertes a los sueños!",
+      "unlocksArea": "lavanderia",
+      "successMessage": "¡El escritorio de papá guardaba más que papeles!",
       "hints": [
-        "Es un mueble donde se duerme.",
-        "Es la cama más grande de la casa.",
-        "Mira debajo de la cama grande."
+        "Es un mueble donde alguien trabaja o escribe.",
+        "Está en la Habitación 2 y tiene cajones.",
+        "Busca en los cajones del escritorio de papá."
       ],
-      "temperatura": "Si tus rodillas tocan el suelo junto a la cama… ¡te quemas! 🔥",
+      "temperatura": "Si tocas la lámpara del escritorio… ¡quemas! 🔥",
       "revelado": "normal",
       "challenge": null
     },
     {
       "id": "pista-5",
       "order": 5,
-      "character": "piri",
-      "areaId": "patio",
-      "title": "El escondite final",
-      "riddle": "Soy la casita de una planta: tengo tierra pero no soy jardín, y la abrazo para que crezca feliz. En el patio me encuentras… ¡soy la más grandota de todas!",
+      "character": "muni",
+      "areaId": "lavanderia",
+      "title": "El torbellino que deja todo limpio",
+      "riddle": "Trago ropa sucia y la devuelvo oliendo a flores; giro y giro como un torbellino atrapado en una caja redonda. No tengo boca, pero tengo una puerta redonda por donde a veces se escapan calcetines perdidos. Ábreme con cuidado —ya no debería estar girando— y busca dentro de mi tambor.",
       "qrToken": "DT-001-P5-Q2Z7",
       "manualCode": "PIR-888",
       "letra": "E",
       "unlocksArea": null,
-      "successMessage": "¡Tienes todas las letras del cofre!",
+      "successMessage": "¡Tienes todas las letras! Y ahora Muni te susurra el secreto final…",
       "hints": [
-        "Ya no está dentro de la casa.",
-        "Las plantas viven dentro de ella.",
-        "Revisa la maceta más grande del patio."
+        "Está en la Lavandería y tiene una puerta redonda.",
+        "Gira la ropa con agua y jabón hasta dejarla limpia.",
+        "Abre la puerta de la lavadora y mira dentro del tambor."
       ],
-      "temperatura": "Si hueles las flores… ¡estás ardiendo! 🔥",
+      "temperatura": "Si escuchas el eco dentro del tambor… ¡ardes! 🔥",
       "revelado": "normal",
       "challenge": {
         "tipo": "opcion-multiple",
@@ -180,12 +200,31 @@
         ],
         "correcta": 2,
         "mensajeExito": "¡Dorado como el sol! ¡Ve por la última pista!"
-      }
+      },
+      "revelaTesoro": true
     }
   ],
   "treasure": {
-    "areaId": "patio",
-    "message": "¡El Cofre Dorado está enterrado en el patio! Escribe la palabra secreta con las letras que ganaste.",
-    "finalCode": "TESORO-777"
+    "areaId": "cocina",
+    "message": "El cofre tiene una cerradura de letras. Ordena las letras que ganaste y escribe la palabra secreta para abrirlo.",
+    "finalCode": "TESORO-777",
+    "ubicacion": "La Cocina",
+    "acertijoFinal": "¡El Cofre Dorado está en LA COCINA! 🍽️ Busca en el guardarropa de la cocina… ¡el tesoro te está esperando ahí!"
+  },
+  "zonasEspeciales": {
+    "prohibida": {
+      "casa-de-los-maestros-inaccesible": "⛔ Aquí viven los maestros. ¡Esta casa no es parte de la aventura!",
+      "casa-de-los-maestros-2-inaccesible": "⛔ Aquí viven los maestros. ¡Esta casa no es parte de la aventura!",
+      "area-prohibida-casa-del-pirata-grumpy": "🏴‍☠️ ¡Cuidado! Aquí vive el Pirata Grumpy y no le gustan las visitas. ¡Zona prohibida!",
+      "reino-lejano-prohibido": "🚫 El Reino Lejano queda demasiado lejos. ¡Ningún tesoro se esconde ahí!",
+      "area-prohibida-2": "⛔ Zona prohibida. ¡Aquí no hay pistas, regresa al mapa!",
+      "area-prohibida-3": "⛔ Zona prohibida. ¡Aquí no hay pistas, regresa al mapa!",
+      "area-de-peligro-chucho-feroz-y-minas-de-caca": "🐕 ¡PELIGRO! Aquí vive el Chucho Feroz y hay minas de caca por todos lados. ¡Ni se te ocurra entrar!"
+    },
+    "adulto": {
+      "calle": "🚸 ¡ALTO! Nunca cruces la calle solo. Busca a un adulto para que te acompañe.",
+      "calle2": "🚸 ¡ALTO! Nunca cruces la calle solo. Busca a un adulto para que te acompañe.",
+      "area-de-juegos-cesped": "🚸 El área de juegos está cruzando la calle. ¡Solo puedes ir acompañado de un adulto!"
+    }
   }
 }

@@ -5,13 +5,53 @@
   background: var(--pergamino-osc);
   overflow: hidden;
   position: relative;
-  touch-action: none; /* los gestos los maneja map-controller */
+  /* pan-y = el dedo puede deslizar la página verticalmente sobre el mapa.
+     Al ampliar, map-controller cambia esto a "none" para poder arrastrar
+     el mapa, y lo devuelve a "pan-y" al volver al tamaño normal. */
+  touch-action: pan-y;
   margin-top: var(--esp-2);
+  /* El mapa (viewBox 3000×2000, proporción 3:2) se dimensiona por su
+     propia proporción para que quepa entero. En vertical el mapa nunca
+     ocupa tanto que tape la misión, así que además se limita a 46svh:
+     si esa altura obliga a un recuadro más ancho que 3:2 (apaisado),
+     el SVG usa object-fit:contain para verse completo con márgenes a
+     los lados, en vez de recortarse por abajo. */
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  max-height: 46svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.mapa-marco.ampliado { touch-action: none; }
+
+/* Botones de zoom (alternativa accesible al pellizco) */
+.mapa-zoom {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 5;
+}
+.mapa-zoom button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--texto);
+  background: rgba(255,255,255,0.94);
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--texto);
+}
+.mapa-zoom button:focus-visible { outline: 4px solid var(--azul-intenso); outline-offset: 2px; }
 .mapa-marco svg {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
+  object-fit: contain;
   transform-origin: 0 0;
 }
 
@@ -37,6 +77,19 @@
 
 .area { cursor: pointer; }
 .area:focus-visible .suelo { outline: 5px dashed var(--azul-intenso); outline-offset: 3px; }
+
+/* ─── Zonas prohibidas: siempre visibles, marcadas con rayas rojas ───
+   Nunca se descubren ni se completan: solo avisan al tocarlas.       */
+.area.prohibida .suelo { opacity: 0.75; }
+.area.prohibida .tachado { pointer-events: none; }
+.area.prohibida .etiqueta { fill: #8B2E2A; }
+.area.prohibida:focus-visible .suelo { outline-color: var(--rojo-pirata); }
+
+/* ─── Zonas que requieren un adulto (la calle y lo que hay al cruzar) ─── */
+.area.adulto .suelo { stroke: var(--rojo-pirata); stroke-dasharray: 26 18; }
+
+/* Sacudida al tocar una zona prohibida */
+.area.rechazada { animation: sacudida 0.3s ease 2; transform-box: fill-box; transform-origin: center; }
 
 .area .niebla,
 .area .candado { transition: opacity 0.7s ease; }
@@ -70,6 +123,21 @@
 
 /* La ruta punteada del tesoro */
 #ruta-tesoro { transition: opacity 0.5s ease; }
+
+/* Flecha animada que indica hacia dónde ir después de cada pista */
+#ruta-siguiente {
+  stroke: var(--rojo-pirata);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-dasharray: 4 16;
+  fill: none;
+  animation: caminar 1s linear infinite;
+}
+@keyframes caminar { to { stroke-dashoffset: -40; } }
+
+@media (prefers-reduced-motion: reduce) {
+  #ruta-siguiente { animation: none; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .area.actual .suelo { animation: none; }

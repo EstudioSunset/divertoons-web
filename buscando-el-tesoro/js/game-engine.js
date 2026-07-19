@@ -178,7 +178,11 @@ async function prepararTablero() {
   await Mapa.cargarMapa(RUTA_MAPA, {
     nombres: config.areas || {},
     mostrarEtiquetas: config.opciones?.mostrarEtiquetas !== false,
-    alTocarArea: mensaje => UI.avisar(mensaje)
+    avisosEspeciales: config.zonasEspeciales || {},
+    alTocarArea: (mensaje, tipo) => {
+      UI.avisar(mensaje, tipo ? 5000 : 2600);
+      if (tipo) Audio.vibrar(config.opciones?.vibracion ? [40, 60, 40] : 0);
+    }
   });
 
   pintarLetras();
@@ -190,6 +194,8 @@ function refrescarTablero() {
   const total = config.clues.length;
   const hechas = progreso.completadas.length;
   const pista = pistaActual();
+
+  Mapa.borrarRutaSiguiente(); // la flecha se vuelve a dibujar solo al completar una pista
 
   // Progreso
   UI.texto('progreso-texto', pista
@@ -443,7 +449,7 @@ function completarPista(pista) {
     pista.successMessage || '¡Pista encontrada!',
     pista.letra ? `¡Ganaste la letra "${pista.letra}" para abrir el cofre!` : '',
     '',
-    esLaUltima ? '¡Abrir el Cofre Dorado!' : 'Siguiente misión',
+    esLaUltima ? '¡Abrir el Cofre Dorado!' : '🗺️ Ver a dónde ir',
     () => {
       UI.cerrarModales();
       refrescarTablero();
@@ -451,8 +457,16 @@ function completarPista(pista) {
       if (esLaUltima) {
         abrirCofre();
       } else {
-        Audio.reproducir('desbloqueo');
-        UI.avisar('🗺️ ¡Una nueva zona apareció en el mapa!');
+        // Llevar la vista al mapa y dibujar la flecha punteada
+        // desde donde estaban hasta la siguiente zona.
+        const siguiente = pistaActual();
+        Mapa.enfocarMapa();
+        if (siguiente) {
+          Mapa.rutaHaciaSiguiente(pista.areaId, siguiente.areaId);
+          const nombre = (config.areas || {})[siguiente.areaId] || siguiente.areaId;
+          Audio.reproducir('desbloqueo');
+          UI.avisar(`🗺️ ¡Sigue la línea punteada hacia ${nombre}!`, 4000);
+        }
       }
     });
 }
@@ -472,7 +486,16 @@ function abrirCofre() {
   document.getElementById('btn-abrir-cofre').onclick = () => {
     if (QR.normalizarCodigo(input.value) === palabra) {
       UI.cerrarModal('modal-cofre');
-      terminarJuego();
+      // La última pista revela DÓNDE está el tesoro de verdad.
+      const revelacion = config.treasure?.acertijoFinal;
+      if (revelacion) {
+        Audio.reproducir('desbloqueo');
+        Mapa.mostrarTesoro();
+        mostrarResultado('exito', '🗝️ ¡El cofre se abrió!', revelacion, '',
+          '¡Voy por el tesoro!', () => { UI.cerrarModales(); terminarJuego(); });
+      } else {
+        terminarJuego();
+      }
     } else {
       Audio.reproducir('incorrecto');
       input.classList.add('anim-sacudida');
