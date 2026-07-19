@@ -68,6 +68,8 @@ Todo el contenido vive en **`data/aventura-001.json`**. Dos formas de editarlo:
 | `revelado` | `"normal"` o `"linterna"` (el acertijo se alumbra con el dedo) |
 | `challenge` | Desafío previo opcional: `opcion-multiple` o `fisico` |
 
+En `treasure` defines dónde está el premio real: `ubicacion` (para ti) y `acertijoFinal` (el texto que el juego le muestra al niño al abrir el cofre, diciéndole exactamente dónde buscar).
+
 **Zonas disponibles del mapa** (`areaId`): `dormitorio-principal`, `bano-principal`, `dormitorio-2`, `sala`, `cocina`, `pasillo`, `entrada`, `patio`, `bano-2`, `dormitorio-3`. Los nombres que ven los niños se cambian en la sección `"areas"` del JSON, sin tocar el SVG.
 
 ⚠️ **Después de cualquier cambio de pistas o códigos, vuelve a imprimir las tarjetas.** El configurador sube el número de `version` automáticamente: eso hace que los progresos guardados con la versión vieja pidan reiniciar (a propósito, para que nadie quede a mitad de juego con pistas que ya no existen).
@@ -81,7 +83,7 @@ Todo el contenido vive en **`data/aventura-001.json`**. Dos formas de editarlo:
 ## 🎨 Colores y personajes
 
 - **Colores:** todos centralizados en `css/variables.css`.
-- **Personajes:** por ahora usan emojis (🔵 Xan, 🌞 Soli, 🏴‍☠️ Piri). Cuando tengas los PNG de tus personajes reales, guárdalos en `assets/characters/` y reemplaza los emojis en el JSON/HTML.
+- **Personajes:** por ahora usan emojis (☀️ Solovino, 🌙 Muni, 🌍 Xhan). Cuando tengas los PNG de tus personajes reales, guárdalos en `assets/characters/` y reemplaza los emojis en el JSON/HTML.
 - **Logo:** `assets/img/logo.png`.
 
 ## 🔊 Sonidos (opcionales)
