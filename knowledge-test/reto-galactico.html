@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090d24">
+<meta name="description" content="An interactive, adaptive children's thinking adventure by Divertoons. Works on mobile devices.">
+<title>Cosmic Brain Quest | Divertoons</title>
+<style>:root{font-family:ui-rounded,"Trebuchet MS",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-synthesis:none;-webkit-font-smoothing:antialiased}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;overflow-x:hidden;color:var(--text);background:var(--base)}body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background:var(--sky)}body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.7;background-image:radial-gradient(circle at 8% 15%,var(--twinkle) 1.5px,transparent 2px),radial-gradient(circle at 68% 12%,var(--twinkle) 2px,transparent 3px),radial-gradient(circle at 92% 53%,var(--twinkle) 1px,transparent 3px),radial-gradient(circle at 23% 79%,var(--twinkle) 1.5px,transparent 2px),radial-gradient(circle at 71% 84%,var(--twinkle) 2px,transparent 3px);background-size:330px 360px;animation:stars 13s ease-in-out infinite alternate}button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible{outline:3px solid var(--focus);outline-offset:4px}button:disabled{cursor:not-allowed;opacity:.45}a{color:inherit}#app{min-height:100vh}.shell{width:min(100% - 32px,820px);margin:0 auto;padding:17px 0 55px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:26px}.logo{font-size:clamp(19px,5vw,23px);letter-spacing:-1.05px;font-weight:1000;display:flex;align-items:center;gap:8px;white-space:nowrap}.brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:12px;background:var(--logo-bg);box-shadow:0 4px 16px var(--shadow);font-size:19px;transform:rotate(-8deg)}.logo span span{color:var(--accent)}.top-right{display:flex;align-items:center;gap:8px}.pill{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--tag-bg);color:var(--muted);border-radius:999px;padding:8px 12px;font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.hero,.question-card,.results{border:1px solid var(--line);background:var(--panel);box-shadow:0 20px 55px var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-radius:30px;overflow:hidden}.hero{position:relative;padding:clamp(24px,5.5vw,40px);isolation:isolate}.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;align-items:center;gap:2px}.hero-text{position:relative;z-index:2}.eyebrow{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--accent-border);background:var(--accent-bg);color:var(--accent);padding:9px 13px;border-radius:99px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:900}.hero h1{font-size:clamp(37px,7.5vw,62px);line-height:1.06;letter-spacing:-2.7px;margin:18px 0 16px;font-weight:1000}.hero h1 em{font-style:normal;color:var(--accent)}.hero p,.subtitle{font-size:clamp(15px,2.3vw,17px);line-height:1.65;color:var(--muted);max-width:430px;margin:0}.hero-art{height:auto;width:100%;max-height:350px;overflow:visible;filter:drop-shadow(0 15px 25px var(--art-shadow));animation:bob 5s ease-in-out infinite}.fun-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px;margin-bottom:23px}.fun-chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--chip);padding:9px 12px;border-radius:14px;font-size:12px;font-weight:800}.cta{border:0;background:var(--button-gradient);color:var(--button-text);min-height:56px;border-radius:17px;font-weight:950;font-size:16px;padding:14px 23px;box-shadow:0 8px 24px var(--button-shadow);display:inline-flex;align-items:center;justify-content:center;gap:12px;transition:transform .17s ease,filter .17s ease,box-shadow .17s}.cta:hover{filter:brightness(1.04);box-shadow:0 12px 30px var(--button-shadow)}.cta:active{transform:translateY(2px) scale(.99)}.cta:disabled{box-shadow:none}.big-cta{width:100%}.footnote{font-size:12px;line-height:1.6;color:var(--muted);margin:17px 2px 0;text-align:center}.mini-info{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}.info-item{border:1px solid var(--line);background:var(--subpanel);border-radius:18px;padding:17px 12px;text-align:center}.info-item .ico{font-size:22px;display:block;margin-bottom:7px}.info-item strong{display:block;font-size:13px}.info-item small{display:block;font-size:11px;color:var(--muted);margin-top:4px;line-height:1.35}.quiz-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.small-title{font-size:14px;font-weight:1000;letter-spacing:-.3px}.progress-wrap{height:10px;border-radius:99px;overflow:hidden;background:var(--track);border:1px solid var(--line);margin:0 0 17px}.progress-fill{height:100%;background:var(--progress);border-radius:99px;transition:width .45s cubic-bezier(.2,.8,.2,1)}.question-card{padding:clamp(22px,5vw,38px);animation:rise .36s both}.question-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:21px}.subject{display:inline-flex;align-items:center;gap:7px;border-radius:999px;background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent-border);padding:9px 12px;font-size:12px;font-weight:900}.level{font-size:12px;color:var(--muted);font-weight:800}.question-card h2{font-size:clamp(23px,4.9vw,35px);line-height:1.32;letter-spacing:-.7px;margin:9px 0 21px;font-weight:950}.story{border-left:4px solid var(--accent);background:var(--story-bg);border-radius:0 17px 17px 0;padding:19px 20px;margin:3px 0 22px;font-size:clamp(16px,3vw,19px);line-height:1.8;white-space:pre-line}.story-label{display:flex;align-items:center;gap:7px;color:var(--accent);text-transform:uppercase;letter-spacing:.09em;font-size:11px;font-weight:950;margin-bottom:9px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0 24px}.answer{display:flex;align-items:center;gap:12px;min-height:68px;width:100%;padding:12px 14px;text-align:left;border:2px solid var(--answer-border);border-radius:17px;background:var(--answer-bg);color:var(--text);transition:transform .18s,border-color .18s,background .18s,box-shadow .18s;font-size:15px;font-weight:800;line-height:1.35}.answer:hover{border-color:var(--accent-border)}.answer:active{transform:scale(.984)}.answer.selected{background:var(--selected);border-color:var(--accent);box-shadow:0 0 0 3px var(--answer-ring)}.letter{border-radius:11px;background:var(--letter-bg);color:var(--accent);display:grid;place-items:center;width:33px;height:33px;flex:none;font-size:13px;font-weight:950}.answer.selected .letter{background:var(--accent);color:var(--button-text)}.question-actions{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}.quiet-btn{border:1px solid var(--line);border-radius:13px;background:var(--tag-bg);color:var(--muted);padding:12px 15px;font-size:13px;font-weight:850;min-height:44px}.listen{margin-bottom:6px;display:inline-flex;gap:8px;align-items:center}.question-actions .cta{min-width:190px}.status-line{color:var(--muted);font-size:12px;text-align:center;margin:18px auto 0;line-height:1.55}.results{padding:clamp(22px,5vw,38px);animation:rise .5s both}.celebrate{position:relative;text-align:center;margin-bottom:22px}.medallion{margin:0 auto 13px;width:106px;height:106px;border-radius:34px;display:grid;place-items:center;font-size:48px;background:var(--accent-bg);border:2px solid var(--accent-border);box-shadow:0 15px 35px var(--shadow);transform:rotate(-5deg);animation:pop .6s cubic-bezier(.2,1.6,.2,1)}.results h1{margin:0 0 6px;font-size:clamp(31px,6.5vw,48px);letter-spacing:-1.5px}.results .subtitle{margin:auto;max-width:500px}.scoreboard{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:25px 0}.score-stat{padding:17px 10px;text-align:center;border-radius:18px;background:var(--subpanel);border:1px solid var(--line)}.score-stat b{display:block;font-size:clamp(26px,5.5vw,36px);line-height:1.1;letter-spacing:-1px}.score-stat small{display:block;color:var(--muted);font-weight:800;margin-top:7px;font-size:11px}.section-heading{font-weight:1000;font-size:18px;letter-spacing:-.4px;margin:24px 0 12px}.breakdown-row{margin:12px 0}.breakdown-labels{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:850;margin:0 0 8px}.bar-bg{height:11px;border-radius:99px;background:var(--track);overflow:hidden}.bar-fill{height:100%;border-radius:99px;background:var(--progress)}.advice{padding:16px 18px;border-radius:16px;background:var(--story-bg);border:1px solid var(--accent-border);line-height:1.6;font-size:14px;margin-top:18px}.advice strong{color:var(--accent)}.review{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}.review summary{list-style:none;font-weight:950;display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:5px 0 14px;gap:12px}.review summary::-webkit-details-marker{display:none}.review summary::after{content:"⌄";font-size:24px;color:var(--accent)}.review[open] summary::after{content:"⌃"}.review-item{padding:14px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.55}.review-item b{display:block;margin-bottom:3px}.review-item .rmeta{font-size:11px;letter-spacing:.04em;text-transform:uppercase;font-weight:950;color:var(--accent);margin-bottom:6px}.review-item p{margin:4px 0;color:var(--muted)}.review-item .answer-correct{color:var(--text);font-weight:850}.result-actions{display:flex;gap:10px;margin-top:21px;flex-wrap:wrap}.result-actions>*{flex:1;min-width:175px}.parent-note{border-top:1px solid var(--line);margin-top:26px;padding-top:16px;font-size:12px;color:var(--muted);line-height:1.6}.toast{position:fixed;left:50%;bottom:25px;transform:translateX(-50%);z-index:20;border-radius:14px;padding:12px 17px;background:var(--toast-bg);color:var(--toast-text);box-shadow:0 12px 35px #0003;font-size:13px;font-weight:850;max-width:calc(100% - 30px);text-align:center;animation:rise .2s}.restart-note{font-size:11px;color:var(--muted);margin:10px 0 0}.corner-deco{position:absolute;pointer-events:none;font-size:22px;opacity:.75;animation:bob 4s infinite;z-index:0}.corner-deco.one{top:8px;right:20px}.corner-deco.two{bottom:12px;left:30%;animation-delay:-1.4s}.no-select{-webkit-user-select:none;user-select:none}@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-11px) rotate(3deg)}}@keyframes stars{from{transform:translateY(0);opacity:.5}to{transform:translateY(-9px);opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@keyframes pop{from{opacity:0;transform:scale(.4) rotate(-35deg)}to{opacity:1;transform:scale(1) rotate(-5deg)}}@media(max-width:620px){.shell{width:min(100% - 26px,550px);padding-top:14px}.topbar{margin-bottom:17px}.hero{padding:24px 22px}.hero-grid{grid-template-columns:1fr}.hero h1{font-size:42px;line-height:1.08;letter-spacing:-1.8px;margin-top:15px}.hero-art{height:205px;max-height:205px;width:100%;margin:6px auto -8px;order:-1}.hero-text{order:2}.mini-info{grid-template-columns:repeat(3,1fr);gap:7px}.info-item{padding:13px 6px}.info-item strong{font-size:11px}.info-item small{font-size:10px}.fun-row{margin-top:18px;gap:7px}.fun-chip{font-size:11px;padding:8px 9px}.answers{grid-template-columns:1fr;gap:9px}.answer{min-height:62px;font-size:15px}.question-card{padding:23px 18px}.question-card h2{font-size:24px}.question-actions .cta{flex:1}.results{padding:23px 19px}.story{padding:14px 16px}.score-stat{padding:14px 5px}.score-stat small{font-size:10px}}@media(max-width:375px){.top-right .pill{font-size:9px;padding:8px}.logo{font-size:18px}.hero h1{font-size:36px}.question-actions{display:grid;grid-template-columns:1fr 1fr}.question-actions .cta{min-width:0}.answer{font-size:14px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+:root{--base:#080c21;--sky:radial-gradient(ellipse 85% 58% at 70% 9%,#223777 0%,transparent 80%),radial-gradient(ellipse 60% 70% at 3% 80%,#173654 0%,transparent 80%),linear-gradient(145deg,#090d24,#070b1b 80%);--twinkle:#a2c3ff;--text:#f3f7ff;--muted:#b4c1e3;--panel:rgba(16,23,52,.93);--subpanel:#17244b;--line:#31466f;--accent:#62f4d6;--accent-bg:rgba(51,204,175,.11);--accent-border:rgba(98,244,214,.3);--logo-bg:linear-gradient(135deg,#5a86ff,#52f9d4);--shadow:rgba(0,2,21,.52);--tag-bg:#141d3d;--chip:#192b4b;--button-gradient:linear-gradient(135deg,#60f0d3,#7beab0);--button-text:#072c37;--button-shadow:rgba(33,205,171,.19);--art-shadow:rgba(88,222,245,.15);--track:#27385b;--progress:linear-gradient(90deg,#4df9cf,#59b9ff);--story-bg:#182944;--answer-border:#34446b;--answer-bg:#101c3d;--selected:#16485a;--answer-ring:rgba(98,244,214,.13);--letter-bg:#253762;--focus:#f5d77d;--toast-bg:#5ceac9;--toast-text:#07313f}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>window.DIVERTOONS_CONFIG={"theme":"boy","title":"Cosmic Brain Quest","subjects":{"math":{"label":"Mental Math","icon":"🔢"},"logic":{"label":"Logic","icon":"🧠"},"pattern":{"label":"Number Patterns","icon":"✨"}},"sequence":["math","logic","pattern","math","logic","pattern","math","logic","pattern","math","logic","pattern"],"bank":{"math":{"1":[{"id":"bm101","prompt":"What is 37 + 28?","options":["55","65","64","75"],"correct":1,"why":"37 + 20 = 57, then + 8 = 65."},{"id":"bm102","prompt":"What is 86 − 29?","options":["57","67","56","65"],"correct":0,"why":"86 − 30 = 56; add 1 back to get 57."},{"id":"bm103","prompt":"What is 6 × 7?","options":["36","48","42","49"],"correct":2,"why":"Six groups of seven make 42."},{"id":"bm104","prompt":"Each pack has 8 pencils. How many pencils are in 4 packs?","options":["28","30","36","32"],"correct":3,"why":"4 × 8 = 32 pencils."},{"id":"bm105","prompt":"What is half of 90?","options":["30","40","45","50"],"correct":2,"why":"90 ÷ 2 = 45."}],"2":[{"id":"bm201","prompt":"Calculate 125 − 48 + 16.","options":["83","93","103","87"],"correct":1,"why":"125 − 48 = 77; 77 + 16 = 93."},{"id":"bm202","prompt":"Four tickets cost $28. At the same price, how much do six tickets cost?","options":["$38","$40","$42","$48"],"correct":2,"why":"Each ticket is $7. Six tickets cost 6 × 7 = $42."},{"id":"bm203","prompt":"A room has 9 rows with 7 chairs each. If 5 chairs are empty, how many are occupied?","options":["58","63","56","54"],"correct":0,"why":"9 × 7 = 63 total chairs; 63 − 5 = 58."},{"id":"bm204","prompt":"What is 18 × 5 − 27?","options":["73","67","53","63"],"correct":3,"why":"18 × 5 = 90 and 90 − 27 = 63."},{"id":"bm205","prompt":"What is 64 + 39?","options":["93","102","103","113"],"correct":2,"why":"64 + 40 = 104; subtract 1 to get 103."}],"3":[{"id":"bm301","prompt":"I multiply a number by 4, then add 9. The result is 57. What is my number?","options":["11","12","13","14"],"correct":1,"why":"Undo the steps: 57 − 9 = 48, then 48 ÷ 4 = 12."},{"id":"bm302","prompt":"What is 20% of 150?","options":["20","30","35","45"],"correct":1,"why":"10% of 150 is 15, so 20% is 30."},{"id":"bm303","prompt":"What is 15 × 12?","options":["160","175","185","180"],"correct":3,"why":"15 × (10 + 2) = 150 + 30 = 180."},{"id":"bm304","prompt":"Five boxes contain 18 markers each. You give away 37. How many remain?","options":["53","57","63","47"],"correct":0,"why":"5 × 18 = 90 markers, then 90 − 37 = 53."},{"id":"bm305","prompt":"What is one quarter of 84, plus 19?","options":["39","38","40","42"],"correct":2,"why":"84 ÷ 4 = 21; 21 + 19 = 40."}]},"pattern":{"1":[{"id":"bp101","prompt":"What comes next? 5, 10, 15, 20, …","options":["30","25","24","35"],"correct":1,"why":"Add 5 each time, so 20 + 5 = 25."},{"id":"bp102","prompt":"What comes next? 2, 4, 8, 16, …","options":["20","24","32","30"],"correct":2,"why":"Each number doubles. 16 × 2 = 32."},{"id":"bp103","prompt":"What comes next? 20, 17, 14, 11, …","options":["8","9","7","6"],"correct":0,"why":"Subtract 3 each time. 11 − 3 = 8."},{"id":"bp104","prompt":"What comes next? 1, 3, 5, 7, …","options":["8","10","11","9"],"correct":3,"why":"Add 2 to reach the next odd number: 9."},{"id":"bp105","prompt":"What comes next? 4, 8, 12, 16, …","options":["24","20","18","22"],"correct":1,"why":"Add 4 each time. 16 + 4 = 20."}],"2":[{"id":"bp201","prompt":"Find the next number: 3, 8, 15, 24, 35, …","options":["46","47","49","48"],"correct":3,"why":"The jumps are +5, +7, +9, +11. Next jump is +13. 35 + 13 = 48."},{"id":"bp202","prompt":"Find the next number: 1, 4, 9, 16, 25, …","options":["36","30","35","49"],"correct":0,"why":"These are squares: 1², 2², 3², 4², 5², then 6² = 36."},{"id":"bp203","prompt":"Find the next number: 50, 45, 37, 26, …","options":["15","12","14","11"],"correct":1,"why":"Subtract 5, then 8, then 11; next subtract 14. 26 − 14 = 12."},{"id":"bp204","prompt":"Find the next number: 2, 5, 11, 23, …","options":["35","46","47","49"],"correct":2,"why":"Double and add 1: 23 × 2 + 1 = 47."},{"id":"bp205","prompt":"Find the next number: 1, 2, 4, 7, 11, …","options":["15","17","14","16"],"correct":3,"why":"Add 1, 2, 3, 4, so next add 5. 11 + 5 = 16."}],"3":[{"id":"bp301","prompt":"Find the next number: 2, 3, 5, 9, 17, …","options":["25","33","34","31"],"correct":1,"why":"The jumps double: +1, +2, +4, +8, then +16. 17 + 16 = 33."},{"id":"bp302","prompt":"Find the next number: 1, 2, 6, 24, 120, …","options":["240","600","720","620"],"correct":2,"why":"Multiply by 2, 3, 4, 5, then 6. 120 × 6 = 720."},{"id":"bp303","prompt":"Find the next number: 4, 9, 19, 39, …","options":["79","69","77","81"],"correct":0,"why":"Multiply by 2 and add 1 each time: 39 × 2 + 1 = 79."},{"id":"bp304","prompt":"Find the next number: 7, 10, 16, 25, 37, …","options":["49","50","51","52"],"correct":3,"why":"Jumps are +3, +6, +9, +12, then +15. 37 + 15 = 52."},{"id":"bp305","prompt":"Find the next number: 3, 4, 7, 11, 18, …","options":["27","29","30","25"],"correct":1,"why":"Each new number adds the previous two: 11 + 18 = 29."}]},"logic":{"1":[{"id":"bl101","prompt":"Gold is heavier than silver. Silver is heavier than bronze. Which is lightest?","options":["Gold","Silver","Bronze","They weigh the same"],"correct":2,"why":"If gold > silver > bronze, bronze must be lightest."},{"id":"bl102","prompt":"Maya is older than Leo. Leo is older than Sam. Who is youngest?","options":["Maya","Sam","Leo","Not enough information"],"correct":1,"why":"The age order is Maya, Leo, then Sam."},{"id":"bl103","prompt":"Every glip has blue ears. Nori is a glip. What must be true?","options":["Nori has blue ears","Nori is tall","Nori has wings","Nori is green"],"correct":0,"why":"The rule applies to all glips, including Nori."},{"id":"bl104","prompt":"There are three boxes: red, blue, and green. The prize is not in red or blue. Where is it?","options":["Red","Blue","Any box","Green"],"correct":3,"why":"Only green remains after ruling out red and blue."},{"id":"bl105","prompt":"Tom has fewer marbles than Ana. Ana has fewer than Zoe. Who has the most?","options":["Tom","Ana","Zoe","All equal"],"correct":2,"why":"Zoe > Ana > Tom."}],"2":[{"id":"bl201","prompt":"Lily finishes a race ahead of Max. Noah finishes behind Max. Who finishes second?","options":["Lily","Max","Noah","Cannot tell"],"correct":1,"why":"The order is Lily, Max, Noah."},{"id":"bl202","prompt":"If today is Tuesday, what day will it be in 10 days?","options":["Thursday","Saturday","Friday","Sunday"],"correct":2,"why":"Seven days after Tuesday is Tuesday again. Three more days makes Friday."},{"id":"bl203","prompt":"All rectangles have four sides. Shape Q is a rectangle. What must be true?","options":["Q has four sides","Q is red","Q is a square","Q is large"],"correct":0,"why":"Being a rectangle guarantees four sides; it does not guarantee the other features."},{"id":"bl204","prompt":"You have one quarter and one nickel. How many cents is that?","options":["20¢","35¢","15¢","30¢"],"correct":3,"why":"25 cents + 5 cents = 30 cents."},{"id":"bl205","prompt":"Ava has a cat, Ben has a dog, and Cal has neither. They each have one different pet: cat, dog, or fish. What does Cal have?","options":["A cat","A fish","A dog","No pet"],"correct":1,"why":"The only pet not already assigned is the fish."}],"3":[{"id":"bl301","prompt":"A bag has red and blue marbles. What is the fewest you must take without looking to guarantee two of the same color?","options":["2","3","4","5"],"correct":1,"why":"With only two colors, the third marble must match one of the first two."},{"id":"bl302","prompt":"Every comet in a story glows. A strange object glows. Does that prove it is a comet?","options":["Yes, definitely","Yes, if it is round","No, other things can glow","Only at night"],"correct":2,"why":"The rule says comets glow, not that only comets glow."},{"id":"bl303","prompt":"All wibbles are blue. No blue things are square. Can a wibble be square?","options":["No","Yes","Only small ones","Not enough information"],"correct":0,"why":"Every wibble is blue, and blue things cannot be square."},{"id":"bl304","prompt":"Four robots finish a race. Red is first, Green is last, and Blue finishes ahead of Yellow. Who is second?","options":["Yellow","Green","Red","Blue"],"correct":3,"why":"The only middle positions are second and third. Blue must be second, ahead of Yellow."},{"id":"bl305","prompt":"A two-digit number has a tens digit twice its ones digit. Its digits add to 9. What number is it?","options":["36","63","72","54"],"correct":1,"why":"If the ones digit is 3, the tens digit is 6. 6 + 3 = 9, so 63."}]}},"art":"<svg class=\"hero-art\" viewBox=\"0 0 370 340\" role=\"img\" aria-label=\"Cartoon rocket exploring planets and glowing stars\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"spaceRocket\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop stop-color=\"#bafaff\"/><stop offset=\"1\" stop-color=\"#6c9bff\"/></linearGradient><linearGradient id=\"spaceFlame\" x1=\"0\" x2=\"1\"><stop stop-color=\"#ffd36c\"/><stop offset=\"1\" stop-color=\"#ff6c93\"/></linearGradient><radialGradient id=\"orbBlue\"><stop stop-color=\"#b4e5ff\"/><stop offset=\"1\" stop-color=\"#497de3\"/></radialGradient><filter id=\"glow\"><feGaussianBlur stdDeviation=\"6\"/></filter></defs><ellipse cx=\"181\" cy=\"170\" rx=\"159\" ry=\"112\" fill=\"none\" stroke=\"#509aff\" stroke-width=\"1.8\" stroke-dasharray=\"5 12\" opacity=\".38\" transform=\"rotate(-22 181 170)\"/><circle cx=\"68\" cy=\"85\" r=\"35\" fill=\"url(#orbBlue)\"/><path d=\"M38 82 Q69 62 102 89\" fill=\"none\" stroke=\"#bbf5ff\" opacity=\".35\" stroke-width=\"10\"/><circle cx=\"299\" cy=\"252\" r=\"48\" fill=\"#61e5c8\" opacity=\".12\"/><circle cx=\"299\" cy=\"252\" r=\"32\" fill=\"#68e9ca\" opacity=\".2\"/><circle cx=\"299\" cy=\"252\" r=\"20\" fill=\"#71f7df\" opacity=\".6\"/><path d=\"M286 247 Q299 230 311 250\" stroke=\"#b9fff1\" stroke-width=\"5\" fill=\"none\" opacity=\".55\"/><g transform=\"translate(187 170) rotate(39)\"><path d=\"M-19 82 Q-35 134 -4 165 Q17 143 17 83\" fill=\"url(#spaceFlame)\" opacity=\".75\"/><path d=\"M-9 87 Q-20 130 -3 149 Q9 124 5 88\" fill=\"#fff2af\"/><path d=\"M-37 43 L-76 94 L-38 79Z\" fill=\"#59f0d0\"/><path d=\"M36 43 L76 94 L37 79Z\" fill=\"#59f0d0\"/><path d=\"M-37 63 L-38 7 Q-36 -44 -3 -99 Q35 -42 38 7 L37 63 Q0 84 -37 63Z\" fill=\"url(#spaceRocket)\" stroke=\"#d3faff\" stroke-width=\"4\"/><path d=\"M-3 -97 Q-28 -50 -34 -18 L30 -18 Q20 -60 -3 -97Z\" fill=\"#566cff\"/><circle cx=\"0\" cy=\"3\" r=\"23\" fill=\"#17316b\" stroke=\"#ecfbff\" stroke-width=\"6\"/><circle cx=\"-5\" cy=\"-3\" r=\"10\" fill=\"#65c4ff\"/><circle cx=\"-10\" cy=\"-9\" r=\"4\" fill=\"#fff\" opacity=\".8\"/><rect x=\"-28\" y=\"65\" width=\"56\" height=\"23\" rx=\"7\" fill=\"#4468b6\" stroke=\"#9ce7ff\" stroke-width=\"3\"/><path d=\"M-35 40 Q0 57 35 40\" fill=\"none\" stroke=\"#f4feff\" stroke-width=\"4\" opacity=\".75\"/></g><path d=\"M276 52 l7 17 17 7 -17 7 -7 17 -7 -17 -17 -7 17 -7Z\" fill=\"#f9e5a9\"/><path d=\"M58 228 l5 11 11 5 -11 5 -5 11 -5 -11 -11 -5 11 -5Z\" fill=\"#7ef8e6\"/><path d=\"M326 142 l4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4Z\" fill=\"#ffa5d0\"/><circle cx=\"92\" cy=\"296\" r=\"4\" fill=\"#ffd784\"/><circle cx=\"237\" cy=\"38\" r=\"3\" fill=\"#67efff\"/><circle cx=\"339\" cy=\"202\" r=\"4\" fill=\"#b6dbff\"/></svg>"};</script>
+<script>(() => {
+  'use strict';
+  const app = document.querySelector('#app');
+  const CONFIG = window.DIVERTOONS_CONFIG;
+  const IS_GIRL = CONFIG.theme === 'girl';
+  const LETTERS = ['A', 'B', 'C', 'D'];
+  let state = {};
+  let toastTimer;
+
+  const escapeHTML = value => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi,n));
+  const sample = xs => xs[Math.floor(Math.random()*xs.length)];
+  const allCount = CONFIG.sequence.length;
+  const SUBJECTS = CONFIG.subjects;
+  const safeStopSpeech = () => { try { window.speechSynthesis?.cancel(); } catch(_) {} };
+
+  function reset() {
+    safeStopSpeech();
+    state = { phase:'intro', index:0, chosen:null, current:null, history:[],
+      used: new Set(), levels:Object.fromEntries(Object.keys(SUBJECTS).map(k => [k,2])) };
+    render();
+  }
+
+  function chooseQuestion() {
+    const subject = CONFIG.sequence[state.index];
+    const desired = state.levels[subject];
+    let choices = CONFIG.bank[subject][desired].filter(q => !state.used.has(q.id));
+    if (!choices.length) {
+      const levels = [1,2,3].sort((a,b) => Math.abs(a-desired)-Math.abs(b-desired));
+      choices = levels.flatMap(level => CONFIG.bank[subject][level].filter(q => !state.used.has(q.id)));
+    }
+    if (!choices.length) throw Error('The question bank needs more unique questions for ' + subject);
+    const q = sample(choices);
+    state.used.add(q.id);
+    return {...q, subject, level:desired};
+  }
+
+  function start() {
+    state.phase = 'quiz';
+    state.current = chooseQuestion();
+    render();
+  }
+
+  function submit() {
+    if (state.phase !== 'quiz' || state.chosen === null) return;
+    record(state.chosen);
+  }
+  function skip() {
+    if (state.phase !== 'quiz') return;
+    record(null);
+  }
+  function record(chosen) {
+    safeStopSpeech();
+    const q = state.current;
+    const correct = chosen === q.correct;
+    state.history.push({...q, chosen, isCorrect: correct});
+    state.levels[q.subject] = clamp(state.levels[q.subject] + (correct ? 1 : -1),1,3);
+    state.index++;
+    state.chosen = null;
+    if (state.index === allCount) {
+      state.phase = 'results';
+      state.current = null;
+    } else {
+      state.current = chooseQuestion();
+    }
+    render();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function header() {
+    return `<header class="topbar"><div class="logo" aria-label="Divertoons"><div class="brand-mark" aria-hidden="true">${IS_GIRL?'✦':'◈'}</div><span>DIVER<span>TOONS</span></span></div><div class="top-right"><span class="pill">${IS_GIRL?'🦄 MAGIC QUEST':'🚀 BRAIN LAB'}</span></div></header>`;
+  }
+
+  function intro() {
+    const mini = IS_GIRL ? [
+      ['📖','Reading','Discover stories'],['➕','Math','Solve fun puzzles'],['🌈','Your pace','No timer']
+    ] : [
+      ['🧠','Logic','Think it through'],['🔢','Math','Mental challenges'],['✨','Patterns','Spot the rule']
+    ];
+    return `${header()}<section class="hero"><span class="corner-deco one" aria-hidden="true">${IS_GIRL?'💖':'✦'}</span><div class="hero-grid"><div class="hero-text"><div class="eyebrow">${IS_GIRL?'✧ WELCOME TO THE MAGIC KINGDOM':'✦ YOUR ADVENTURE STARTS HERE'}</div><h1>${IS_GIRL?'Little steps.<br><em>Big magic.</em>':'Big ideas.<br><em>Bold brain.</em>'}</h1><p>${IS_GIRL?'A storybook adventure full of unicorns, mysteries, and magical math. Every question is a new chance to shine.':'Ready for a cosmic brain mission? Explore numbers, uncover hidden patterns, and solve mysteries with your own superpower: thinking.'}</p><div class="fun-row"><span class="fun-chip">🧩 ${allCount} challenges</span><span class="fun-chip">🪄 Adapts to you</span><span class="fun-chip">🕒 No timer</span></div><button type="button" class="cta big-cta" id="start">${IS_GIRL?'Enter the magic kingdom':'Launch my mission'} <span aria-hidden="true">➜</span></button></div>${CONFIG.art}</div></section><div class="mini-info">${mini.map(x=>`<div class="info-item"><span class="ico" aria-hidden="true">${x[0]}</span><strong>${x[1]}</strong><small>${x[2]}</small></div>`).join('')}</div><p class="footnote">${IS_GIRL?'Read the stories by yourself if you can. You may listen to math questions.':'You can hear the questions out loud. Take your time and think for yourself.'}<br>Scores help you practice — they do not measure intelligence or IQ.</p>`;
+  }
+
+  function showQuestion() {
+    const q = state.current;
+    const progress = Math.round(state.index / allCount * 100);
+    const canSpeak = ('speechSynthesis' in window) && (!IS_GIRL || q.subject === 'math');
+    return `${header()}<div class="quiz-head"><div class="small-title">${IS_GIRL?'✨ Royal quest':'🛸 Mission log'} <span style="opacity:.65">${state.index+1} / ${allCount}</span></div><span class="pill">${Math.round((state.index+1)/allCount*100)}% ★</span></div><div class="progress-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progress}" aria-label="Challenge progress"><div class="progress-fill" style="width:${progress}%"></div></div><main class="question-card" aria-live="polite"><div class="question-top"><span class="subject">${SUBJECTS[q.subject].icon} ${SUBJECTS[q.subject].label}</span><span class="level">${IS_GIRL?'One step at a time':'Think before you tap'} ✦</span></div>${q.passage ? `<div class="story"><div class="story-label">📖 Read this story</div>${escapeHTML(q.passage)}</div>` : ''}<h2 id="question-title">${escapeHTML(q.prompt)}</h2>${canSpeak ? '<button type="button" class="quiet-btn listen" id="listen" aria-label="Read question and answer choices aloud">🔊 Hear it again</button>' : ''}<div class="answers" role="group" aria-labelledby="question-title">${q.options.map((o,i)=>`<button type="button" class="answer" data-answer="${i}" aria-pressed="false"><span class="letter">${LETTERS[i]}</span><span>${escapeHTML(o)}</span></button>`).join('')}</div><div class="question-actions"><button type="button" class="quiet-btn" id="skip">Skip for now</button><button type="button" class="cta" id="continue" disabled>${state.index===allCount-1?'Finish quest':'Lock in answer'} <span aria-hidden="true">➜</span></button></div><div class="status-line">No rush, no hints, just your own ideas. 💫</div></main>`;
+  }
+
+  function stats() {
+    return Object.keys(SUBJECTS).map(subject => {
+      const items = state.history.filter(x => x.subject === subject);
+      return {subject, n:items.length, correct:items.filter(x=>x.isCorrect).length};
+    });
+  }
+
+  function getTip(areas) {
+    const weakest = [...areas].sort((a,b)=>a.correct/a.n-b.correct/b.n)[0];
+    const tips = {
+      math:'Try five minutes of mental math with everyday numbers. Say each step out loud, and check your answer with the opposite operation.',
+      pattern:'Look at the gaps between numbers first. Ask: is each jump bigger, smaller, or changing by a rule?',
+      logic:'Draw a quick diagram or rule out impossible choices one by one. An explanation is as important as the answer.',
+      reading:'After each short story, explain what happened, why, and which words give you the clue.',
+    };
+    return tips[weakest.subject];
+  }
+
+  function finalResults() {
+    const count = state.history.filter(x=>x.isCorrect).length;
+    const skipped = state.history.filter(x=>x.chosen===null).length;
+    const areas = stats();
+    const adv = getTip(areas);
+    const stars = count >= 10 ? '🌟' : count >= 6 ? '🏅' : '💫';
+    return `${header()}<main class="results"><div class="celebrate"><div class="medallion" aria-hidden="true">${stars}</div><div class="eyebrow">${IS_GIRL?'✧ THE ROYAL QUEST IS COMPLETE':'✦ MISSION COMPLETE'}</div><h1>${IS_GIRL?'You made magic!':'Mission accomplished!'}</h1><p class="subtitle">${IS_GIRL?'You tried reading and math adventures, and that is something to celebrate.':'You explored logic, numbers, and patterns. Now here is what you solved.'}</p></div><div class="scoreboard"><div class="score-stat"><b>${count}/${allCount}</b><small>Correct</small></div><div class="score-stat"><b>${areas.length}</b><small>Skills explored</small></div><div class="score-stat"><b>${skipped}</b><small>Skipped</small></div></div><h2 class="section-heading">Your skill map</h2>${areas.map(a=>`<div class="breakdown-row"><div class="breakdown-labels"><span>${SUBJECTS[a.subject].icon} ${SUBJECTS[a.subject].label}</span><span>${a.correct} of ${a.n}</span></div><div class="bar-bg"><div class="bar-fill" style="width:${a.correct/a.n*100}%"></div></div></div>`).join('')}<div class="advice"><strong>🎯 Next practice idea</strong><div>${escapeHTML(adv)}</div></div><details class="review"><summary>🔎 Review every answer</summary>${state.history.map((x,i)=>`<div class="review-item"><div class="rmeta">${i+1}. ${escapeHTML(SUBJECTS[x.subject].label)} · ${['','Starter','Explorer','Challenger'][x.level]} · ${x.isCorrect?'✓ Correct':x.chosen===null?'— Skipped':'✗ Try again'}</div><b>${escapeHTML(x.prompt)}</b><p>Your answer: ${x.chosen===null?'Skipped':escapeHTML(x.options[x.chosen])}</p><p class="answer-correct">Correct answer: ${escapeHTML(x.options[x.correct])}</p><p>Why: ${escapeHTML(x.why)}</p></div>`).join('')}</details><div class="result-actions"><button type="button" class="cta" id="share">📤 Share report</button><button type="button" class="quiet-btn" id="restart">↻ Play again</button></div><div class="parent-note"><strong>For parents / Para mamá y papá:</strong> This is an informal, adaptive practice activity, not a standardized IQ or giftedness test. Different sessions can use different questions and difficulty levels. The report stays on this device until you share it. No answers are sent to a server.</div></main><p class="footnote">Made with ❤️ for Divertoons</p>`;
+  }
+
+  function reportText() {
+    const a = stats();
+    const n = state.history.filter(x=>x.isCorrect).length;
+    return [
+      `DIVERTOONS — ${IS_GIRL?'Magical Reading & Math':'Cosmic Logic & Math'} Quest`,
+      `Result: ${n}/${allCount} correct`,
+      ...a.map(s=>`${SUBJECTS[s.subject].label}: ${s.correct}/${s.n}`),
+      '', 'REVIEW:',
+      ...state.history.map((x,i)=>`${i+1}. [${SUBJECTS[x.subject].label}, level ${x.level}] ${x.prompt}\nGiven: ${x.chosen===null?'Skipped':x.options[x.chosen]}\nCorrect: ${x.options[x.correct]}\nExplanation: ${x.why}`),
+      '', 'Informal adaptive practice only — not an IQ test.'
+    ].join('\n');
+  }
+
+  function render() {
+    app.innerHTML = `<div class="shell">${state.phase === 'intro' ? intro() : state.phase === 'quiz' ? showQuestion() : finalResults()}</div>`;
+    document.title = CONFIG.title + ' | Divertoons';
+  }
+
+  function pick(i) {
+    if (state.phase !== 'quiz') return;
+    state.chosen = i;
+    app.querySelectorAll('.answer').forEach((btn,j) => {
+      btn.classList.toggle('selected', i===j);
+      btn.setAttribute('aria-pressed', i===j ? 'true' : 'false');
+    });
+    document.querySelector('#continue').disabled = false;
+  }
+
+  function speak() {
+    if (!('speechSynthesis' in window) || !state.current) return;
+    if (IS_GIRL && state.current.subject === 'reading') return;
+    safeStopSpeech();
+    const q = state.current;
+    const content = q.prompt + '. ' + q.options.map((option,i)=>`Choice ${LETTERS[i]}: ${option}.`).join(' ');
+    const utterance = new SpeechSynthesisUtterance(content);
+    utterance.lang = 'en-US';
+    utterance.rate = .82;
+    utterance.pitch = IS_GIRL ? 1.1 : 1;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function toast(text) {
+    document.querySelector('.toast')?.remove();
+    clearTimeout(toastTimer);
+    const node=document.createElement('div');
+    node.className='toast';
+    node.textContent=text;
+    node.setAttribute('role','status');
+    document.body.append(node);
+    toastTimer=setTimeout(()=>node.remove(),3000);
+  }
+
+  async function shareReport() {
+    const content=reportText();
+    if (navigator.share) {
+      try { await navigator.share({title: CONFIG.title + ' — Divertoons',text:content}); return; }
+      catch (err) { if (err.name==='AbortError') return; }
+    }
+    try { await navigator.clipboard.writeText(content); toast('Report copied! Paste it into a message.'); }
+    catch (_) {
+      const area=document.createElement('textarea');area.value=content;area.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(area);area.select();
+      const done=document.execCommand('copy');area.remove();
+      toast(done?'Report copied!':'Could not copy. Take a screenshot of your results.');
+    }
+  }
+
+  app.addEventListener('click',e=>{
+    const btn=e.target.closest('button');
+    if (!btn) return;
+    if (btn.id==='start') return start();
+    if (btn.hasAttribute('data-answer')) return pick(Number(btn.getAttribute('data-answer')));
+    if (btn.id==='listen') return speak();
+    if (btn.id==='continue') return submit();
+    if (btn.id==='skip') return skip();
+    if (btn.id==='restart') return reset();
+    if (btn.id==='share') return shareReport();
+  });
+  reset();
+})();
+</script>
+</body>
+</html>

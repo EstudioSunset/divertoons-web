@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff4fb">
+<meta name="description" content="An interactive, adaptive children's thinking adventure by Divertoons. Works on mobile devices.">
+<title>Magical Reading &amp; Math | Divertoons</title>
+<style>:root{font-family:ui-rounded,"Trebuchet MS",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-synthesis:none;-webkit-font-smoothing:antialiased}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;overflow-x:hidden;color:var(--text);background:var(--base)}body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background:var(--sky)}body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.7;background-image:radial-gradient(circle at 8% 15%,var(--twinkle) 1.5px,transparent 2px),radial-gradient(circle at 68% 12%,var(--twinkle) 2px,transparent 3px),radial-gradient(circle at 92% 53%,var(--twinkle) 1px,transparent 3px),radial-gradient(circle at 23% 79%,var(--twinkle) 1.5px,transparent 2px),radial-gradient(circle at 71% 84%,var(--twinkle) 2px,transparent 3px);background-size:330px 360px;animation:stars 13s ease-in-out infinite alternate}button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible{outline:3px solid var(--focus);outline-offset:4px}button:disabled{cursor:not-allowed;opacity:.45}a{color:inherit}#app{min-height:100vh}.shell{width:min(100% - 32px,820px);margin:0 auto;padding:17px 0 55px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:26px}.logo{font-size:clamp(19px,5vw,23px);letter-spacing:-1.05px;font-weight:1000;display:flex;align-items:center;gap:8px;white-space:nowrap}.brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:12px;background:var(--logo-bg);box-shadow:0 4px 16px var(--shadow);font-size:19px;transform:rotate(-8deg)}.logo span span{color:var(--accent)}.top-right{display:flex;align-items:center;gap:8px}.pill{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--tag-bg);color:var(--muted);border-radius:999px;padding:8px 12px;font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.hero,.question-card,.results{border:1px solid var(--line);background:var(--panel);box-shadow:0 20px 55px var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-radius:30px;overflow:hidden}.hero{position:relative;padding:clamp(24px,5.5vw,40px);isolation:isolate}.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;align-items:center;gap:2px}.hero-text{position:relative;z-index:2}.eyebrow{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--accent-border);background:var(--accent-bg);color:var(--accent);padding:9px 13px;border-radius:99px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:900}.hero h1{font-size:clamp(37px,7.5vw,62px);line-height:1.06;letter-spacing:-2.7px;margin:18px 0 16px;font-weight:1000}.hero h1 em{font-style:normal;color:var(--accent)}.hero p,.subtitle{font-size:clamp(15px,2.3vw,17px);line-height:1.65;color:var(--muted);max-width:430px;margin:0}.hero-art{height:auto;width:100%;max-height:350px;overflow:visible;filter:drop-shadow(0 15px 25px var(--art-shadow));animation:bob 5s ease-in-out infinite}.fun-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px;margin-bottom:23px}.fun-chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--chip);padding:9px 12px;border-radius:14px;font-size:12px;font-weight:800}.cta{border:0;background:var(--button-gradient);color:var(--button-text);min-height:56px;border-radius:17px;font-weight:950;font-size:16px;padding:14px 23px;box-shadow:0 8px 24px var(--button-shadow);display:inline-flex;align-items:center;justify-content:center;gap:12px;transition:transform .17s ease,filter .17s ease,box-shadow .17s}.cta:hover{filter:brightness(1.04);box-shadow:0 12px 30px var(--button-shadow)}.cta:active{transform:translateY(2px) scale(.99)}.cta:disabled{box-shadow:none}.big-cta{width:100%}.footnote{font-size:12px;line-height:1.6;color:var(--muted);margin:17px 2px 0;text-align:center}.mini-info{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}.info-item{border:1px solid var(--line);background:var(--subpanel);border-radius:18px;padding:17px 12px;text-align:center}.info-item .ico{font-size:22px;display:block;margin-bottom:7px}.info-item strong{display:block;font-size:13px}.info-item small{display:block;font-size:11px;color:var(--muted);margin-top:4px;line-height:1.35}.quiz-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.small-title{font-size:14px;font-weight:1000;letter-spacing:-.3px}.progress-wrap{height:10px;border-radius:99px;overflow:hidden;background:var(--track);border:1px solid var(--line);margin:0 0 17px}.progress-fill{height:100%;background:var(--progress);border-radius:99px;transition:width .45s cubic-bezier(.2,.8,.2,1)}.question-card{padding:clamp(22px,5vw,38px);animation:rise .36s both}.question-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:21px}.subject{display:inline-flex;align-items:center;gap:7px;border-radius:999px;background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent-border);padding:9px 12px;font-size:12px;font-weight:900}.level{font-size:12px;color:var(--muted);font-weight:800}.question-card h2{font-size:clamp(23px,4.9vw,35px);line-height:1.32;letter-spacing:-.7px;margin:9px 0 21px;font-weight:950}.story{border-left:4px solid var(--accent);background:var(--story-bg);border-radius:0 17px 17px 0;padding:19px 20px;margin:3px 0 22px;font-size:clamp(16px,3vw,19px);line-height:1.8;white-space:pre-line}.story-label{display:flex;align-items:center;gap:7px;color:var(--accent);text-transform:uppercase;letter-spacing:.09em;font-size:11px;font-weight:950;margin-bottom:9px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0 24px}.answer{display:flex;align-items:center;gap:12px;min-height:68px;width:100%;padding:12px 14px;text-align:left;border:2px solid var(--answer-border);border-radius:17px;background:var(--answer-bg);color:var(--text);transition:transform .18s,border-color .18s,background .18s,box-shadow .18s;font-size:15px;font-weight:800;line-height:1.35}.answer:hover{border-color:var(--accent-border)}.answer:active{transform:scale(.984)}.answer.selected{background:var(--selected);border-color:var(--accent);box-shadow:0 0 0 3px var(--answer-ring)}.letter{border-radius:11px;background:var(--letter-bg);color:var(--accent);display:grid;place-items:center;width:33px;height:33px;flex:none;font-size:13px;font-weight:950}.answer.selected .letter{background:var(--accent);color:var(--button-text)}.question-actions{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}.quiet-btn{border:1px solid var(--line);border-radius:13px;background:var(--tag-bg);color:var(--muted);padding:12px 15px;font-size:13px;font-weight:850;min-height:44px}.listen{margin-bottom:6px;display:inline-flex;gap:8px;align-items:center}.question-actions .cta{min-width:190px}.status-line{color:var(--muted);font-size:12px;text-align:center;margin:18px auto 0;line-height:1.55}.results{padding:clamp(22px,5vw,38px);animation:rise .5s both}.celebrate{position:relative;text-align:center;margin-bottom:22px}.medallion{margin:0 auto 13px;width:106px;height:106px;border-radius:34px;display:grid;place-items:center;font-size:48px;background:var(--accent-bg);border:2px solid var(--accent-border);box-shadow:0 15px 35px var(--shadow);transform:rotate(-5deg);animation:pop .6s cubic-bezier(.2,1.6,.2,1)}.results h1{margin:0 0 6px;font-size:clamp(31px,6.5vw,48px);letter-spacing:-1.5px}.results .subtitle{margin:auto;max-width:500px}.scoreboard{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:25px 0}.score-stat{padding:17px 10px;text-align:center;border-radius:18px;background:var(--subpanel);border:1px solid var(--line)}.score-stat b{display:block;font-size:clamp(26px,5.5vw,36px);line-height:1.1;letter-spacing:-1px}.score-stat small{display:block;color:var(--muted);font-weight:800;margin-top:7px;font-size:11px}.section-heading{font-weight:1000;font-size:18px;letter-spacing:-.4px;margin:24px 0 12px}.breakdown-row{margin:12px 0}.breakdown-labels{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:850;margin:0 0 8px}.bar-bg{height:11px;border-radius:99px;background:var(--track);overflow:hidden}.bar-fill{height:100%;border-radius:99px;background:var(--progress)}.advice{padding:16px 18px;border-radius:16px;background:var(--story-bg);border:1px solid var(--accent-border);line-height:1.6;font-size:14px;margin-top:18px}.advice strong{color:var(--accent)}.review{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}.review summary{list-style:none;font-weight:950;display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:5px 0 14px;gap:12px}.review summary::-webkit-details-marker{display:none}.review summary::after{content:"⌄";font-size:24px;color:var(--accent)}.review[open] summary::after{content:"⌃"}.review-item{padding:14px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.55}.review-item b{display:block;margin-bottom:3px}.review-item .rmeta{font-size:11px;letter-spacing:.04em;text-transform:uppercase;font-weight:950;color:var(--accent);margin-bottom:6px}.review-item p{margin:4px 0;color:var(--muted)}.review-item .answer-correct{color:var(--text);font-weight:850}.result-actions{display:flex;gap:10px;margin-top:21px;flex-wrap:wrap}.result-actions>*{flex:1;min-width:175px}.parent-note{border-top:1px solid var(--line);margin-top:26px;padding-top:16px;font-size:12px;color:var(--muted);line-height:1.6}.toast{position:fixed;left:50%;bottom:25px;transform:translateX(-50%);z-index:20;border-radius:14px;padding:12px 17px;background:var(--toast-bg);color:var(--toast-text);box-shadow:0 12px 35px #0003;font-size:13px;font-weight:850;max-width:calc(100% - 30px);text-align:center;animation:rise .2s}.restart-note{font-size:11px;color:var(--muted);margin:10px 0 0}.corner-deco{position:absolute;pointer-events:none;font-size:22px;opacity:.75;animation:bob 4s infinite;z-index:0}.corner-deco.one{top:8px;right:20px}.corner-deco.two{bottom:12px;left:30%;animation-delay:-1.4s}.no-select{-webkit-user-select:none;user-select:none}@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-11px) rotate(3deg)}}@keyframes stars{from{transform:translateY(0);opacity:.5}to{transform:translateY(-9px);opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@keyframes pop{from{opacity:0;transform:scale(.4) rotate(-35deg)}to{opacity:1;transform:scale(1) rotate(-5deg)}}@media(max-width:620px){.shell{width:min(100% - 26px,550px);padding-top:14px}.topbar{margin-bottom:17px}.hero{padding:24px 22px}.hero-grid{grid-template-columns:1fr}.hero h1{font-size:42px;line-height:1.08;letter-spacing:-1.8px;margin-top:15px}.hero-art{height:205px;max-height:205px;width:100%;margin:6px auto -8px;order:-1}.hero-text{order:2}.mini-info{grid-template-columns:repeat(3,1fr);gap:7px}.info-item{padding:13px 6px}.info-item strong{font-size:11px}.info-item small{font-size:10px}.fun-row{margin-top:18px;gap:7px}.fun-chip{font-size:11px;padding:8px 9px}.answers{grid-template-columns:1fr;gap:9px}.answer{min-height:62px;font-size:15px}.question-card{padding:23px 18px}.question-card h2{font-size:24px}.question-actions .cta{flex:1}.results{padding:23px 19px}.story{padding:14px 16px}.score-stat{padding:14px 5px}.score-stat small{font-size:10px}}@media(max-width:375px){.top-right .pill{font-size:9px;padding:8px}.logo{font-size:18px}.hero h1{font-size:36px}.question-actions{display:grid;grid-template-columns:1fr 1fr}.question-actions .cta{min-width:0}.answer{font-size:14px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+:root{--base:#fff5fc;--sky:radial-gradient(ellipse 75% 53% at 76% 12%,#ffd5eb 0%,transparent 85%),radial-gradient(ellipse 65% 60% at 0% 72%,#ded3ff 0%,transparent 80%),linear-gradient(155deg,#fff4fb,#f0ebff 86%);--twinkle:#ff9fdb;--text:#49306d;--muted:#7e658e;--panel:rgba(255,255,255,.94);--subpanel:#fbf2ff;--line:#eed9f2;--accent:#ae4cb9;--accent-bg:#fae8fc;--accent-border:#edbfef;--logo-bg:linear-gradient(135deg,#ffa7d8,#bd98ff);--shadow:rgba(167,90,154,.15);--tag-bg:#fff5fc;--chip:#fdf0ff;--button-gradient:linear-gradient(135deg,#fa78b7,#b68cff);--button-text:#fff;--button-shadow:rgba(205,96,190,.28);--art-shadow:rgba(242,120,189,.19);--track:#f2e4f5;--progress:linear-gradient(90deg,#ff81b9,#bd9cff);--story-bg:#fff5fa;--answer-border:#efd9f1;--answer-bg:#fffbff;--selected:#f9e6ff;--answer-ring:rgba(174,76,185,.10);--letter-bg:#f5eafa;--focus:#b767d1;--toast-bg:#a44cb3;--toast-text:#fff}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>window.DIVERTOONS_CONFIG={"theme":"girl","title":"Magical Reading & Math","subjects":{"reading":{"label":"Reading","icon":"📖"},"math":{"label":"Math","icon":"🧮"}},"sequence":["reading","math","reading","math","reading","math","reading","math","reading","math","reading","math"],"bank":{"reading":{"1":[{"id":"gr101","prompt":"Where did Sofia put her key?","options":["In her bag","In a purple shoe","In the garden","Under her pillow"],"correct":1,"why":"The story says she placed the key inside a purple shoe.","passage":"Before breakfast, Sofia placed a silver key inside a purple shoe. Then she went outside to water the roses. When she returned, she remembered where she had hidden it."},{"id":"gr102","prompt":"What did Luna choose?","options":["A red kite","A green hat","A blue balloon","A toy horse"],"correct":2,"why":"Luna chose the blue balloon.","passage":"At the fair, Luna picked a blue balloon. Her brother chose a red kite. They walked home together when the music stopped."},{"id":"gr103","prompt":"Where did Mia go on Friday?","options":["The library","The bakery","The river","The castle"],"correct":0,"why":"Mia went to the library.","passage":"Every Friday, Mia takes a book to the library. This Friday she borrowed a story about oceans and carried it home in her backpack."},{"id":"gr104","prompt":"What kept the little dragon mostly dry?","options":["A blanket","A hat","A cave","The tree leaves"],"correct":3,"why":"The leaves above the dragon helped block the rain.","passage":"When the rain began, a little dragon hid behind a tall tree. The thick leaves kept it mostly dry until the clouds moved away."},{"id":"gr105","prompt":"What was the weather like?","options":["Hot and sunny","Cold and windy","Rainy and warm","Snowy and calm"],"correct":1,"why":"Nina packed a scarf because of the cold wind.","passage":"Nina could hear the wind whistling outside. She packed her scarf and put on a warm coat before leaving for school."}],"2":[{"id":"gr201","prompt":"Why did Princess Isla go to the pond?","options":["She heard singing","She wanted to swim","She followed the hoofprints","She was looking for a crown"],"correct":2,"why":"She followed the muddy hoofprints and found her unicorn at the pond.","passage":"The garden gate stood open, and tiny muddy hoofprints crossed the grass. Princess Isla followed them past the flowers. At the pond, she spotted her unicorn taking a long drink."},{"id":"gr202","prompt":"Why did the sandwich become soggy?","options":["It got wet in the rain","It was too hot","A bird ate it","Mira dropped it in soup"],"correct":0,"why":"Mira left her sandwich on the bench while it rained.","passage":"When the rain started, Mira tucked her paper map safely into her jacket. But she left her sandwich on the bench. When she returned, the bread was soggy."},{"id":"gr203","prompt":"What most helped Theo improve?","options":["A new piano","Magic","A friend played for him","Practicing every afternoon"],"correct":3,"why":"He practiced regularly, so he got better.","passage":"Theo practiced the piano every afternoon. On Monday he made many mistakes. By Friday he could play the whole song smoothly, and he smiled when the final note rang out."},{"id":"gr204","prompt":"Why did Nora whisper?","options":["She forgot how to speak","She did not want to disturb readers","She was hiding from a dragon","Her voice was gone"],"correct":1,"why":"The library was quiet, so whispering helped avoid disturbing anyone.","passage":"Nora stepped into the library. Every table had someone reading at it. She walked softly to the desk and whispered her question to the librarian."},{"id":"gr205","prompt":"What was June trying to do?","options":["Build a birdhouse","Scare the birds","Feed the birds","Paint the feeder"],"correct":2,"why":"She filled the empty feeder with seeds for birds.","passage":"June noticed that the bird feeder outside her window was empty. She grabbed a small bag of seeds, went into the garden, and filled the feeder all the way to the top."}],"3":[{"id":"gr301","prompt":"In this story, what does “fragile” mean?","options":["Very old","Easy to break","Beautiful","Difficult to find"],"correct":1,"why":"Violet avoids the fragile bridge because it might break.","passage":"Violet looked at the crooked wooden bridge. “It is fragile,” warned the wizard. Violet stepped back and took the sturdy stone path instead."},{"id":"gr302","prompt":"What does “basked” most nearly mean?","options":["Hid from the light","Ran through the rain","Enjoyed the warmth","Made a loud sound"],"correct":2,"why":"To bask is to enjoy pleasant warmth, especially sunshine.","passage":"After days of chilly rain, the flowers finally basked in the sunshine. Their petals opened wide as the garden grew warm again."},{"id":"gr303","prompt":"Which word best describes Amara?","options":["Brave","Careless","Angry","Lazy"],"correct":0,"why":"Amara speaks even though she feels nervous, showing courage.","passage":"Amara felt nervous about speaking in front of her class. Her hands shook a little, but she raised one anyway and shared her idea."},{"id":"gr304","prompt":"What is the best clue that someone passed through the gate?","options":["The gate looked ordinary","The sky was cloudy","The gate was tall","Tiny footprints led through it"],"correct":3,"why":"Footprints leading through the gate suggest someone or something used it.","passage":"The maze ended at an ordinary-looking gate. Aria almost turned away, but then she noticed tiny footprints in the dirt leading right through the opening."},{"id":"gr305","prompt":"What was the queen’s unusual treasure?","options":["A mountain of gold","A diamond crown","Books to share","A silver horse"],"correct":2,"why":"The treasure was books, something the whole village could enjoy and learn from.","passage":"The queen wrote that her treasure was not gold, but something the whole village could share. When the grand doors opened, children found shelves and shelves of beautiful books."}]},"math":{"1":[{"id":"gm101","prompt":"What is 14 + 9?","options":["22","23","24","25"],"correct":1,"why":"14 + 10 = 24; subtract 1 to get 23."},{"id":"gm102","prompt":"What is 30 − 12?","options":["16","17","19","18"],"correct":3,"why":"30 − 10 = 20, then minus 2 makes 18."},{"id":"gm103","prompt":"Four baskets have 3 apples each. How many apples are there?","options":["12","7","9","16"],"correct":0,"why":"4 groups of 3 apples make 12."},{"id":"gm104","prompt":"You have 20 stars. You give away 7. How many are left?","options":["14","12","13","17"],"correct":2,"why":"20 − 7 = 13 stars."},{"id":"gm105","prompt":"Which number is greatest?","options":["38","83","48","73"],"correct":1,"why":"83 is greater than 73, 48, and 38."}],"2":[{"id":"gm201","prompt":"Luna collects 27 gems, finds 16 more, then gives away 9. How many remain?","options":["34","35","32","43"],"correct":0,"why":"27 + 16 = 43; 43 − 9 = 34."},{"id":"gm202","prompt":"Each unicorn needs 4 carrots. How many carrots do 6 unicorns need?","options":["10","20","28","24"],"correct":3,"why":"6 × 4 = 24 carrots."},{"id":"gm203","prompt":"A party starts at 2:30 PM and lasts one hour. When does it end?","options":["2:45 PM","3:00 PM","3:30 PM","4:30 PM"],"correct":2,"why":"One hour after 2:30 PM is 3:30 PM."},{"id":"gm204","prompt":"Which piece of cake is bigger?","options":["1/4 of a cake","1/2 of a cake","They are the same","Not enough information"],"correct":1,"why":"One half of the same-size cake is bigger than one quarter."},{"id":"gm205","prompt":"You make 5 groups of 6 stickers, then give away 8. How many are left?","options":["22","24","28","38"],"correct":0,"why":"5 × 6 = 30; 30 − 8 = 22."},{"id":"gm206","prompt":"What is 48 ÷ 6?","options":["6","7","9","8"],"correct":3,"why":"Six groups of eight make 48, so 48 ÷ 6 = 8."}],"3":[{"id":"gm301","prompt":"You have $20 and buy 3 toy crowns costing $4 each. How much change do you get?","options":["$12","$6","$8","$4"],"correct":2,"why":"3 × $4 = $12; $20 − $12 = $8."},{"id":"gm302","prompt":"Three boxes hold 12 pearls each. Half of all the pearls are pink. How many pink pearls?","options":["12","18","24","36"],"correct":1,"why":"3 × 12 = 36 pearls; half of 36 is 18."},{"id":"gm303","prompt":"A dragon has 75 coins, shares 28, then finds 19 more. How many coins now?","options":["66","64","56","68"],"correct":0,"why":"75 − 28 = 47; 47 + 19 = 66."},{"id":"gm304","prompt":"A ribbon is 36 inches long. You cut it into 4 equal pieces. How long is each piece?","options":["8 inches","12 inches","6 inches","9 inches"],"correct":3,"why":"36 ÷ 4 = 9 inches per piece."},{"id":"gm305","prompt":"Four friends share 30 cookies equally, with some left over. How many cookies are left over?","options":["1","3","2","4"],"correct":2,"why":"Each friend gets 7 cookies (28 total), leaving 2."},{"id":"gm306","prompt":"Find the missing number: 7, 14, 21, __, 35.","options":["27","28","29","30"],"correct":1,"why":"The numbers increase by 7: 21 + 7 = 28."}]}},"art":"<svg class=\"hero-art\" viewBox=\"0 0 380 320\" role=\"img\" aria-label=\"Friendly white unicorn with a rainbow, fairy-tale castle, and sparkling stars\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"rainbowPink\" x1=\"0\" x2=\"1\"><stop stop-color=\"#ffa1c9\"/><stop offset=\"1\" stop-color=\"#c198ff\"/></linearGradient><linearGradient id=\"magicMane\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop stop-color=\"#a7a6fa\"/><stop offset=\".48\" stop-color=\"#f898d3\"/><stop offset=\"1\" stop-color=\"#ffe7a5\"/></linearGradient><linearGradient id=\"unicornWhite\" x1=\"0\" x2=\".6\" y1=\"0\" y2=\"1\"><stop stop-color=\"#fff\"/><stop offset=\"1\" stop-color=\"#f6edff\"/></linearGradient></defs><path d=\"M20 234 A156 156 0 0 1 332 234\" fill=\"none\" stroke=\"#ffdca3\" stroke-width=\"17\" opacity=\".7\"/><path d=\"M43 235 A134 134 0 0 1 311 235\" fill=\"none\" stroke=\"#ff9ecb\" stroke-width=\"16\" opacity=\".8\"/><path d=\"M65 236 A112 112 0 0 1 289 236\" fill=\"none\" stroke=\"#b4adfb\" stroke-width=\"17\" opacity=\".8\"/><path d=\"M88 237 A89 89 0 0 1 266 237\" fill=\"none\" stroke=\"#92dfcf\" stroke-width=\"13\" opacity=\".7\"/><g fill=\"#fff\"><ellipse cx=\"41\" cy=\"238\" rx=\"36\" ry=\"21\"/><ellipse cx=\"70\" cy=\"246\" rx=\"40\" ry=\"17\"/><ellipse cx=\"321\" cy=\"246\" rx=\"48\" ry=\"18\"/><ellipse cx=\"345\" cy=\"234\" rx=\"31\" ry=\"26\"/></g><g opacity=\".8\"><path d=\"M302 187 v-45 l19 -16 19 16 v45\" fill=\"#c0adf6\"/><path d=\"M293 145 v-26 l19 -15 19 15 v26\" fill=\"#e0c4fa\"/><path d=\"M308 109 V83 l-9 9 13 13 13 -13 -9 -9 v26\" fill=\"#f3b7db\"/><path d=\"M326 187 v-33 h28 v33\" fill=\"#e5bdeb\"/><path d=\"M330 156 v-19 l10 -12 10 12 v19\" fill=\"#bdb4ff\"/><path d=\"M285 187 v-30 h17 v30\" fill=\"#f5c6e5\"/></g><g transform=\"translate(61 7)\"><path d=\"M147 78 C203 54 238 88 230 131 C276 161 249 242 193 256 L94 256 C72 206 63 163 81 116Z\" fill=\"url(#magicMane)\" stroke=\"#e2b7ee\" stroke-width=\"3\"/><path d=\"M150 105 L170 21 L187 107\" fill=\"#ffe9a2\" stroke=\"#e5aa5b\" stroke-width=\"4\"/><path d=\"M158 70 L179 75 M155 87 L185 92\" stroke=\"#e5b86e\" stroke-width=\"3\"/><path d=\"M107 112 Q93 70 110 64 Q135 60 145 122\" fill=\"#fff\" stroke=\"#dfd6f5\" stroke-width=\"4\"/><path d=\"M114 104 Q108 78 115 77 Q124 78 131 111\" fill=\"#f6add1\"/><path d=\"M182 112 Q185 70 204 77 Q219 86 205 129\" fill=\"#fff\" stroke=\"#dfd6f5\" stroke-width=\"4\"/><path d=\"M188 110 Q194 87 200 91 Q207 99 199 113\" fill=\"#f6add1\"/><path d=\"M113 100 Q154 80 192 107 Q225 134 205 186 Q194 202 182 234 L112 234 C97 205 85 183 86 157 Q89 118 113 100Z\" fill=\"url(#unicornWhite)\" stroke=\"#e9d9f3\" stroke-width=\"4\"/><path d=\"M95 173 Q65 172 65 192 Q67 223 111 221 L147 218 Q156 186 136 176Z\" fill=\"#fff\" stroke=\"#e9d9f3\" stroke-width=\"4\"/><ellipse cx=\"93\" cy=\"198\" rx=\"20\" ry=\"12\" fill=\"#ffbdd9\" opacity=\".45\"/><path d=\"M117 151 Q133 162 148 148\" fill=\"none\" stroke=\"#655078\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M142 147 l4 -9 M134 151 l0 -10\" stroke=\"#655078\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"85\" cy=\"193\" r=\"3\" fill=\"#9974a9\"/><path d=\"M183 97 Q160 111 159 127 Q180 123 193 138 Q216 139 218 168\" fill=\"none\" stroke=\"#ffb0dc\" stroke-width=\"16\" stroke-linecap=\"round\"/><path d=\"M192 117 Q208 121 223 146\" fill=\"none\" stroke=\"#aeb5ff\" stroke-width=\"13\" stroke-linecap=\"round\"/><path d=\"M175 217 Q195 229 216 217\" fill=\"none\" stroke=\"#f6aedb\" stroke-width=\"11\" stroke-linecap=\"round\"/></g><path d=\"M54 67 l7 18 18 7 -18 7 -7 18 -7 -18 -18 -7 18 -7Z\" fill=\"#ffa4d2\"/><path d=\"M305 35 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5Z\" fill=\"#f3b855\"/><path d=\"M343 92 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4Z\" fill=\"#bb9afa\"/><circle cx=\"31\" cy=\"153\" r=\"4\" fill=\"#bea0ff\"/><circle cx=\"352\" cy=\"171\" r=\"4\" fill=\"#ffa5d0\"/></svg>"};</script>
+<script>(() => {
+  'use strict';
+  const app = document.querySelector('#app');
+  const CONFIG = window.DIVERTOONS_CONFIG;
+  const IS_GIRL = CONFIG.theme === 'girl';
+  const LETTERS = ['A', 'B', 'C', 'D'];
+  let state = {};
+  let toastTimer;
+
+  const escapeHTML = value => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi,n));
+  const sample = xs => xs[Math.floor(Math.random()*xs.length)];
+  const allCount = CONFIG.sequence.length;
+  const SUBJECTS = CONFIG.subjects;
+  const safeStopSpeech = () => { try { window.speechSynthesis?.cancel(); } catch(_) {} };
+
+  function reset() {
+    safeStopSpeech();
+    state = { phase:'intro', index:0, chosen:null, current:null, history:[],
+      used: new Set(), levels:Object.fromEntries(Object.keys(SUBJECTS).map(k => [k,2])) };
+    render();
+  }
+
+  function chooseQuestion() {
+    const subject = CONFIG.sequence[state.index];
+    const desired = state.levels[subject];
+    let choices = CONFIG.bank[subject][desired].filter(q => !state.used.has(q.id));
+    if (!choices.length) {
+      const levels = [1,2,3].sort((a,b) => Math.abs(a-desired)-Math.abs(b-desired));
+      choices = levels.flatMap(level => CONFIG.bank[subject][level].filter(q => !state.used.has(q.id)));
+    }
+    if (!choices.length) throw Error('The question bank needs more unique questions for ' + subject);
+    const q = sample(choices);
+    state.used.add(q.id);
+    return {...q, subject, level:desired};
+  }
+
+  function start() {
+    state.phase = 'quiz';
+    state.current = chooseQuestion();
+    render();
+  }
+
+  function submit() {
+    if (state.phase !== 'quiz' || state.chosen === null) return;
+    record(state.chosen);
+  }
+  function skip() {
+    if (state.phase !== 'quiz') return;
+    record(null);
+  }
+  function record(chosen) {
+    safeStopSpeech();
+    const q = state.current;
+    const correct = chosen === q.correct;
+    state.history.push({...q, chosen, isCorrect: correct});
+    state.levels[q.subject] = clamp(state.levels[q.subject] + (correct ? 1 : -1),1,3);
+    state.index++;
+    state.chosen = null;
+    if (state.index === allCount) {
+      state.phase = 'results';
+      state.current = null;
+    } else {
+      state.current = chooseQuestion();
+    }
+    render();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function header() {
+    return `<header class="topbar"><div class="logo" aria-label="Divertoons"><div class="brand-mark" aria-hidden="true">${IS_GIRL?'✦':'◈'}</div><span>DIVER<span>TOONS</span></span></div><div class="top-right"><span class="pill">${IS_GIRL?'🦄 MAGIC QUEST':'🚀 BRAIN LAB'}</span></div></header>`;
+  }
+
+  function intro() {
+    const mini = IS_GIRL ? [
+      ['📖','Reading','Discover stories'],['➕','Math','Solve fun puzzles'],['🌈','Your pace','No timer']
+    ] : [
+      ['🧠','Logic','Think it through'],['🔢','Math','Mental challenges'],['✨','Patterns','Spot the rule']
+    ];
+    return `${header()}<section class="hero"><span class="corner-deco one" aria-hidden="true">${IS_GIRL?'💖':'✦'}</span><div class="hero-grid"><div class="hero-text"><div class="eyebrow">${IS_GIRL?'✧ WELCOME TO THE MAGIC KINGDOM':'✦ YOUR ADVENTURE STARTS HERE'}</div><h1>${IS_GIRL?'Little steps.<br><em>Big magic.</em>':'Big ideas.<br><em>Bold brain.</em>'}</h1><p>${IS_GIRL?'A storybook adventure full of unicorns, mysteries, and magical math. Every question is a new chance to shine.':'Ready for a cosmic brain mission? Explore numbers, uncover hidden patterns, and solve mysteries with your own superpower: thinking.'}</p><div class="fun-row"><span class="fun-chip">🧩 ${allCount} challenges</span><span class="fun-chip">🪄 Adapts to you</span><span class="fun-chip">🕒 No timer</span></div><button type="button" class="cta big-cta" id="start">${IS_GIRL?'Enter the magic kingdom':'Launch my mission'} <span aria-hidden="true">➜</span></button></div>${CONFIG.art}</div></section><div class="mini-info">${mini.map(x=>`<div class="info-item"><span class="ico" aria-hidden="true">${x[0]}</span><strong>${x[1]}</strong><small>${x[2]}</small></div>`).join('')}</div><p class="footnote">${IS_GIRL?'Read the stories by yourself if you can. You may listen to math questions.':'You can hear the questions out loud. Take your time and think for yourself.'}<br>Scores help you practice — they do not measure intelligence or IQ.</p>`;
+  }
+
+  function showQuestion() {
+    const q = state.current;
+    const progress = Math.round(state.index / allCount * 100);
+    const canSpeak = ('speechSynthesis' in window) && (!IS_GIRL || q.subject === 'math');
+    return `${header()}<div class="quiz-head"><div class="small-title">${IS_GIRL?'✨ Royal quest':'🛸 Mission log'} <span style="opacity:.65">${state.index+1} / ${allCount}</span></div><span class="pill">${Math.round((state.index+1)/allCount*100)}% ★</span></div><div class="progress-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progress}" aria-label="Challenge progress"><div class="progress-fill" style="width:${progress}%"></div></div><main class="question-card" aria-live="polite"><div class="question-top"><span class="subject">${SUBJECTS[q.subject].icon} ${SUBJECTS[q.subject].label}</span><span class="level">${IS_GIRL?'One step at a time':'Think before you tap'} ✦</span></div>${q.passage ? `<div class="story"><div class="story-label">📖 Read this story</div>${escapeHTML(q.passage)}</div>` : ''}<h2 id="question-title">${escapeHTML(q.prompt)}</h2>${canSpeak ? '<button type="button" class="quiet-btn listen" id="listen" aria-label="Read question and answer choices aloud">🔊 Hear it again</button>' : ''}<div class="answers" role="group" aria-labelledby="question-title">${q.options.map((o,i)=>`<button type="button" class="answer" data-answer="${i}" aria-pressed="false"><span class="letter">${LETTERS[i]}</span><span>${escapeHTML(o)}</span></button>`).join('')}</div><div class="question-actions"><button type="button" class="quiet-btn" id="skip">Skip for now</button><button type="button" class="cta" id="continue" disabled>${state.index===allCount-1?'Finish quest':'Lock in answer'} <span aria-hidden="true">➜</span></button></div><div class="status-line">No rush, no hints, just your own ideas. 💫</div></main>`;
+  }
+
+  function stats() {
+    return Object.keys(SUBJECTS).map(subject => {
+      const items = state.history.filter(x => x.subject === subject);
+      return {subject, n:items.length, correct:items.filter(x=>x.isCorrect).length};
+    });
+  }
+
+  function getTip(areas) {
+    const weakest = [...areas].sort((a,b)=>a.correct/a.n-b.correct/b.n)[0];
+    const tips = {
+      math:'Try five minutes of mental math with everyday numbers. Say each step out loud, and check your answer with the opposite operation.',
+      pattern:'Look at the gaps between numbers first. Ask: is each jump bigger, smaller, or changing by a rule?',
+      logic:'Draw a quick diagram or rule out impossible choices one by one. An explanation is as important as the answer.',
+      reading:'After each short story, explain what happened, why, and which words give you the clue.',
+    };
+    return tips[weakest.subject];
+  }
+
+  function finalResults() {
+    const count = state.history.filter(x=>x.isCorrect).length;
+    const skipped = state.history.filter(x=>x.chosen===null).length;
+    const areas = stats();
+    const adv = getTip(areas);
+    const stars = count >= 10 ? '🌟' : count >= 6 ? '🏅' : '💫';
+    return `${header()}<main class="results"><div class="celebrate"><div class="medallion" aria-hidden="true">${stars}</div><div class="eyebrow">${IS_GIRL?'✧ THE ROYAL QUEST IS COMPLETE':'✦ MISSION COMPLETE'}</div><h1>${IS_GIRL?'You made magic!':'Mission accomplished!'}</h1><p class="subtitle">${IS_GIRL?'You tried reading and math adventures, and that is something to celebrate.':'You explored logic, numbers, and patterns. Now here is what you solved.'}</p></div><div class="scoreboard"><div class="score-stat"><b>${count}/${allCount}</b><small>Correct</small></div><div class="score-stat"><b>${areas.length}</b><small>Skills explored</small></div><div class="score-stat"><b>${skipped}</b><small>Skipped</small></div></div><h2 class="section-heading">Your skill map</h2>${areas.map(a=>`<div class="breakdown-row"><div class="breakdown-labels"><span>${SUBJECTS[a.subject].icon} ${SUBJECTS[a.subject].label}</span><span>${a.correct} of ${a.n}</span></div><div class="bar-bg"><div class="bar-fill" style="width:${a.correct/a.n*100}%"></div></div></div>`).join('')}<div class="advice"><strong>🎯 Next practice idea</strong><div>${escapeHTML(adv)}</div></div><details class="review"><summary>🔎 Review every answer</summary>${state.history.map((x,i)=>`<div class="review-item"><div class="rmeta">${i+1}. ${escapeHTML(SUBJECTS[x.subject].label)} · ${['','Starter','Explorer','Challenger'][x.level]} · ${x.isCorrect?'✓ Correct':x.chosen===null?'— Skipped':'✗ Try again'}</div><b>${escapeHTML(x.prompt)}</b><p>Your answer: ${x.chosen===null?'Skipped':escapeHTML(x.options[x.chosen])}</p><p class="answer-correct">Correct answer: ${escapeHTML(x.options[x.correct])}</p><p>Why: ${escapeHTML(x.why)}</p></div>`).join('')}</details><div class="result-actions"><button type="button" class="cta" id="share">📤 Share report</button><button type="button" class="quiet-btn" id="restart">↻ Play again</button></div><div class="parent-note"><strong>For parents / Para mamá y papá:</strong> This is an informal, adaptive practice activity, not a standardized IQ or giftedness test. Different sessions can use different questions and difficulty levels. The report stays on this device until you share it. No answers are sent to a server.</div></main><p class="footnote">Made with ❤️ for Divertoons</p>`;
+  }
+
+  function reportText() {
+    const a = stats();
+    const n = state.history.filter(x=>x.isCorrect).length;
+    return [
+      `DIVERTOONS — ${IS_GIRL?'Magical Reading & Math':'Cosmic Logic & Math'} Quest`,
+      `Result: ${n}/${allCount} correct`,
+      ...a.map(s=>`${SUBJECTS[s.subject].label}: ${s.correct}/${s.n}`),
+      '', 'REVIEW:',
+      ...state.history.map((x,i)=>`${i+1}. [${SUBJECTS[x.subject].label}, level ${x.level}] ${x.prompt}\nGiven: ${x.chosen===null?'Skipped':x.options[x.chosen]}\nCorrect: ${x.options[x.correct]}\nExplanation: ${x.why}`),
+      '', 'Informal adaptive practice only — not an IQ test.'
+    ].join('\n');
+  }
+
+  function render() {
+    app.innerHTML = `<div class="shell">${state.phase === 'intro' ? intro() : state.phase === 'quiz' ? showQuestion() : finalResults()}</div>`;
+    document.title = CONFIG.title + ' | Divertoons';
+  }
+
+  function pick(i) {
+    if (state.phase !== 'quiz') return;
+    state.chosen = i;
+    app.querySelectorAll('.answer').forEach((btn,j) => {
+      btn.classList.toggle('selected', i===j);
+      btn.setAttribute('aria-pressed', i===j ? 'true' : 'false');
+    });
+    document.querySelector('#continue').disabled = false;
+  }
+
+  function speak() {
+    if (!('speechSynthesis' in window) || !state.current) return;
+    if (IS_GIRL && state.current.subject === 'reading') return;
+    safeStopSpeech();
+    const q = state.current;
+    const content = q.prompt + '. ' + q.options.map((option,i)=>`Choice ${LETTERS[i]}: ${option}.`).join(' ');
+    const utterance = new SpeechSynthesisUtterance(content);
+    utterance.lang = 'en-US';
+    utterance.rate = .82;
+    utterance.pitch = IS_GIRL ? 1.1 : 1;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function toast(text) {
+    document.querySelector('.toast')?.remove();
+    clearTimeout(toastTimer);
+    const node=document.createElement('div');
+    node.className='toast';
+    node.textContent=text;
+    node.setAttribute('role','status');
+    document.body.append(node);
+    toastTimer=setTimeout(()=>node.remove(),3000);
+  }
+
+  async function shareReport() {
+    const content=reportText();
+    if (navigator.share) {
+      try { await navigator.share({title: CONFIG.title + ' — Divertoons',text:content}); return; }
+      catch (err) { if (err.name==='AbortError') return; }
+    }
+    try { await navigator.clipboard.writeText(content); toast('Report copied! Paste it into a message.'); }
+    catch (_) {
+      const area=document.createElement('textarea');area.value=content;area.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(area);area.select();
+      const done=document.execCommand('copy');area.remove();
+      toast(done?'Report copied!':'Could not copy. Take a screenshot of your results.');
+    }
+  }
+
+  app.addEventListener('click',e=>{
+    const btn=e.target.closest('button');
+    if (!btn) return;
+    if (btn.id==='start') return start();
+    if (btn.hasAttribute('data-answer')) return pick(Number(btn.getAttribute('data-answer')));
+    if (btn.id==='listen') return speak();
+    if (btn.id==='continue') return submit();
+    if (btn.id==='skip') return skip();
+    if (btn.id==='restart') return reset();
+    if (btn.id==='share') return shareReport();
+  });
+  reset();
+})();
+</script>
+</body>
+</html>
